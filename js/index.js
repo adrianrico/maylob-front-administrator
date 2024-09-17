@@ -719,7 +719,7 @@ function getGPS(maneuver_id)
 
     $.ajax({
         //url: 'http://localhost:8080/man/getGPS',
-        url: 'https://maylob-backend.onrender.com/man/addManeuver',
+        url: 'https://maylob-backend.onrender.com/man/getGPS',
         type: 'get',
         contentType: 'application/json',
         data: maneuver_id,
