@@ -1102,7 +1102,7 @@ function getAllManeuversID()
 
     $.ajax({
         //url: 'http://localhost:8080/man/getAllManeuvers',
-        url: 'https://maylob-backend.onrender.com/man/findManeuver',
+        url: 'https://maylob-backend.onrender.com/man/getAllManeuvers',
         type: "get",
         dataType: 'json',
         success : (function (data) 

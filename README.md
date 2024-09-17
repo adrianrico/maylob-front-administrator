@@ -9,7 +9,8 @@
   > - Modified index to display initial view since it was hidden by default...
 
 >### JS
-  >- initial COMMIT
+  >- Getting all maneuvers bugfix, AJAX url was changed...
+  
   >> - #### GSAP
   >>> - Initial COMMIT
 
