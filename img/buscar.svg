@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100mm"
+   height="98.529465mm"
+   viewBox="0 0 100 98.529465"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="buscar.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.72337262"
+     inkscape:cx="396.75265"
+     inkscape:cy="-147.22703"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(3.92e-5,-99.999982)">
+    <g
+       transform="matrix(2.7371576,0,0,2.7371576,-2074.7655,-1005.8199)"
+       id="g828">
+      <path
+         d="m 786.617,426.003 c -0.745,1.256 -1.676,2.332 -2.702,3.497 -1.118,1.259 -2.516,2.156 -3.912,2.873 l 6.52,6.28 c 0.931,0.897 2.12,1.347 3.308,1.347 1.186,0 2.375,-0.45 3.306,-1.347 1.863,-1.794 1.863,-4.577 0,-6.371 z"
+         fill="#f5dec7"
+         fill-rule="evenodd"
+         id="path824" />
+      <path
+         d="m 772.545,408.957 c 5.248,0 9.666,4.403 9.666,9.633 -0.094,2.569 -1.014,4.954 -2.761,6.698 -1.75,1.742 -4.143,2.936 -6.905,2.936 -5.338,0 -9.665,-4.313 -9.665,-9.634 0,-5.23 4.327,-9.633 9.665,-9.633 z m 0,-4.954 c -7.918,0 -14.545,6.605 -14.545,14.494 0,7.892 6.627,14.497 14.545,14.497 0.103,0.003 0.205,0.003 0.307,0.003 3.752,0 7.314,-1.637 10.002,-4.406 2.67,-2.752 4.143,-6.331 4.143,-10.094 0,-7.889 -6.536,-14.494 -14.452,-14.494 z"
+         fill="#f5dec7"
+         fill-rule="evenodd"
+         id="path826" />
+    </g>
+  </g>
+</svg>

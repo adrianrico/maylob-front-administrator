@@ -1,0 +1,244 @@
+*
+{
+    margin:     0;
+    padding:    0;
+
+    box-sizing: border-box;
+}
+
+html, body
+{   
+    height: 100svh;
+    width:  100%;
+
+    -ms-overflow-style: none; 
+    scrollbar-width:    none; 
+    
+    overflow-y:         hidden;
+    overflow-x:         hidden;
+    
+    font-family: 'Roboto', sans-serif;
+
+    background-color: #233243;
+
+    background-image:       url("../IMG/wave.svg");
+    background-position:    center;
+    background-repeat:      no-repeat;
+    background-size:        cover;
+}
+
+body::-webkit-scrollbar 
+{
+    display: none;
+}
+
+header
+{
+    height: 10%;
+
+    font-size:      clamp(0.5rem, 1rem, 2rem);
+    font-weight:    100;
+    color:          #f28617;
+
+    display: flex;
+
+    border-bottom: #f28617 solid 2px;
+
+    background-image:   url("../IMG/trianglify-lowres.png");
+    background-repeat:  no-repeat;
+    background-size:    cover;
+}
+
+#bannerLogo
+{
+    height: 100%;
+    width:  50%;
+
+    padding-left:   1rem;
+    padding-top:    0.4rem;
+    padding-bottom: 0.4rem;
+
+    display:            flex;
+    align-items:        center;
+    justify-content:    left;
+
+}
+
+#bannerLogo img
+{
+    height: 100%;
+}
+
+#bannerText
+{
+    height: 100%;
+    width:  50%;
+
+    padding-right:  1rem;
+    padding-bottom: 0.4rem;
+
+    display:            flex;
+    align-items:        end;
+    justify-content:    right;
+
+}
+
+main
+{
+    height: 90%;
+}
+
+/******************************************************** 
+Iniciar a modificar el contenido del cuerpo abajo...
+********************************************************/
+section
+{
+    height: 100%;
+
+}
+
+.container
+{
+    display:            flex;
+    align-items:        center;
+    justify-content:    center;
+
+    text-align: center;
+
+}
+
+#dynamic_content
+{
+    height: 80%;
+
+    display:            grid;
+    grid-template-rows: auto, auto, auto, auto;
+    text-align:         center;
+
+    font-size:      clamp(0.5rem, 1rem, 2rem);
+    font-weight:    100;
+    color:          #f28617;
+}
+
+.rowItem
+{
+    height: 5rem;
+    width:  95%;
+
+    margin:auto;
+    padding: 0.25rem;
+
+    border-radius: 15px;
+    background-color: #2d4056;
+}
+
+.rowContent
+{
+    height: 100%;
+    width:  80%;
+
+}
+
+.rowContentColumn
+{
+    height: 100%;
+    width:  50%;
+
+}
+
+.miniContainer
+{
+    height: 50%;
+    width:  100%;
+
+    display:            flex;
+    align-items:        center;
+    justify-content:    start;
+
+}
+
+
+.rowBtn
+{
+    height: 100%;
+    width:  20%;
+
+    margin-left: 0.25rem;
+
+    display:            flex;
+    align-items:        center;
+    justify-content:    center;
+
+    border-radius: 15px;
+
+    background-color: #b46311;
+}
+
+.rowBtn img
+{
+    height: 80%;
+}
+
+#fixed_content
+{
+    height: 20%;
+
+}
+
+/******************************************************** 
+Estilos reutilizables de botones...
+********************************************************/
+
+.btn
+{
+    height: 4rem;   
+    width:  250px;   
+
+    margin: 0.5rem;
+
+    display: flex;
+    
+}
+
+.btn_right
+{
+    height: 100%;
+    width:  70%;
+
+    font-size:      clamp(0.5rem, 1rem, 3rem);
+    font-weight:    100;
+    text-transform: uppercase;
+
+    color: #fff;
+
+    display:            flex;
+    align-items:        center;
+    justify-content:    center;
+
+    border-top-right-radius:    15px;
+    border-bottom-right-radius: 15px;
+
+    background-color: #f28617;
+
+}
+
+.btn_left
+{
+    height: 100%;
+    width:  30%;
+
+    display:            flex;
+    align-items:        center;
+    justify-content:    center;
+
+    border-top-left-radius:    15px;
+    border-bottom-left-radius: 15px;
+
+    background-color: #b46311;
+
+}
+
+.btn img
+{
+    height: 70%;
+}

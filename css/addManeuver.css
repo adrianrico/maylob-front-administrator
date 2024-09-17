@@ -1,0 +1,259 @@
+*
+{
+    margin:     0;
+    padding:    0;
+
+    box-sizing: border-box;
+}
+
+html, body
+{   
+    height: 100svh;
+    width:  100%;
+
+    -ms-overflow-style: none; 
+    scrollbar-width:    none; 
+    
+    overflow-y:         hidden;
+    overflow-x:         hidden;
+    
+    font-family: 'Roboto', sans-serif;
+
+    background-color: #233243;
+
+    background-image:       url("../IMG/wave.svg");
+    background-position:    center;
+    background-repeat:      no-repeat;
+    background-size:        cover;
+}
+
+body::-webkit-scrollbar 
+{
+    display: none;
+}
+
+header
+{
+    height: 10%;
+
+    font-size:      clamp(0.5rem, 1rem, 2rem);
+    font-weight:    100;
+    color:          #f28617;
+
+    display: flex;
+
+    border-bottom: #f28617 solid 2px;
+
+    background-image:   url("../IMG/trianglify-lowres.png");
+    background-repeat:  no-repeat;
+    background-size:    cover;
+}
+
+#bannerLogo
+{
+    height: 100%;
+    width:  50%;
+
+    padding-left:   1rem;
+    padding-top:    0.4rem;
+    padding-bottom: 0.4rem;
+
+    display:            flex;
+    align-items:        center;
+    justify-content:    left;
+
+}
+
+#bannerLogo img
+{
+    height: 100%;
+}
+
+#bannerText
+{
+    height: 100%;
+    width:  50%;
+
+    padding-right:  1rem;
+    padding-bottom: 0.4rem;
+
+    display:            flex;
+    align-items:        end;
+    justify-content:    right;
+
+}
+
+main
+{
+    height: 90%;
+   
+}
+
+.flexCentered
+{
+    display:            flex;
+    align-items:        center;
+    justify-content:    center;
+    
+    
+}
+
+.vertical
+{
+    flex-direction: column;
+}
+
+/******************************************************** 
+Iniciar a modificar el contenido del cuerpo abajo...
+********************************************************/
+
+#formSection
+{
+    height: 85%;
+       
+    display:            grid;
+    grid-template-rows: auto, auto, auto, auto, auto, auto;
+
+    font-size:      clamp(0.5rem, 1rem, 2rem);
+    font-weight:    100;
+    color:          #f28617;
+
+    /* From https://css.glass */
+    /* background: #627a926b;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px #0000001a;
+    backdrop-filter: blur(5.4px);
+    -webkit-backdrop-filter: blur(5.4px); */
+    
+}
+
+
+
+.dualContainer
+{
+    height: 100%;
+    width:  50%;
+    
+}
+
+label
+{
+    margin-bottom: 0.32rem;
+}
+
+select
+{
+    height: 1.5rem;
+    width:  18rem;
+
+    font-size:      clamp(0.5rem, 1rem, 2rem);
+    font-weight:    100;
+    color:          #b46311;
+
+    border: none;
+    border-radius: 5px;
+}
+
+.miniInput
+{
+    height: 1.5rem;
+    width:  8.5rem;
+}
+
+input
+{
+    height: 1.5rem;
+    width:  18rem;
+
+    padding-left: 0.25rem;
+
+    font-size:      clamp(0.5rem, 1rem, 2rem);
+    font-weight:    100;
+    color:          #b46311;
+
+    border: none;
+    border-radius: 5px;
+}
+
+#btnSection
+{
+    height: 15%;
+
+    
+}
+
+
+/******************************************************** 
+Estilos reutilizables de botónes...
+********************************************************/
+
+.btn
+{
+    height: 4rem;   
+    width:  250px;   
+
+    margin: 0.5rem;
+
+    display: flex;
+    
+}
+
+.btn_right
+{
+    height: 100%;
+    width:  70%;
+
+    font-size:      clamp(0.5rem, 1rem, 3rem);
+    font-weight:    100;
+
+    color: #fff;
+
+    display:            flex;
+    align-items:        center;
+    justify-content:    center;
+
+    border-top-right-radius:    15px;
+    border-bottom-right-radius: 15px;
+
+    background-color: #f28617;
+
+}
+
+.btn_left
+{
+    height: 100%;
+    width:  30%;
+
+    display:            flex;
+    align-items:        center;
+    justify-content:    center;
+
+    border-top-left-radius:    15px;
+    border-bottom-left-radius: 15px;
+
+    background-color: #b46311;
+
+}
+
+.btn img
+{
+    height: 60%;
+}
+
+.primaryColor
+{
+    background-color: #233d4d;
+    /* background-color: #0b132b; */
+}
+
+.secondaryColor
+{
+    background-color: #fe7f2d;
+    /* background-color: #1c2541; */
+}
+
+.accentColor
+{
+    background-color: #fcca46;
+    /* background-color: #3a506b; */
+}

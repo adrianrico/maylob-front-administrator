@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100mm"
+   height="100.61708mm"
+   viewBox="0 0 100 100.61708"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="tamaño.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.72337262"
+     inkscape:cx="396.75265"
+     inkscape:cy="230.17183"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(5.48562e-5)">
+    <g
+       transform="matrix(2.7953848,0,0,2.7953848,-2122.0109,-894.53153)"
+       id="g1152">
+      <path
+         d="m 785.416,320.003 c -0.29,0 -0.583,0.111 -0.804,0.336 l -4.031,4.046 4.031,4.042 c 0.446,0.451 0.446,1.258 0,1.709 -0.225,0.226 -0.538,0.337 -0.853,0.337 -0.313,0 -0.625,-0.111 -0.85,-0.337 l -4.03,-4.045 -3.044,3.055 4.03,4.046 c 0.446,0.45 0.446,1.169 0,1.617 -0.225,0.225 -0.514,0.337 -0.819,0.337 -0.301,0 -0.614,-0.112 -0.884,-0.337 l -3.939,-4.045 -3.044,3.058 4.03,4.043 c 0.447,0.45 0.447,1.258 0,1.708 -0.224,0.226 -0.537,0.337 -0.852,0.337 -0.313,0 -0.626,-0.111 -0.85,-0.337 l -4.03,-4.045 -3.045,3.055 4.21,4.046 c 0.446,0.45 0.446,1.258 0,1.617 -0.225,0.226 -0.537,0.337 -0.85,0.337 -0.315,0 -0.628,-0.111 -0.853,-0.337 l -4.118,-4.045 -5.372,5.395 c -0.449,0.448 -0.449,1.258 0,1.706 l 8.237,8.359 c 0.224,0.225 0.537,0.336 0.853,0.336 0.312,0 0.625,-0.111 0.849,-0.336 l 25.163,-25.345 c 0.446,-0.451 0.446,-1.17 0,-1.618 l -8.328,-8.359 c -0.224,-0.225 -0.514,-0.336 -0.807,-0.336 z"
+         fill="#5f7d95"
+         fill-rule="evenodd"
+         id="path1150" />
+    </g>
+  </g>
+</svg>
