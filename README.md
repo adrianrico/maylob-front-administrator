@@ -5,6 +5,9 @@
 
 ## EXTENDED CHANGE LOG:
 
+>### INDEX (HTML)
+  > - Modified index to display initial view since it was hidden by default...
+
 >### JS
   >- initial COMMIT
   >> - #### GSAP
