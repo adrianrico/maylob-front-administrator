@@ -772,7 +772,7 @@ function updateGPS(data2send)
 
     $.ajax({
         //url: 'http://localhost:8080/man/updateManeuverGPS',
-        url: 'https://maylob-backend.onrender.com/man/addManeuver',
+        url: 'https://maylob-backend.onrender.com/man/updateManeuverGPS',
         type: 'PATCH',
         contentType: 'application/json',
         data: JSON.stringify(data2send),
