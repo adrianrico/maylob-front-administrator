@@ -304,6 +304,7 @@ $('#go2step4').click(function()
     if (maneuver_type === "EXTERNA") 
     {
         saveManeuver(maneuver_type)
+        //animationFunction.goBackAnimation('formStep_C','initialView')
     }else
     {
         animationFunction.forwardNavigation('formStep_C','formStep_D')
@@ -362,7 +363,7 @@ $('#saveManeuver').click(function()
     saveManeuver(maneuver_type)
     
     getAvailableManeuvers()
-    animationFunction.goBackAnimation('formStep_D','formStep_A')
+    //animationFunction.goBackAnimation('formStep_D','initialView')
 })
 
 /** BACKWARD NAVIGATION */
@@ -944,6 +945,8 @@ function saveManeuver(maneuver_type)
                     $('.pop-ok').addClass('pop-up')
                     $('.pop-up').fadeIn(500)
                     $('#okText').text("⛟ Maniobra guardada")
+
+                    animationFunction.goBackAnimation('formStep_C','initialView')
                 }),
     
                 error: function(XMLHttpRequest, textStatus, errorThrown) 
@@ -1013,6 +1016,8 @@ function saveManeuver(maneuver_type)
                 $('.pop-ok').addClass('pop-up')
                 $('.pop-up').fadeIn(500)
                 $('#okText').text("⛟ Maniobra guardada")
+
+                animationFunction.goBackAnimation('formStep_D','initialView')
             }),
 
             error: function(XMLHttpRequest, textStatus, errorThrown) 

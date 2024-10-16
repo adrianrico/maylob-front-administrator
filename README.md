@@ -11,12 +11,12 @@
 
 >### JS
   >- Getting all maneuvers bugfix, AJAX url was changed...
-  
+  >- Added navigation to initial view after saving maneuver...
+
   >> - #### GSAP
-  >>> - Initial COMMIT
+
 
 >### IMG
-  >- initial COMMIT
+
 
 >### CSS
-  >- initial COMMIT
