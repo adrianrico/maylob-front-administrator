@@ -856,7 +856,7 @@ function saveManeuver(maneuver_type)
     :
     maneuver_operator = "POR DEFINIR"
 
-    let maneuver_tracking_link = $("#manGPS").val().trim().toUpperCase() 
+    let maneuver_tracking_link = $("#manGPS").val().trim() 
     validateField(maneuver_tracking_link) ? 
     maneuver_tracking_link = maneuver_tracking_link
     :

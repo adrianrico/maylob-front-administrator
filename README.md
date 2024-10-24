@@ -5,18 +5,6 @@
 
 ## EXTENDED CHANGE LOG:
 
->### INDEX (HTML)
-  > - Modified index to display initial view since it was hidden by default...
-  > - MONI bugfix, AJAX controller call was incorrect, changed to right one...
-
 >### JS
-  >- Getting all maneuvers bugfix, AJAX url was changed...
-  >- Added navigation to initial view after saving maneuver...
-
-  >> - #### GSAP
-
-
->### IMG
-
-
->### CSS
+  >- (addManeuver) Bugfix, when getting the GPS value from this input it was converted to upper case wich caused to crash the link...
+  
