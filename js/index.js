@@ -385,6 +385,7 @@ $('#back2STP4_STP3').click(function()
 
 // Needs to be global to clear automatic executuion instance...!
 var automatedSearchInstance
+var searchInstance
 
 //#region Timeline
 
@@ -438,9 +439,10 @@ $('#manSearch_btn').click(function()
                             }
                         }
 
+                    searchInstance = data.foundManeuver[0].maneuver_id    
                     automatedSearchInstance = setInterval(function()
                     {
-                        getEvents(maneuverID_input)
+                        getEvents(searchInstance)
                     }, 15000
                     )
 
@@ -602,11 +604,9 @@ $('#closeManeuverData_pop').click(function()
 $('#openGPS_pop').click(function()
 {
     $('#gps-pop').css('display','flex').hide().fadeIn(250); 
-
-    let maneuverID_input = $('#moniID_input').val().trim().toUpperCase()
-
+    
     $('#trackingMap').empty()
-    getGPS(maneuverID_input)
+    getGPS(searchInstance)
     
 })
 

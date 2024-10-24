@@ -6,5 +6,5 @@
 ## EXTENDED CHANGE LOG:
 
 >### JS
-  >- (addManeuver) Bugfix, when getting the GPS value from this input it was converted to upper case wich caused to crash the link...
+  >- (getGps) Bugfix, added searchInstance to use always the maneuver ID, before if the container ID was used crashed the gps link search because container ID was used instead...
   
