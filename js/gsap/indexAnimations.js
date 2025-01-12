@@ -41,43 +41,67 @@ export function changeViewTitle(viewID,viewTitle)
 
 //#endregion fade animations...
 
-export function growAnimation(view2display)
+export function growAnimation(view2display,byClass,displayType)
 {
-    $("#"+view2display+"").removeClass('hidden');
+    if (byClass) 
+    {
+        $("#"+view2display+"").removeClass('hidden');
    
-    var displayView = gsap.timeline();
+        var displayView = gsap.timeline();
+        
+        displayView
+        .fromTo('#'+view2display+'',{scale:0}, { duration: 0.15,scale:1.05})
+        .fromTo('#'+view2display+'',{scale:1.05}, { duration: 0.15,scale:1})
+    } else 
+    {
+        $("#"+view2display+"").css('display',displayType);
+   
+        var displayView = gsap.timeline();
+        
+        displayView
+        .fromTo('#'+view2display+'',{scale:0}, { duration: 0.15,scale:1.05})
+        .fromTo('#'+view2display+'',{scale:1.05}, { duration: 0.15,scale:1})
+    }
+}
+
+export function shrinkAnimation(view2hide,byClass)
+{ 
+    if (byClass)
+    {
+        let shrinkView = gsap.timeline({
+            onComplete: function() 
+            {
+                $("#"+view2hide+"").addClass('hidden');
+            }
+        });
     
-    displayView
-    .fromTo('#'+view2display+'',{scale:0}, { duration: 0.15,scale:1.05})
-    .fromTo('#'+view2display+'',{scale:1.05}, { duration: 0.15,scale:1})
+        shrinkView
+        .fromTo('#'+view2hide+'',{scale:1}, { duration: 0.15,scale:1.05})
+        .fromTo('#'+view2hide+'',{scale:1.05}, { duration: 0.15,scale:0})
+
+    } else 
+    {
+        let shrinkView = gsap.timeline({
+            onComplete: function() 
+            {
+                $("#"+view2hide+"").css('display','none');
+            }
+        });
+    
+        shrinkView
+        .fromTo('#'+view2hide+'',{scale:1}, { duration: 0.15,scale:1.05})
+        .fromTo('#'+view2hide+'',{scale:1.05}, { duration: 0.15,scale:0})
+    }
 }
 
-export function shrinkAnimation(view2hide)
+export function navigateToView(originView,destinationView,classFlag,displayType)
 {
-    var hideView = gsap.timeline({
-        onComplete: function() 
-        {
-            $("#"+view2hide+"").addClass('hidden');
-        }
-    });
-
-    hideView
-    .fromTo('#'+view2hide+'',{scale:1}, { duration: 0.15,scale:1.05})
-    .fromTo('#'+view2hide+'',{scale:1.05}, { duration: 0.15,scale:0})
-}
-
-
-
-export function forwardNavigation(currentView,nextView)
-{
-    shrinkAnimation(currentView)
+    shrinkAnimation(originView,classFlag)
     setTimeout(function() 
     {
-        growAnimation(nextView)
+        growAnimation(destinationView,classFlag,displayType)
     }, 300)
 }
-
-
 
 export function goBackAnimation(currentView, previousView)
 {
@@ -115,3 +139,4 @@ export function animateTruck(run)
         .fromTo('#truck',{y:1.15}, { duration: 0.1,y:0})
     }
 }
+

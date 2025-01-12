@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- CDN'S -->
@@ -25,26 +25,23 @@
 <body>
  
 <header>
-    <div id="bannerLogo">
-        <img src="img/mainLogo_orange.svg" alt="truck logo">
-    </div>
-    <div id="bannerText" class="fade-in">
-        <p id="bannerText_prompt">¡Bienvenido!</p>
-    </div>
+    <img id="bannerLogo"src="img/mainLogo_orange.svg" alt="truck logo">
+    <p id="bannerText">¡Bienvenido!</p>
 </header>
 
-<main class="flexCentered vertical">
+<main class="flexCentered">
 
 <!--**************************************************
     [ INITIAL VIEW ]
 **************************************************-->
-<section id="initialView" class="">
-    <div id="initialView_btnsContainer" class="view_100 flexCentered vertical">
-        <button id="go2addEquipment" class="btn flexCentered">AGREGAR EQUIPOS</button>
-        <button id="go2moni"         class="btn flexCentered">MONI</button>
-        <button id="go2maneuversID"  class="btn flexCentered">VER MANIOBRAS</button>
-        <button id="go2addManeuvers" class="btn flexCentered">NUEVA MANIOBRA</button>
-    </div>
+<section id="homePage" class="flexCentered">
+
+<div id="homePage_btnsWidget" class="widget">
+    <button id="go2addEquipment" class="btn flexCentered">Agregar equipos</button>
+    <button id="go2maneuversID"  class="btn flexCentered">Mis maniobras</button>
+    <button id="go2addManeuvers" class="btn flexCentered">Nueva maniobra</button>
+</div>    
+
 </section>
 
 
@@ -54,8 +51,10 @@
 <!--**************************************************
     [ ADD EQUIPMENT VIEW ]
 **************************************************-->
-<section id="addEquipmentView" class="hidden">
-    <div class="view_70 addEquipment_form">
+<section id="addEquipmentPage" class="red">
+
+    asd
+<!--     <div class="view_70 addEquipment_form">
         <div class="flexCentered vertical">
             <label for="objectCategory">Selecciona la categoría.</label>
             <select name="objectCategory" id="objectCategory" class="dropdown">
@@ -86,7 +85,7 @@
             <img src="img/flecha.svg" alt="flecha" class="arrow">
         </button>
         <button id="saveEquipment" class="btn flexCentered">GUARDAR</button>
-    </div>
+    </div> -->
 </section>
 
 
@@ -96,16 +95,21 @@
 <!--**************************************************
     [ MANEUVERS ID VIEW ]
 **************************************************-->
-<section id="maneuversView" class="hidden">
-    <div id="maneuversList" class="view_70 flexCentered vertical"></div>
-    <div class="view_30 flexCentered top">
-        <button id="back2IV_MW" class="back_btn flexCentered ">
-            <img src="img/flecha.svg" alt="flecha" class="arrow">
-        </button>
+<section id="maneuversPage" class="">
+ 
+<div id="maneuversList_container" class="widget ">    
+    <div id="maneuversList">
+        
     </div>
+</div>    
 
-    
 </section>
+
+
+
+
+
+
 
 <div id="updateGPS_pop" class="view_100 flexCentered vertical">
     <label for="updateGPSinput" class="strong">GPS LINK.</label>
@@ -590,6 +594,21 @@
 </div>
 
 </main>
+
+
+<nav id="navBar" class="navWidget widget">
+    <button id="goBack_btn" class="navWidget_btn back_btn">
+        <img src="img/nav_arrow_white.svg" alt="">
+    </button>
+
+<!--     <button id="save_btn" class="navWidget_btn hidden">
+        <img src="img/guardar.svg" alt="">
+    </button>
+
+    <button class="navWidget_btn forward_btn hidden">
+        <img src="img/nav_arrow_white.svg" alt="">
+    </button> -->
+</nav>
 
 </body>
 </html>

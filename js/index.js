@@ -2,11 +2,17 @@ import * as animationFunction from '/js/gsap/indexAnimations.js';
 
 //#region [ INITIAL VIEW ]
 
+var viewHistory = []
+var actualView  = ""
+
 /** FORWARD NAVIGATION */
 $('#go2addEquipment').click(function()
 {
-    animationFunction.forwardNavigation('initialView','addEquipmentView')
-    animationFunction.changeViewTitle('bannerText_prompt','Agrega tu equipo.')
+    animationFunction.navigateToView('homePage','addEquipmentPage',false,'flex')
+    animationFunction.growAnimation('navBar',false,'flex')
+
+    viewHistory.push('homePage')
+    actualView = 'addEquipmentPage'
 });
 
 /** FORWARD NAVIGATION */
@@ -24,8 +30,11 @@ $('#go2maneuversID').click(function()
     $('#maneuversList').empty()
     getAllManeuversID()
 
-    animationFunction.forwardNavigation('initialView','maneuversView')
-    animationFunction.changeViewTitle('bannerText_prompt','Maniobras')
+    animationFunction.navigateToView('homePage','maneuversPage',false,'flex')
+    animationFunction.growAnimation('navBar',false,'flex')
+
+    viewHistory.push('homePage')
+    actualView = 'maneuversPage'    
 });
 
 /** FORWARD NAVIGATION */
@@ -217,10 +226,12 @@ $('#saveEquipment').click(function()
 });
 
 /** BACKWARD NAVIGATION */
-$('#back2IV_AEW').click(function()
+$('#goBack_btn').click(function()
 {
-    animationFunction.goBackAnimation('addEquipmentView','initialView')
-    animationFunction.changeViewTitle('bannerText_prompt','¡Bienvenido!')
+    let lastVisitedView = viewHistory[viewHistory.length-1];
+
+    animationFunction.navigateToView(actualView,lastVisitedView,false,'flex')
+    animationFunction.shrinkAnimation('navBar',false)
 });
 
 //#endregion [ ADD EQUIPMENT VIEW ]
@@ -670,10 +681,10 @@ $('#maneuversList').on('click','.update', (e)=>
 
 $('#maneuversList').on('click','.delete', (e)=>
 {
-/*     console.log($(e.target).closest('.maneuverElement')
-    .find('.maneuverElement_data')
-    .find('.strong').text());
- */
+    console.log($(e.target).closest('.cardWidget')
+    .find('.cardWidget_header')
+    .find('.cardWidgetHeader_text')
+    .find('.widget_ID').text());
 
 })
 
@@ -1123,7 +1134,7 @@ function getAllManeuversID()
             {  
                 for (let index = 0; index < data.objectsFound.length; index++) 
                 {
-                   fillIDDashboard(data.objectsFound[index].maneuver_id,data.objectsFound[index].maneuver_current_status,data.objectsFound[index].maneuver_current_location)
+                   fillIDDashboard(data.objectsFound[index].maneuver_id,data.objectsFound[index].maneuver_current_status,data.objectsFound[index].maneuver_current_location,data.objectsFound[index].maneuver_operator)
                     
                     /* var foundEvents = data.foundManeuver[0].maneuver_events.length
     
@@ -1157,9 +1168,9 @@ function getAllManeuversID()
 /** Execute this to fill id dashboard elements...
  * 
  */
-function fillIDDashboard(maneuverID,lastStatus,lastLocation)
+function fillIDDashboard(maneuverID,lastStatus,lastLocation,operatorName)
 {
-    
+/*     
     $("#maneuversList").append(
         "<div class='maneuverElement flexCentered'>"+
         "<div class='maneuverElement_data'>"+
@@ -1178,7 +1189,59 @@ function fillIDDashboard(maneuverID,lastStatus,lastLocation)
         "</button>"+
         "</div>"+
         "</div>"
+    ) */
+
+    $("#maneuversList").append(
+        "<div class='cardWidget'>"+
+        "<div class='cardWidget_header'>"+
+        "    <div class='cardWidgetHeader_logo flexCentered'>"+
+        "        <img src='img/tracto.svg' alt='truck image'>"+
+        "    </div>"+
+        "    <div class='cardWidgetHeader_text'>"+
+        "        <div class='cardWidget_row'>"+
+        "            <p class='strong-orange'>MANIOBRA</p>"+
+        "            <p class='light-white widget_ID'>"+maneuverID+"</p>"+
+        "        </div>"+
+    
+        "        <div class='cardWidget_row'>"+
+        "            <p class='strong-orange'>OPERADOR</p>"+
+        "            <p class='light-white'>"+operatorName+"</p>"+
+        "        </div>"+
+        "    </div>"+
+        "</div>"+
+    
+        "<div class='cardWidget_data'>"+
+        "    <div class='cardWidget_row'>"+
+        "        <p class='strong-orange'>ÚLTIMA ACTUALIZACIÓN</p>"+
+        "        <p class='light-white'>"+lastStatus+"</p>"+
+        "    </div>"+
+    
+        "    <div class='cardWidget_row'>"+
+        "        <p class='strong-orange'>ÚLTIMA UBICACIÓN</p>"+
+        "        <p class='light-white'>"+lastLocation+"</p>"+
+        "    </div>"+
+        "</div>"+
+        
+        "<div class='cardWidget_buttons'>"+
+        "    <button class='cardWidget_btn'>"+
+        "        <img class='cardWidget_btnImg delete' src='img/delete_red.svg' alt='error image'>"+
+        "    </button>"+
+        
+        "    <button class='cardWidget_btn'>"+
+        "        <img class='cardWidget_btnImg' src='img/editar.svg' alt='edit image'>"+
+        "    </button>"+
+    
+        "    <button class='cardWidget_btn'>"+
+        "        <img class='cardWidget_btnImg' src='img/location_orange.svg' alt='location image'>"+
+        "    </button>"+
+    
+        "    <button class='cardWidget_btn'>"+
+        "        <img class='cardWidget_btnImg' src='img/see_orange.svg' alt='location image'>"+
+        "    </button>"+
+        "</div>"+
+        "</div>"
     )
+
 }
 
 

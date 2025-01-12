@@ -1,9 +1,9 @@
-/* #region [ GLOBAL CONTENT ]*/
+/* #region [ GLOBAL CONTENT ] */
 
 *
 {
-    margin:     0;
-    padding:    0;
+    margin:  0;
+    padding: 0;
 
     box-sizing: border-box;
 }
@@ -29,9 +29,20 @@ html, body
     background-size:        cover;
 }
 
-body::-webkit-scrollbar 
+body
 {
-    display: none;
+    display:         flex;
+    flex-direction:  column;
+}
+
+body::-webkit-scrollbar { display: none; }
+
+main { flex: 1; }
+
+section
+{
+    height: 100%;
+    width:  100%;
 }
 
 /* #endregion [ GLOBAL CONTENT ] */
@@ -41,94 +52,156 @@ body::-webkit-scrollbar
 
 
 
-/* #region [ HEADER ] */
+/* #region [ VIEWS DISPLAY ] */
+
+#homePage         { display: flex; } /*flex*/
+#addEquipmentPage { display: none; } /*flex*/
+#maneuversPage    { display: none; } /*flex*/
+
+/* #endregion [ VIEWS DISPLAY ] */
 /****************************************************************************************************************/
+
+
+
+
+
+/* #region [ HEADER ] */
 
 header
 {
-    height: 10%;
-
-    font-size:      clamp(0.5rem, 1.5rem, 2rem);
-    font-weight:    100;
-    color:          #f28617;
+    height: 48px;
+    width:  100%;
 
     display: flex;
 
-    background-image:   url("/img/trianglify-lowres.png");
-    background-repeat:  no-repeat;
-    background-size:    cover;
-
-    position: relative;
+    position: relative;    
 }
 
 header::after
 {
     height: 2px;
-    width:  100%;
+    width:  50%;
 
     content:"";
-    background: -webkit-linear-gradient(left,rgb(242, 134, 23) ,rgba(83, 0, 30, 1) 100%);
+    background: -webkit-linear-gradient(left,rgb(242, 134, 23) ,#233243 100%);
     
     display: block;
 
     position: absolute;
-    bottom: 0;
+    bottom:   0;
 }
 
 #bannerLogo
 {
-    height: 100%;
-    width:  50%;
+    height:  100%;
+    padding: 0.25rem;
 
-    padding-left:   1rem;
-    padding-top:    0.4rem;
-    padding-bottom: 0.4rem;
-
-    display:            flex;
-    align-items:        end;
-    justify-content:    left;
-}
-
-#bannerLogo img
-{
-    height: 80%;
+    margin-right: auto;
 }
 
 #bannerText
 {
     height: 100%;
-    width:  50%;
+    padding: 0.25rem 0.25rem;
 
-    padding-right:  1rem;
-    padding-bottom: 0.4rem;
+    transition: font-size 0.5s ease;
+    color: #f28617;
 
-    display:            flex;
-    align-items:        end;
-    justify-content:    right;
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
 
+    margin-right: 0.25rem;
 }
 
 /* #endregion [ HEADER ] */
+/****************************************************************************************************************/
 
-main
+
+
+
+
+/* #region [ NAV BAR ] */
+
+.navWidget
 {
-    height: 90%;
+    height: 3.5rem;
+    width:  22rem;
+
+    margin-bottom: 0.25rem;
+    padding: 0 0.25rem 0 0.25rem;
+
+    display:         none;
+    align-items:     center;
+    justify-content: space-between;
+
+    position:   relative;
+    left:       50%;
+    transform:  translateX(-50%);
 }
 
-
-
-
-
-/******************************************************** 
-MAIN CONTENT BELOW...
-********************************************************/
-
-/* [ INITIAL VIEW ] */
-/****************************************************************************************************************/
-#initialView_btnsContainer
+.navWidget_btn
 {
+    height: 3rem;
+    width:  3rem;
+
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+
+    border:        none;
+    border-radius: 25px;
+
+    color: #e5e5e5;
+
+    background-color: #f28617;
+}
+
+.navWidget_btn img
+{
+    height: 1.5rem;
+    width:  1.5rem;
+}
+
+.back_btn
+{   
+    padding-bottom: 0.25rem;
+
+    -webkit-transform:  rotate(270deg);
+    -moz-transform:     rotate(270deg);
+    -ms-transform:      rotate(270deg);
+    -o-transform:       rotate(270deg);
+    transform:          rotate(270deg);
+}
+
+.forward_btn
+{   
+    padding-bottom: 0.25rem;
+
+    -webkit-transform:  rotate(90deg);
+    -moz-transform:     rotate(90deg);
+    -ms-transform:      rotate(90deg);
+    -o-transform:       rotate(90deg);
+    transform:          rotate(90deg);
+}
+
+/* #endregion [ NAV BAR ] */
+/****************************************************************************************************************/
+
+
+
+
+
+/* #region [ HOME PAGE ] */
+#homePage_btnsWidget
+{
+    display:         flex;
+    flex-direction:  column;
+    align-items:     center;
     justify-content: space-evenly;
 }
+/* #endregion [ HOME PAGE ] */
+/****************************************************************************************************************/
 
 
 
@@ -136,6 +209,13 @@ MAIN CONTENT BELOW...
 
 /****************************************************************************************************************/
 /* #region [ ADD EQUIPMENT ] */
+#addEquipmentPage
+{
+    height: 100%;
+    width:  100%;
+    background-color: #009800;
+}
+
 
 .addEquipment_form
 {
@@ -462,15 +542,169 @@ MAIN CONTENT BELOW...
 /* #endregion [ MONI ] */
 
 
-/*[ MANEUVERS ID VIEW ] ********************************************************/
+/*[ MANEUVERS PAGE ] ********************************************************/
+
+
+/**********************************************************/
+/* #region [ CARD WIDGET ] */
+
+.cardWidget
+{
+    height: 25rem;
+    width:  20rem;
+
+    margin: 1rem 0 2rem 0;
+
+    border-radius: 50px;
+    background-color: #38506b;
+
+    display: grid;
+    grid-template-rows: 25% auto auto;     
+}
+
+.cardWidget_header
+{
+   display: grid;
+   grid-template-columns: 25% auto; 
+
+   position: relative;
+}
+
+.cardWidget_header img
+{
+    width: 3.5rem;
+    padding: 0.25rem;
+}
+
+.cardWidget_header::before
+{
+    height: 1px;
+    width:  90%;
+
+    content:"";
+    background: -webkit-linear-gradient(left,rgb(242, 134, 23) ,rgb(242, 134, 23) 100%);
+    
+    display: block;
+
+    position: absolute;
+    bottom:   0;
+    left:     50%;
+
+    transform: translateX(-50%);
+}
+
+.cardWidgetHeader_text
+{
+    display: grid;
+    grid-template-rows: auto auto;
+}
+
+.cardWidget_row
+{
+    display:         flex;
+    flex-direction:  column;
+    align-items:     flex-start;
+    justify-content: center;
+
+    margin-left: 0.25rem;
+}
+
+.cardWidget_data
+{
+    display: grid;
+    grid-template-rows: auto auto;
+
+    padding-left: 0.25rem;
+}
+
+.cardWidget_buttons
+{
+    border-radius: 0 0 50px 50px;
+    background-color: #334962;
+
+    display:         flex;
+    align-items:     center;
+    justify-content: space-evenly;
+    
+}
+
+.cardWidget_btn
+{
+    height: 4rem;
+    width:  4rem;
+
+    border:        none;
+    border-radius: 15px;
+
+    background-color: #233243;
+
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+}
+
+.cardWidget_btnImg
+{
+    width: 80%;
+
+    padding: 0.5rem;
+}
+
+.strong-orange
+{
+    font-size:      clamp(0.5rem, 1rem, 3rem);
+    font-weight:    900;
+    color:        #f28617;
+}
+
+.light-white
+{
+    font-size:      clamp(0.5rem, 1rem, 3rem);
+    font-weight:    100;
+    color:        #dddddd;
+}
+
+/* #endregion [ CARD WIDGET ] */
+
+#maneuversPage
+{
+    flex-direction:  column;
+    align-items:     center;
+    justify-content: center;   
+}
+
+#maneuversList_container
+{   
+    height: 28rem;
+    width:  22rem;
+
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+
+}
 
 #maneuversList
 {
-    overflow-y:         scroll;
-    scrollbar-width:    none;  
+    height: 90%;
+    width:  20rem;
 
-    justify-content: space-evenly;
+    overflow-y:      scroll;
+    scrollbar-width: none;      
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .maneuverElement
 {
@@ -528,11 +762,6 @@ MAIN CONTENT BELOW...
     height: 1rem;
 }
 
-.delete
-{
-    background-color: #f74f4f;
-}
-
 .save
 { background-color: #f28617;}
 
@@ -560,12 +789,10 @@ MAIN CONTENT BELOW...
 /******************************************************** 
 REUSABLE...
 ********************************************************/
-.top{ margin-top: 1rem;}
 
-section
-{
-    height: clamp(300px, 95%, 700px);
-    width:  clamp(300px, 95%, 700px);
+.widget
+{    
+    transition: width 0.5s ease;
 
     border-radius: 25px;
 
@@ -573,9 +800,9 @@ section
     box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.25);
     backdrop-filter:            blur(8px);
     -webkit-backdrop-filter:    blur(8px);
-
-    color: #f28617;
 }
+
+.top{ margin-top: 1rem;}
 
 .view_100
 {
@@ -750,32 +977,7 @@ section
     height: 1rem;
 }
 
-.back_btn
-{
-    height: 4rem;   
-    width:  4rem;   
 
-    margin-right: 0.5rem;
-
-    background-color: #233243;
-
-    border: none;
-    border-radius: 50px;
-}
-
-.back_btn img
-{
-    height: 1rem;
-}
-
-.arrow
-{
-    -webkit-transform:  rotate(270deg);
-    -moz-transform:     rotate(270deg);
-    -ms-transform:      rotate(270deg);
-    -o-transform:       rotate(270deg);
-    transform:          rotate(270deg);
-}
 
 .hidden
 {
@@ -937,3 +1139,70 @@ section
 .green-d{border: greenyellow 1px dashed;}
 .blue{border: blue 1px solid;}
 .blue-d{border: blue 1px dashed;}
+
+
+
+/******************************************************** 
+Responsiveness...
+********************************************************/
+
+/* [ MOBILE DESIGN ] */
+@media (min-width: 200px) and (max-width: 980px)
+{
+    #bannerText
+    {
+        font-size: 0.8rem;
+    }
+
+
+    /* #region [ HOME PAGE ] */
+    #homePage_btnsWidget
+    {
+        height: clamp(300px, 300px, 700px);
+        width:  clamp(300px, 300px, 700px);
+    }
+    /* #endregion [ HOME PAGE ] */
+
+    
+    /* #region [ MANEUVERS PAGE ] */
+    #maneuversList
+    {
+        height: clamp(300px, 80%, 80%);
+        width:  clamp(300px, 20rem, 20rem);
+    }
+    /* #endregion [MANEUVERS PAGE] */ 
+
+
+}
+/****************************************************************************************************************/
+
+
+
+
+
+/*[ DESKTOP DESIGN ]*/
+@media (min-width: 981px) 
+{
+    #bannerText
+    {
+        font-size: 1rem;
+    }
+
+
+    /* #region [ HOME PAGE ] */
+    #homePage_btnsWidget
+    {
+        height: clamp(300px, 500px, 700px);
+        width:  clamp(300px, 500px, 700px);
+    }
+    /* #endregion [ HOME PAGE ] */
+
+
+    /* #region [ MANEUVERS PAGE ] */
+
+
+
+
+    /* #endregion [MANEUVERS PAGE] */ 
+}
+/****************************************************************************************************************/
