@@ -1160,7 +1160,7 @@ $('.filter-col').on('change','#transportista_filter', (e)=>
         let data2Send = {'transporter_name':transporter_name}
     
         $.ajax({
-        url: API_URL'/readTransporters',
+        url: API_URL+'/readTransporters',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(data2Send),
@@ -1500,7 +1500,7 @@ $('#maneuvuers_scrollableContainer').on('click','.btn_deleteManeuver', (e)=>
         animationFunction.animateTruck(true)
 
         $.ajax({
-        url: API_URL'/man/deleteManeuver',
+        url: API_URL+'/man/deleteManeuver',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(data2delete),
