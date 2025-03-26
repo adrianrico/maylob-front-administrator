@@ -119,7 +119,7 @@ $('#filter_btn').click(function()
             let data2Send = {'transporter_name':transporter_name}
 
             $.ajax({
-                url: API_URL+'readTransporters',
+                url: API_URL+'/readTransporters',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(data2Send),
