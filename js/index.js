@@ -4,8 +4,8 @@ import * as animationFunction from '/js/gsap/indexAnimations.js';
 var actualPage = ''
 
 // Used for local testing...
-var API_URL = 'http://localhost:8080'
-//var API_URL = 'https://maylob-backend.onrender.com'
+//var API_URL = 'http://localhost:8080'
+var API_URL = 'https://maylob-backend.onrender.com'
 
 //#region [ INITIAL VIEW ]
 
