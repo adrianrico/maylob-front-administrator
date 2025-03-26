@@ -94,36 +94,71 @@ export function shrinkAnimation(view2hide,byClass)
     }
 }
 
+
+
+
+
+//#region [ NAVIGATION FUNCTIONS ]
+
 export function navigateToView(originView,destinationView,classFlag,displayType)
 {
+    //Display NAVBAR with the needed buttons only...
+    displayNavBar(destinationView)
+
+    //Animations only...
     shrinkAnimation(originView,classFlag)
     setTimeout(function() 
     {
         growAnimation(destinationView,classFlag,displayType)
     }, 300)
+
+    return destinationView
 }
 
-export function goBackAnimation(currentView, previousView)
+//#endregion [ NAVIGATION FUNCTIONS ]
+/****************************************************************************************************************/
+
+
+
+
+
+//#region [ SPECIFIC DISPLAY ANIMATIONS ]
+
+function displayNavBar(actualPage)
 {
-    var hideView = gsap.timeline({
-        onComplete: function() 
+    if (actualPage === 'homePage') 
+    {
+        shrinkAnimation('navBarView',false)
+    }else
+    {
+        setTimeout(function() 
         {
-            $("#"+currentView+"").addClass('hidden');
+            //To display only needed NAVBAR buttons...
+            switch (actualPage) 
+            {
+                case 'maneuversPage':
+                    $('#goBack_btn').css('display','flex')
+                    $('#save_btn').css('display','none')
+                    $('#filter_btn').css('display','flex')
+                break;
 
-            $("#"+previousView+"").removeClass('hidden');
-   
-            var displayView = gsap.timeline();
+                case 'addManeuverPage':
+                    $('#goBack_btn').css('display','flex')
+                    $('#save_btn').css('display','flex')
+                    $('#filter_btn').css('display','none')
+                break;
             
-            displayView
-            .fromTo('#'+previousView+'',{scale:0}, { duration: 0.15,scale:1.05})
-            .fromTo('#'+previousView+'',{scale:1.05}, { duration: 0.15,scale:1})
-        }
-    });
-
-    hideView
-    .fromTo('#'+currentView+'',{scale:1}, { duration: 0.15,scale:1.05})
-    .fromTo('#'+currentView+'',{scale:1.05}, { duration: 0.15,scale:0})
+                default: break;
+            }
+            
+            growAnimation('navBarView',false,'flex')
+            growAnimation('navBar',false,'flex')
+        }, 300)
+    }
 }
+
+
+
 
 export function animateTruck(run)
 {
@@ -140,3 +175,5 @@ export function animateTruck(run)
     }
 }
 
+//#endregion [ SPECIFIC DISPLAY ANIMATIONS ]
+/****************************************************************************************************************/

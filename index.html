@@ -31,18 +31,480 @@
 
 <main class="flexCentered">
 
-<!--**************************************************
-    [ INITIAL VIEW ]
-**************************************************-->
-<section id="homePage" class="flexCentered">
+<!--****************************************************************************************************
+[ HOME PAGE ]
+****************************************************************************************************-->
+<section id="homePage">
 
-<div id="homePage_btnsWidget" class="widget">
-    <button id="go2addEquipment" class="btn flexCentered">Agregar equipos</button>
-    <button id="go2maneuversID"  class="btn flexCentered">Mis maniobras</button>
-    <button id="go2addManeuvers" class="btn flexCentered">Nueva maniobra</button>
+<div id="homePage_btnsWidget">
+    <button id="go2addManeuvers" class="homePage_btn">REGISTRAR MANIOBRA</button>
+    <button id="go2maneuversID"  class="homePage_btn">MIS MANIOBRAS</button>
 </div>    
 
 </section>
+
+
+
+
+
+<!--****************************************************************************************************
+[ ADD MANEUVER PAGE ]
+****************************************************************************************************-->
+<section id="addManeuverPage">
+    <div class=" addManeuver_formContainer ">
+    
+        <div class="addManeuver_formContainer_topRow"> 
+            
+            <div class="addManeuver_formFields">
+                <label for="cliente_select">CLIENTE</label>
+                <select name="cliente_select" id="cliente_select"></select>
+
+                <label for="modalidad_select">MODALIDAD</label>
+                <select name="modalidad_select" id="modalidad_select">
+                    <option value="">SELECCIONA</option>    
+                    <option value="FULL">FULL</option>    
+                    <option value="SENCILLO">SENCILLO</option>    
+                </select>
+    
+                <label for="despacho_input">FECHA DE DESPACHO</label> 
+                <input type="datetime-local" name="despacho_input" id="despacho_input">
+
+                <label for="aa_input">AGENTE ADUANAL</label>
+                <input type="text" id="aa_input" placeholder="Ingresa AA.">
+                
+                <label for="ejecutiva_input">DATO DE EJECUTIVA</label>
+                <input type="text" id="ejecutiva_input" placeholder="Ingresa nombre de ejecutiva.">
+            
+            </div>
+
+            <div class="addManeuver_formFields">
+                <label for="terminal_select">TERMINAL DE CARGA</label>
+                <select name="terminal_select" id="terminal_select">
+                    <option value="">SELECCIONA</option>    
+                    <option value="HUTCHINSON">HUTCHINSON</option>    
+                    <option value="APM">APM</option>     
+                    <option value="UTTSA">UTTSA</option>     
+                </select>     
+
+                <label for="descarga_select">SITIO DE DESCARGA</label>
+                <select name="descarga_select" id="descarga_select">
+                    <option value="">SELECCIONA</option>    
+                    <option value="TECOM">TECOM</option>    
+                    <option value="SETRASA">SETRASA</option>     
+                    <option value="LG">LG</option>     
+                    <option value="RESGUARDO INTELIGENTE">RESGUARDO INTELIGENTE</option>     
+                    <option value="SIMA">SIMA</option>     
+                    <option value="VAS CONTAINER">VAS CONTAINER</option>     
+                    <option value="TLE">TLE</option>     
+                    <option value="CHANGAN">CHANGAN</option>     
+                    <option value="ALCAM">ALCAM</option>     
+                    <option value="EZ HOLDING">EZ HOLDING</option>     
+                    <option value="MANPORT">MANPORT</option>     
+                    <option value="OTRO">OTRO</option>     
+                </select>     
+
+                <label for="descargaExtra_nombre">NOMBRE DE SITIO EXTRA</label>
+                <input type="text" id="descargaExtra_nombre" placeholder="Ingresa nombre." disabled>
+
+                <label for="descargaExtra_ubicacion">LINK DE UBICACIÓN EXTRA</label>
+                <input type="text" id="descargaExtra_ubicacion" placeholder="Ingresa ubicación." disabled>
+
+            </div>    
+
+    
+            <div class="addManeuver_formFields">
+
+                <label for="transportista_select">LÍNEA TRANSPORTISTA</label>
+                <select name="transportista_select" id="transportista_select"></select>
+
+                <label for="eco_select">ECO</label>
+                <select name="eco_select" id="eco_select"></select>
+    
+                <label for="operador_select">OPERADOR</label>
+                <select name="operador_select" id="operador_select"></select>
+    
+    
+                <label for="gps_input">LINK GPS</label>
+                <input type="text" id="gps_input" placeholder="Ingresa el link del GPS.">
+    
+
+            </div>
+            
+        </div>
+    
+        <div class="addManeuver_formContainer_midRow">
+            
+            <div class="addManeuver_formFields">
+                <label for="con1ID_input">CONTENEDOR 1</label>
+                <input type="text" id="con1ID_input" placeholder="ID del contenedor.">
+    
+                <label for="con1Size_select">TAMAÑO</label>
+                <select name="con1Size_select" id="con1Size_select"">
+                    <option value="-">SELECCIONA</option>    
+                    <option value="20">20</option>    
+                    <option value="40">40</option>    
+                </select>
+    
+                <label for="con1Content_input">CONTENIDO</label>
+                <select name="con1Content_input" id="con1Content_input">
+                    <option value="-">SELECCIONA</option>    
+                    <option value="VACÍO">VACÍO</option>    
+                    <option value="LLENO">LLENO</option>    
+                </select>
+    
+                <label for="con1weight_input">PESO (TONS)</label>
+                <input type="number" id="con1weight_input" placeholder="Peso del contenedor." class="containers_weight">
+
+                <label for="con1type_input">TIPO</label>
+                <input type="text" id="con1type_input" placeholder="Tipo del contenedor.">
+            </div>
+    
+            <div class="addManeuver_formFields">
+                <label for="con2ID_input">CONTENEDOR 2</label>
+                <input type="text" id="con2ID_input" placeholder="ID del contenedor.">
+    
+                <label for="con2Size_select">TAMAÑO</label>
+                <select name="con2Size_select" id="con2Size_select"">
+                    <option value="-">SELECCIONA</option>    
+                    <option value="20">20</option>    
+                    <option value="40">40</option>    
+                </select>
+    
+                <label for="con2Content_input">CONTENIDO</label>
+                <select name="con2Content_input" id="con2Content_input">
+                    <option value="-">SELECCIONA</option>    
+                    <option value="VACÍO">VACÍO</option>    
+                    <option value="LLENO">LLENO</option>    
+                </select>
+    
+                <label for="con2weight_input">PESO (TONS)</label>
+                <input type="number" id="con2weight_input" placeholder="Peso del contenedor.">
+    
+                <label for="con2type_input">TIPO</label>
+                <input type="text" id="con2type_input" placeholder="Tipo del contenedor.">
+            </div>
+    
+            <div class="addManeuver_formFields">
+                <label for="con3ID_input">CONTENEDOR 3</label>
+                <input type="text" id="con3ID_input" placeholder="ID del contenedor.">
+    
+                <label for="con3Size_select">TAMAÑO</label>
+                <select name="con3Size_select" id="con3Size_select">
+                    <option value="-">SELECCIONA</option>    
+                    <option value="20">20</option>    
+                    <option value="40">40</option>    
+                </select>
+    
+                <label for="con3Content_input">CONTENIDO</label>
+                <select name="con3Content_input" id="con3Content_input">
+                    <option value="-">SELECCIONA</option>    
+                    <option value="VACÍO">VACÍO</option>    
+                    <option value="LLENO">LLENO</option>    
+                </select>
+    
+                <label for="con3weight_input">PESO (TONS)</label>
+                <input type="number" id="con3weight_input" placeholder="Peso del contenedor.">
+            
+                <label for="con3type_input">TIPO</label>
+                <input type="text" id="con3type_input" placeholder="Tipo del contenedor.">
+            </div>
+    
+            <div class="addManeuver_formFields">
+                <label for="con4ID_input">CONTENEDOR 4</label>
+                <input type="text" id="con4ID_input" placeholder="ID del contenedor.">
+    
+                <label for="con4Size_select">TAMAÑO</label>
+                <select name="con4Size_select" id="con4Size_select">
+                    <option value="-">SELECCIONA</option>    
+                    <option value="20">20</option>    
+                    <option value="40">40</option>    
+                </select>
+    
+                <label for="con4Content_input">CONTENIDO</label>
+                <select name="con4Content_input" id="con4Content_input">
+                    <option value="-">SELECCIONA</option>    
+                    <option value="VACÍO">VACÍO</option>    
+                    <option value="LLENO">LLENO</option>    
+                </select>
+    
+                <label for="con4weight_input">PESO (TONS)</label>
+                <input type="number" id="con4weight_input" placeholder="Peso del contenedor.">
+    
+                <label for="con4type_input">TIPO</label>
+                <input type="text" id="con4type_input" placeholder="Tipo del contenedor.">
+            </div>
+        </div>
+    
+    </div>
+</section>
+
+
+
+
+
+<!--****************************************************************************************************
+[ MANEUVERS PAGE ]
+****************************************************************************************************-->
+<section id="maneuversPage" class="">
+ 
+<div id="maneuvuers_scrollableContainer">
+
+<!-- <div class=" maneuverContainer">
+
+    <div class="mainRow">
+        <table class="briefingTable">
+            <tr class="tableHeader">
+                <th>FOLIO</th>
+                <th>PORCENTAJE</th>
+                <th>UBICACIÓN</th>
+                <th>ESTATUS</th>
+                <th>CLIENTE</th>
+                <th>MODALIDAD</th>
+                <th>FECHA DE DESPACHO</th>
+                <th>FECHA DE TERMINO</th>
+            </tr>
+            <tr class="tableData">
+                <td>qwe</td>
+                <td>PORCENTAJE</td>
+                <td>
+                    <select>
+                        <option value="">ASLA</option>
+                        <option value="">EN RUTA</option>
+                        <option value="">EN TERMINAL</option>
+                        <option value="">EN PATIO</option>
+                    </select>
+                </td>
+                <td>
+                    <select>
+                        <option value="">EN ESPERA</option>
+                        <option value="">LLAMADO</option>
+                        <option value="">EN RUTA A TERMINAL</option>
+                        <option value="">EN RUTA FISCAL</option>
+                        <option value="">CARGANDO CONTENEDORES</option>
+                        <option value="">DESCARGANDO</option>
+                    </select>
+                </td>
+                <td>CLIENTE</td>
+                <td>MODALIDAD</td>
+                <td>FECHA DE DESPACHO</td>
+                <td>FECHA DE TERMINO</td>
+            </tr>
+            
+        </table>
+
+        <button class="briefBtn">
+            <img src="img/nav_arrow_white.svg" alt="">
+        </button>
+    </div>
+
+    <div class="detailsRow hidden">
+        <div class="containersTable">
+            <div class="containersTable_header">CONTENEDORES</div>
+            <div class="containersData ">
+                <div class="containerRow ">
+                    <div class="containerRow_ids ">
+                        <p>ID CONTENEDOR</p>
+                    </div>
+                    <div class="containerRow_data ">
+                        <p class="">TAMAÑO</p>
+                        <p class="">LLENO</p>
+                    </div>
+                </div>
+                <div class="containerRow ">
+                    <div class="containerRow_ids ">
+                        <p>ID CONTENEDOR</p>
+                    </div>
+                    <div class="containerRow_data ">
+                        <p class="">TAMAÑO</p>
+                        <p class="">LLENO</p>
+                    </div>
+                </div>
+                <div class="containerRow ">
+                    <div class="containerRow_ids ">
+                        <p>ID CONTENEDOR</p>
+                    </div>
+                    <div class="containerRow_data ">
+                        <p class="">TAMAÑO</p>
+                        <p class="">LLENO</p>
+                    </div>
+                </div>
+                <div class="containerRow ">
+                    <div class="containerRow_ids ">
+                        <p>ID CONTENEDOR</p>
+                    </div>
+                    <div class="containerRow_data ">
+                        <p class="">TAMAÑO</p>
+                        <p class="">LLENO</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="detailsContainer">
+
+            <div class="detailsContainer_topRow ">
+                
+                <div class="maneuverOperation">
+                    <table>
+                        <tr class="tableHeader">
+                            <th>ECO</th>
+                            <td>dato ECO</td>
+                        </tr>
+                        <tr class="tableHeader">
+                            <th>OPERADOR</th>
+                            <td>dato COMPLEATO de operador</td>
+                        </tr>
+                        <tr class="tableHeader">
+                            <th>PLACAS</th>
+                            <td>dato PLACAS</td>
+                        </tr>
+                        <tr class="tableHeader">
+                            <th>TRANSPORTISTA</th>
+                            <td>dato línea transportista</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="maneuverOptions">
+                    <button class="widget_btn btn_deleteManeuver">
+                        <img src="img/delete_red.svg" alt="">
+                    </button>
+
+                    <button class="widget_btn btn_gpsManeuver">
+                        <img src="img/location_orange.svg" alt="">
+                    </button>
+
+                    <button class="widget_btn btn_monitorManeuver">
+                        <img src="img/see_orange.svg" alt="">
+                    </button>
+
+                    <button class="widget_btn btn_updateManeuver">
+                        <img src="img/editar.svg" alt="">
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="detailsContainer_botRow">
+                <table>
+                    <tr class="tableHeader">
+                        <th>ECO</th>
+                        <th>OPERADOR</th>
+                        <th>PLACAS</th>
+                        <th>AA</th>
+                        <th>EJECUTIVA</th>
+                        <th>TIPO</th>
+                        <th>PESO</th>
+                        <th>TRANSPORTISTA</th>
+                        <th>CAAT</th>
+                        <th>TERMINAL</th>
+                        <th>DESCARGA</th>
+                        <th>BLOQUE / TURNO</th>
+                    </tr>
+                    <tr>
+                        <td>ECO</td>
+                        <td>OPERADOR</td>
+                        <td>PLACAS</td>
+                        <td>AA</td>
+                        <td>EJECUTIVA</td>
+                        <td>TIPO</td>
+                        <td>PESO</td>
+                        <td>TRANSPORTISTA</td>
+                        <td>CAAT</td>
+                        <td>TERMINAL</td>
+                        <td>DESCARGA</td>
+                        <td>BLOQUE / TURNO</td>
+                    </tr>
+                </table>
+
+                <div class="maneuverNotes">
+                    <textarea name="" id="" class="note"></textarea>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div> -->
+
+</div>
+
+</section>
+
+<div id="filter_container" class="pop_up">
+    
+    <div class="filter-col">    
+        <div class="filterControl_container_single">
+            <label for="folio_filter">FOLIO</label>
+            <input id="folio_filter" type="text" placeholder="Folio a buscar." class="user_filter">
+        
+            <label for="placas_filter">PLACAS</label>
+            <input id="placas_filter" type="text" placeholder="PLACA a buscar." >
+        
+            <label for="contedores_filter">CONTENEDORES</label>
+            <textarea placeholder="ID Cont 1,ID Cont 2...etc " id="contedores_filter" class="note"></textarea>
+        
+            <label for="cliente_filter">CLIENTE</label>
+            <select id="cliente_filter" type="text" placeholder="Cliente a buscar."></select>
+            
+            <label for="transportista_filter">TRANSPORTISTA</label>
+            <select id="transportista_filter" type="text" placeholder="Transportista a buscar."></select>
+                       
+            <label for="operador_filter">OPERADOR</label>
+            <select id="operador_filter" type="text" placeholder="Operador a buscar."></select>
+        </div>
+
+        <div class="filterControl_container_horizontal">
+            <label for="finished_filter">MOSTRAR MANIOBRAS FINALIZADAS</label>
+            <input id="finished_filter" type="checkbox">
+        </div>
+
+        <div class="filterControl_container_single">
+            <label for="from_date_filter">DESDE:</label> 
+            <input type="datetime-local" name="from_date_filter" id="from_date_filter">
+    
+            <label for="until_date_filter">HASTA:</label> 
+            <input type="datetime-local" name="until_date_filter" id="until_date_filter">
+        </div>
+
+        <div class="filter_options">
+            <button class="filter_btn filter_options_left">
+                <img src="img/error.svg" alt="">
+            </button>
+            <button class="filter_btn filter_options_right" id="search_btn">
+                <img src="img/search.svg" alt="">
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="updateGPS_container" class="pop_up">
+
+    <div class="gps_displayContainer">
+        
+    </div>
+
+    <div class="filter-col">    
+        <label for="gps_link">ACTUALIZAR LINK GPS</label>
+        <input id="gps_link" type="text" placeholder="Ingresa el LINK del GPS." >
+
+        <div class="filter_options">
+            <button class="filter_btn" id="updateGPS_container_close">
+                <img src="img/error.svg" alt="">
+            </button>
+            <button class="filter_btn filter_options_right" id="updateGPS_container_save">
+                <img src="img/guardar.svg" alt="">
+            </button>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
 
 
 
@@ -53,83 +515,39 @@
 **************************************************-->
 <section id="addEquipmentPage" class="red">
 
-    asd
-<!--     <div class="view_70 addEquipment_form">
-        <div class="flexCentered vertical">
-            <label for="objectCategory">Selecciona la categoría.</label>
-            <select name="objectCategory" id="objectCategory" class="dropdown">
-                <option value="TRACTO">TRACTO</option>
-                <option value="CHASSIS">CHASSIS</option>
-                <option value="DOLLY">DOLLY</option>
-                <option value="PLATAFORMA">PLATAFORMA</option>
-            </select>
+    <!--     <div class="view_70 addEquipment_form">
+            <div class="flexCentered vertical">
+                <label for="objectCategory">Selecciona la categoría.</label>
+                <select name="objectCategory" id="objectCategory" class="dropdown">
+                    <option value="TRACTO">TRACTO</option>
+                    <option value="CHASSIS">CHASSIS</option>
+                    <option value="DOLLY">DOLLY</option>
+                    <option value="PLATAFORMA">PLATAFORMA</option>
+                </select>
+            </div>
+    
+            <div class="flexCentered vertical ">
+                <label for="objectID">Ingresa un ID único</label>
+                <input type="text" name="objectID" id="objectID" class="textInput">
+            </div>
+    
+            <div class="flexCentered vertical ">
+                <label for="objectPlates">Ingresa PLACAS (Opcional)</label>
+                <input type="text" name="objectPlates" id="objectPlates" class="textInput">
+            </div>
+    
+            <div class="flexCentered vertical ">
+                <label for="objectAvailableCheck">¿DISPONIBLE AHORA?</label>
+                <input type="checkbox" name="objectAvailableCheck" id="objectAvailableCheck" class="checkbox">
+            </div>
         </div>
-
-        <div class="flexCentered vertical ">
-            <label for="objectID">Ingresa un ID único</label>
-            <input type="text" name="objectID" id="objectID" class="textInput">
-        </div>
-
-        <div class="flexCentered vertical ">
-            <label for="objectPlates">Ingresa PLACAS (Opcional)</label>
-            <input type="text" name="objectPlates" id="objectPlates" class="textInput">
-        </div>
-
-        <div class="flexCentered vertical ">
-            <label for="objectAvailableCheck">¿DISPONIBLE AHORA?</label>
-            <input type="checkbox" name="objectAvailableCheck" id="objectAvailableCheck" class="checkbox">
-        </div>
-    </div>
-    <div class="view_30 flexCentered top">
-        <button id="back2IV_AEW" class="back_btn flexCentered ">
-            <img src="img/flecha.svg" alt="flecha" class="arrow">
-        </button>
-        <button id="saveEquipment" class="btn flexCentered">GUARDAR</button>
-    </div> -->
+        <div class="view_30 flexCentered top">
+            <button id="back2IV_AEW" class="back_btn flexCentered ">
+                <img src="img/flecha.svg" alt="flecha" class="arrow">
+            </button>
+            <button id="saveEquipment" class="btn flexCentered">GUARDAR</button>
+        </div> -->
 </section>
-
-
-
-
-
-<!--**************************************************
-    [ MANEUVERS ID VIEW ]
-**************************************************-->
-<section id="maneuversPage" class="">
- 
-<div id="maneuversList_container" class="widget ">    
-    <div id="maneuversList">
-        
-    </div>
-</div>    
-
-</section>
-
-
-
-
-
-
-
-<div id="updateGPS_pop" class="view_100 flexCentered vertical">
-    <label for="updateGPSinput" class="strong">GPS LINK.</label>
-    <input type="text" name="updateGPSinput" id="updateGPSinput" class="textInput" placeholder="Pega el nuevo link.">
-
-    <div class="flexCentered">
-        <button id="closeUpdateLINK" class="back_btn flexCentered top">
-            <img src="img/flecha.svg" alt="" class="arrow">
-        </button>
-
-        <button id="updateGPSbtn" class="back_btn save flexCentered top">
-            <img src="img/guardar.svg" alt="" class="">
-        </button>
-    </div>
-</div>
-
-
-
-
-
 
 
 
@@ -339,198 +757,33 @@
 
 
 
-<!--**************************************************
-    [ ADD MANEUVER VIEW ]
-**************************************************-->
-<section id="formStep_A" class="hidden">
-    <div class="view_70 formContainer">
-        <div class="flexCentered vertical">
-            <label for="manType">* Maniobras disponibles.</label>
-            <select name="manType" id="manType" class="dropdown"></select>
-        </div>
 
-        <div class="flexCentered vertical top">
-            <label for="manOrig">* Patio ó terminal de recolección.</label>
-            <select name="manOrig_select" id="manOrig_select" class="dropdown">
-                <option value="APM">APM</option>
-                <option value="HUTCHINSON">HUTCHINSON</option>
-                <option value="UTTSA">UTTSA</option>
-                <option value="OTRA">OTRA</option>
-            </select>
-            <input type="text" name="manOrig_input" id="manOrig_input" class="textInput hidden_input">
-        </div>
 
-        <div class="flexCentered vertical top">
-            <label for="manDest">* Patio ó terminal de destino.</label>
-            <select name="manDest_select" id="manDest_select" class="dropdown">
-                <option value="ALCAM">ALCAM</option>
-                <option value="CHANGAN">CHANGAN</option>
-                <option value="EZ HOLDING">EZ HOLDING</option>
-                <option value="LG">LG</option>
-                <option value="MANPORT">MANPORT</option>
-                <option value="RI">RESGUARDO INTEL</option>
-                <option value="SETRASA">SETRASA</option>
-                <option value="TECOM">TECOM</option>
-                <option value="TLE">TLE</option>
-                <option value="OTRA">OTRA</option>
-            </select>
-            <input type="text" name="manDest_input" id="manDest_input" class="textInput hidden_input">
+
+
+
+
+
+
+
+
+
+
+
+<div class="notify_pop_up">
+    <div class="notify_container">
+        <div class="notify_img">
+            <!-- <img src="img/ok_white.svg" alt=""> -->
+            <!-- <img src="img/error_white.svg" alt=""> -->
+            <!-- <img src="img/warning_white.svg" alt=""> -->
+            <!-- <img src="" id="notify_logo"> -->
+        </div>
+        <div class="notify_content">
+            <div class="notify_text"></div>
+            <button id="close_notify" class="flexCentered">Entendido</button>
         </div>
     </div>
-
-    <div class="view_30 flexCentered">
-        <button id="back2IV_AMV" class="back_btn flexCentered">
-            <img src="img/flecha.svg" alt="flecha" class="arrow">
-        </button>
-        <button id="go2step2" class="btn flexCentered">SIGUIENTE</button>
-    </div>    
-</section>
-
-
-
-
-
-<section id="formStep_B" class=" hidden">
-    <div class="view_70 formContainer">
-        <div class="flexCentered vertical top">
-            <label for="manUser">* Cliente de maniobra.</label>
-            <input type="text" name="manUser" id="manUser" class="textInput" placeholder="Ingresa NOMBRE.">
-        </div>
-
-        <div class="flexCentered vertical top">
-            <label for="manDate">* Fecha programada</label>
-            <input type="datetime-local" name="manDate" id="manDate" class="textInput">  
-        </div>
-
-        <div class="flexCentered vertical top">
-            <label for="manOP">* Operador.</label>
-            <input type="text" name="manOP" id="manOP" placeholder="Ingresa NOMBRE." class="textInput">
-        </div>
-
-        <div class="flexCentered vertical top">
-            <label for="manGPS">GPS LINK.</label>
-            <input type="text" name="manGPS" id="manGPS" placeholder="Pega el link." class="textInput">
-        </div>
-    </div>
-
-    <div class="view_30 flexCentered">
-        <button id="back2STP1_STP2" class="back_btn flexCentered">
-            <img src="img/flecha.svg" alt="flecha" class="arrow">
-        </button>
-        <button id="go2step3" class="btn flexCentered">SIGUIENTE</button>
-    </div>    
-</section>
-
-
-
-
-
-<section id="formStep_C" class=" hidden">
-    <div class="view_70 formContainer">
-        <div class="flexCentered vertical top">
-            <label for="contID_1">ID de contenedor 1 y tamaño.</label>
-            <div class="flexCentered">
-                <input type="text" placeholder="ID CONTENEDOR" name="contID_1" id="contID_1" class="miniInput">
-                <select name="contSize_1" id="contSize_1" class="miniDropdown">
-                    <option value="">Tamaño</option>
-                    <option value="20">20</option>
-                    <option value="40">40</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="flexCentered vertical top">
-            <label for="contID_2">ID de contenedor 2 y tamaño.</label>
-            <div class="flexCentered">
-                <input type="text" placeholder="ID CONTENEDOR" name="contID_2" id="contID_2" class="miniInput">
-                <select name="contSize_2" id="contSize_2" class="miniDropdown">
-                    <option value="">Tamaño</option>
-                    <option value="20">20</option>
-                    <option value="40">40</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="flexCentered vertical top">
-            <label for="contID_3">ID de contenedor 3 y tamaño.</label>
-            <div class="flexCentered">
-                <input type="text" placeholder="ID CONTENEDOR" name="contID_3" id="contID_3" class="miniInput">
-                <select name="contSize_3" id="contSize_3" class="miniDropdown">
-                    <option value="">Tamaño</option>
-                    <option value="20">20</option>
-                    <option value="40">40</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="flexCentered vertical top">
-            <label for="contID_4">ID de contenedor 4 y tamaño.</label>
-            <div class="flexCentered">
-                <input type="text" placeholder="ID CONTENEDOR" name="contID_4" id="contID_4" class="miniInput">
-                <select name="contSize_4" id="contSize_4" class="miniDropdown">
-                    <option value="">Tamaño</option>
-                    <option value="20">20</option>
-                    <option value="40">40</option>
-                </select>
-            </div>
-        </div>
-
-
-    </div>
-
-    <div class="view_30 flexCentered">
-        <button id="back2STP2_STP3" class="back_btn flexCentered">
-            <img src="img/flecha.svg" alt="flecha" class="arrow">
-        </button>
-        <button id="go2step4" class="btn flexCentered">-</button>
-    </div>    
-</section>
-
-
-
-
-
-<section id="formStep_D" class="hidden">
-    <div class="view_70 formContainer">
-        <div class="flexCentered vertical top">
-            <label for="tractoPick"> Asigna un TRACTO.</label>
-            <select name="tractoPick" id="tractoPick" class="dropdown">
-                <option value="">Selecciona</option>
-            </select>
-        </div>
-
-        <div class="flexCentered vertical top">
-            <label for="firstElement"> Asigna un CHASSIS o PLATAFORMA.</label>
-            <select name="firstElement" id="firstElement" class="dropdown">
-                <option value="">Selecciona</option>
-            </select>
-        </div>
-
-        <div class="flexCentered vertical top">
-            <label for="secondElement" class="dependant"> Asigna un DOLLY.</label>
-            <select name="secondElement" id="secondElement" class="dropdown dependant">
-                <option value="">Selecciona</option>
-            </select>
-        </div>
-
-        <div class="flexCentered vertical top">
-            <label for="thirdElement" class="dependant"> Asigna un CHASSIS o PLATAFORMA.</label>
-            <select name="thirdElement" id="thirdElement" class="dropdown dependant">
-                <option value="">Selecciona</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="view_30 flexCentered">
-        <button id="back2STP4_STP3" class="back_btn flexCentered">
-            <img src="img/flecha.svg" alt="flecha" class="arrow">
-        </button>
-        <button id="saveManeuver" class="btn flexCentered">guardar</button>
-    </div>    
-</section>
-
-
-
+</div>
 
 
 <!--**************************************************
@@ -563,6 +816,7 @@
 </div> 
 
 
+
 <!--**************************************************
     [TOAST]
 **************************************************-->
@@ -593,22 +847,35 @@
     </div>
 </div>
 
+<div id="truck_loader">
+    <img id="truck" src="img/truck.svg" alt="check">
+    <p id="okToastPrompt">Procesando, casi llegamos...</p>
+</div>
+
 </main>
 
 
-<nav id="navBar" class="navWidget widget">
-    <button id="goBack_btn" class="navWidget_btn back_btn">
+<div id="navBarView">
+
+<nav id="navBar">
+    <button id="goBack_btn" class="navBtn">
         <img src="img/nav_arrow_white.svg" alt="">
     </button>
 
-<!--     <button id="save_btn" class="navWidget_btn hidden">
+    <button id="save_btn" class="navBtn">
         <img src="img/guardar.svg" alt="">
     </button>
-
-    <button class="navWidget_btn forward_btn hidden">
+ 
+    <button id="goForward" class="navBtn">
         <img src="img/nav_arrow_white.svg" alt="">
-    </button> -->
+    </button>
+
+    <button id="filter_btn" class="navBtn">
+        <img src="img/buscar.svg" alt="">
+    </button>
 </nav>
+
+</div>
 
 </body>
 </html>

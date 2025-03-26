@@ -1,10 +1,13 @@
 # JS FRONTEND - MAYLOB - ADMINISTRATOR
 
-## GENERAL
-- [ ⚑ ] URL AJAX CALLS must be changed at INDEX.JS between release and local testing version...!
+[⚑] To switch between local and live server just change global API_URL...
+
+## TO DO:
+
+- Clean obsolete functions...
+- Create classes to reduce JS DOM lines...
 
 ## EXTENDED CHANGE LOG:
-
->### JS
-  >- (getGps) Bugfix, added searchInstance to use always the maneuver ID, before if the container ID was used crashed the gps link search because container ID was used instead...
   
+[ index.js ]
+- Created v1.1 Version...
