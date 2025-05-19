@@ -1,6 +1,5 @@
 /****************************************************************************************************************/
 /* #region [ GLOBAL CONTENT ] */
-
 *
 {
     margin:  0;
@@ -279,6 +278,7 @@ header::after
     display:            grid;
     grid-template-rows: auto, auto, auto;
 
+    /* DARK GLASS EFFECT*/
     background:             rgba(120, 120, 120, 0.5);
     box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.25);
     backdrop-filter:            blur(8px);
@@ -403,6 +403,7 @@ header::after
     margin:  1rem 0 0.25rem 0;
     padding: 0.25rem;
 
+    /*LIGHT GLASS EFFECT*/
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
@@ -718,7 +719,7 @@ header::after
     height: 100%;
     width:  100%;
 
-    margin-right: 0.25rem;
+    margin-right: 0.5rem;
     padding: 0.25rem;
 
     border-bottom-right-radius: 5px;
@@ -731,6 +732,37 @@ header::after
     color:        #e5e5e5;
 }
 
+.enable_monitor
+{
+    height: 3rem;
+    width:  3rem;
+
+    margin-left: 0.5rem;
+
+
+    border-radius: 10px;
+
+    appearance: none;
+
+    cursor: pointer;
+    
+    background-color: #dddddd;
+
+    border: none;
+
+    -moz-transition:    all .12s ease-in;
+    -o-transition:      all .12s ease-in;
+    -webkit-transition: all .12s ease-in;
+    transition:         all .12s ease-in;
+}
+
+.enable_monitor:hover{ background-color: #eeeeee; }
+
+.enable_monitor:checked 
+{   
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+    background-color:#37bc9b;
+} 
 
 
 
@@ -1336,6 +1368,9 @@ input[type=text]:focus ,.filterControl_container_single textarea:focus, .filterC
 REUSABLE...
 ********************************************************/
 
+/****************************************************************************************************************/
+/* #region [ LOADER ]*/
+
 #truck_loader
 {
     width:  98%; 
@@ -1350,8 +1385,8 @@ REUSABLE...
 
     background:             rgba(120, 120, 120, 0.5);
     box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.25);
-    backdrop-filter:            blur(8px);
-    -webkit-backdrop-filter:    blur(8px);
+    backdrop-filter:            blur(12px);
+    -webkit-backdrop-filter:    blur(12px);
 
     border-radius: 25px;
 
@@ -1359,8 +1394,6 @@ REUSABLE...
     flex-direction:  column;
     align-items:     center;
     justify-content: center;
-
-
 }
 
 #truck_loader p 
@@ -1370,13 +1403,18 @@ REUSABLE...
     font-size:      clamp(2rem, 2rem, 2rem);
     font-weight:    900;
     color:          #eee;
-
-    border-radius: 15px;
-
-    background-color: #8792a0;
 }
 
-/* FILTER POP-UP */
+/* #endregion [ LOADER ]*/
+/****************************************************************************************************************/
+
+
+
+
+
+
+/****************************************************************************************************************/
+/* #region [ NOTIFY POP-UP ]*/
 .notify_pop_up
 {
     width:  98%;
@@ -1448,9 +1486,15 @@ REUSABLE...
     align-items:     center;
     justify-content: space-evenly;
 
-    font-size:      clamp(1.5rem, 1.5rem, 1.5rem);
+    font-size:      clamp(1rem, 1rem, 1rem);
     font-weight:    100;
     color:          #eee;
+}
+
+.notify_strong
+{
+    font-size:      clamp(1.5rem, 1.5rem, 1.5rem);
+    font-weight:    900;   
 }
 
 .notify_content > button
@@ -1474,10 +1518,15 @@ REUSABLE...
 
 .notify_content > button:hover{background-color: #eee;}
 
+.notify_ok      {background-color: #37bc9b;}
+.notify_error   {background-color: #f74f4f;}
+.notify_warning {background-color: #f5a329;}
 
-.notify_ok    {background-color: #37bc9b;}
-.notify_error {background-color: #f74f4f;}
-.notify_warning {background-color: #FFB74D;}
+/* #endregion [ NOTIFY POP-UP ]*/
+/****************************************************************************************************************/
+
+
+
 
 
 .top{ margin-top: 1rem;}

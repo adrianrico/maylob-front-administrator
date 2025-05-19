@@ -4,7 +4,7 @@ import * as animationFunction from '/js/gsap/indexAnimations.js';
 var actualPage = ''
 
 // Used for local testing...
-//var API_URL = 'http://localhost:8080'
+//var API_URL = 'http://127.0.0.1:8080'
 var API_URL = 'https://maylob-backend.onrender.com'
 
 //#region [ INITIAL VIEW ]
@@ -684,6 +684,7 @@ function fillIDDashboard(parameters)
     let isFinished         = validateField(parameters.man_termino) ? parameters.man_termino : "Aún en curso"
     let selectedOptionFlag = ['','','','','','']
     let enabledOptions     = ''
+    let moniEnableStatus   = parameters.man_moni_enable  === 'true' ?  "checked" : ""
 
     switch (parameters.maneuver_current_location) 
     {
@@ -857,7 +858,8 @@ function fillIDDashboard(parameters)
     "<div class='mainRow'>"+
     "<table class='briefingTable'>"+
     "<tr class='tableHeader'>"+
-    "<th>FOLIO</th>"+
+    "<th>ID</th>"+
+    "<th>1ER CONTENEDOR</th>"+
     "<th>%</th>"+
     "<th>UBICACIÓN</th>"+
     "<th>ESTATUS</th>"+
@@ -868,6 +870,7 @@ function fillIDDashboard(parameters)
     "</tr>"+
     "<tr class='tableData'>"+
     "<td class='tableData_folio'>"+parameters.man_folio+"</td>"+
+    "<td class='tableData_folio2'>"+parameters.manCont_1_id+"</td>"+
     "<td class='tableData_percentage'>"+parameters.maneuver_events[parameters.maneuver_events.length-1]+"</td>"+
     "<td class='tableData_select'>"+
     "<select class='tableData_location'>"+
@@ -1000,6 +1003,7 @@ function fillIDDashboard(parameters)
     "<button class='widget_btn btn_updateNote'>"+
     "<img src='img/editar.svg' alt=''>"+
     "</button>"+
+    "<input class='enable_monitor' type='checkbox' "+moniEnableStatus+">"+
     "</div>"+
     "</div>"+
     "</div>"+
@@ -1650,6 +1654,74 @@ $('#maneuvuers_scrollableContainer').on('click','.btn_updateNote',(e)=>
  
 })
 
+//UPDATE enable monitor...
+$('#maneuvuers_scrollableContainer').on('change','.enable_monitor',(e)=>
+{ 
+    reusableManeuverID = $(e.target).closest('.maneuverContainer')
+    .find('.mainRow')
+    .find('.briefingTable')
+    .find('.tableData')
+    .find('.tableData_folio').text()
+
+    let monitor_enabled = $(e.target).closest('.maneuverContainer')
+    .find('.detailsContainer_botRow')
+    .find('.maneuverNotes')
+    .find('.enable_monitor')
+
+    let enable_moni = monitor_enabled.is(':checked')? 'true':'false'
+
+    let notification_msg =  monitor_enabled.is(':checked') ? 
+    ['¡Maniobra actualizada! ⛟ ','* La maniobra ahora será visible para el cliente.']
+    :
+    ['¡Maniobra actualizada! ⛟ ','* La maniobra ya NO será visible para el cliente.']
+
+    let data2send = {'man_folio':reusableManeuverID, 'man_moni_enable':enable_moni}
+
+    $.ajax({
+        url: API_URL+'/man/updateMoniStatus',
+        type: 'PATCH',
+        contentType: 'application/json',
+        data: JSON.stringify(data2send),
+        success : (function (data) 
+        {
+            switch (data.message) 
+            {
+                case '1':
+                    display_notification('ok', notification_msg) 
+                    
+                    $('#maneuvuers_scrollableContainer').empty()
+                    getAllManeuversID()       
+                    actualPage = animationFunction.navigateToView('maneuversPage','maneuversPage',false,'flex')
+                break;
+
+                case '0':
+                    display_notification('warning', notification_msg) 
+                    
+                    $('#maneuvuers_scrollableContainer').empty()
+                    getAllManeuversID()       
+                    actualPage = animationFunction.navigateToView('maneuversPage','maneuversPage',false,'flex')
+                break;
+            }
+        }),
+
+        error: function(XMLHttpRequest, textStatus, errorThrown) 
+        {  
+            console.log(XMLHttpRequest,textStatus,errorThrown);
+            let notification_msg = ['¡No se puedo habilitar! ⛟ ','* Hubo un problema con la solicitud al servidor.']
+            display_notification('error', notification_msg) 
+        },
+
+        complete: function() 
+        {
+            $('#truck_loader').fadeOut(200)
+            animationFunction.animateTruck(false)
+        },
+    
+        //async:false
+    }) 
+})
+
+
 /* +==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+
  * + [⚑] SELECT OPTIONS...                                                                          +                                                                +
  * +==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+*/ 
@@ -2084,7 +2156,7 @@ $('#manSearch_btn').click(function()
         $.ajax(
         {
             url: 'http://localhost:8080/man/findManeuver',
-            url: 'https://maylob-backend.onrender.com/man/findManeuver',
+            //url: 'https://maylob-backend.onrender.com/man/findManeuver',
             type: "get",
             dataType: 'json',
             data:maneuverID_input,
@@ -2339,10 +2411,14 @@ $('#back2MS_MONI').click(function()
  * +                                                                                               +
  * +==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+
  */ 
-//#region [AUXILIARY COMMON FUCTIONS]
+//#region    [AUXILIARY COMMON FUCTIONS]
 
 //Used to clean all from text INPUTS...
 function resetForm(formClass){ $("."+formClass+"").find(':input').val('') }
+
+
+
+
 
 function display_notification(status,messages)
 {
@@ -2353,7 +2429,13 @@ function display_notification(status,messages)
 
     for (let index = 0; index < messages.length; index++) 
     {
-        $('.notify_text').append('<p>'+messages[index]+'</p>')          
+        if (index === 0) 
+        {
+            $('.notify_text').append('<p class = "notify_strong">'+messages[index]+'</p>')          
+        }else
+        {
+            $('.notify_text').append('<p>'+messages[index]+'</p>')          
+        }
     }
 
     switch (status) 
