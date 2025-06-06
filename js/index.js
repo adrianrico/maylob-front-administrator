@@ -4,8 +4,8 @@ import * as animationFunction from '/js/gsap/indexAnimations.js';
 var actualPage = ''
 
 // Used for local testing...
-//var API_URL = 'http://127.0.0.1:8080'
-var API_URL = 'https://maylob-backend.onrender.com'
+var API_URL = 'http://127.0.0.1:8080'
+//var API_URL = 'https://maylob-backend.onrender.com'
 
 //#region [ INITIAL VIEW ]
 
@@ -869,8 +869,8 @@ function fillIDDashboard(parameters)
     "<th>FECHA DE TERMINO</th>"+
     "</tr>"+
     "<tr class='tableData'>"+
-    "<td class='tableData_folio'>"+parameters.man_folio+"</td>"+
-    "<td class='tableData_folio2'>"+parameters.manCont_1_id+"</td>"+
+    "<td class='tableData_folio'><input type='text' value='"+parameters.man_folio+"'></input></td>"+
+    "<td class='tableData_folio2'><input type='text' value='"+parameters.manCont_1_id+"'></input></td>"+
     "<td class='tableData_percentage'>"+parameters.maneuver_events[parameters.maneuver_events.length-1]+"</td>"+
     "<td class='tableData_select'>"+
     "<select class='tableData_location'>"+
@@ -1450,16 +1450,18 @@ $('#updateGPS_container_save').click(function()
  * +==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+*/ 
 
 //EXPAND MANEUVER ROW...
-$('#maneuvuers_scrollableContainer').on('click','.briefBtn', (e)=>
+$('#maneuvuers_scrollableContainer').on('click','.expand_btn', (e)=>
 {
+
+    console.log('test');
     //$(e.target).closest('.maneuverContainer').find('.detailsRow').toggleClass('hidden')
 
-    const $detailsRow = $(e.target).closest('.maneuverContainer').find('.detailsRow')
+    const $detailsRow = $(e.target).closest('.maneuver_item').find('.collapsable_row')
 
-    if ($detailsRow.hasClass('hidden'))
+    if ($detailsRow.hasClass('expandable'))
     {
         $detailsRow
-        .removeClass('hidden') 
+        .removeClass('expandable') 
         .css('height', 0) 
         .animate(
             { height: $detailsRow.get(0).scrollHeight },150,
@@ -1473,7 +1475,7 @@ $('#maneuvuers_scrollableContainer').on('click','.briefBtn', (e)=>
         $detailsRow.animate(
             { height: 0 }, 150, 
             function () {
-                $(this).addClass('hidden').css('height', ''); 
+                $(this).addClass('expandable').css('height', ''); 
             }
         );
     }

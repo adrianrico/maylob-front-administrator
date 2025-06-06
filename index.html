@@ -247,188 +247,314 @@
 ****************************************************************************************************-->
 <section id="maneuversPage" class="">
  
-<div id="maneuvuers_scrollableContainer">
+    <div id="maneuvuers_scrollableContainer">
 
-<!-- <div class=" maneuverContainer">
-
-    <div class="mainRow">
-        <table class="briefingTable">
-            <tr class="tableHeader">
-                <th>FOLIO</th>
-                <th>PORCENTAJE</th>
-                <th>UBICACIÓN</th>
-                <th>ESTATUS</th>
-                <th>CLIENTE</th>
-                <th>MODALIDAD</th>
-                <th>FECHA DE DESPACHO</th>
-                <th>FECHA DE TERMINO</th>
-            </tr>
-            <tr class="tableData">
-                <td>qwe</td>
-                <td>PORCENTAJE</td>
-                <td>
-                    <select>
-                        <option value="">ASLA</option>
-                        <option value="">EN RUTA</option>
-                        <option value="">EN TERMINAL</option>
-                        <option value="">EN PATIO</option>
-                    </select>
-                </td>
-                <td>
-                    <select>
-                        <option value="">EN ESPERA</option>
-                        <option value="">LLAMADO</option>
-                        <option value="">EN RUTA A TERMINAL</option>
-                        <option value="">EN RUTA FISCAL</option>
-                        <option value="">CARGANDO CONTENEDORES</option>
-                        <option value="">DESCARGANDO</option>
-                    </select>
-                </td>
-                <td>CLIENTE</td>
-                <td>MODALIDAD</td>
-                <td>FECHA DE DESPACHO</td>
-                <td>FECHA DE TERMINO</td>
-            </tr>
+        <div class="maneuver_item">
             
-        </table>
-
-        <button class="briefBtn">
-            <img src="img/nav_arrow_white.svg" alt="">
-        </button>
-    </div>
-
-    <div class="detailsRow hidden">
-        <div class="containersTable">
-            <div class="containersTable_header">CONTENEDORES</div>
-            <div class="containersData ">
-                <div class="containerRow ">
-                    <div class="containerRow_ids ">
-                        <p>ID CONTENEDOR</p>
-                    </div>
-                    <div class="containerRow_data ">
-                        <p class="">TAMAÑO</p>
-                        <p class="">LLENO</p>
-                    </div>
-                </div>
-                <div class="containerRow ">
-                    <div class="containerRow_ids ">
-                        <p>ID CONTENEDOR</p>
-                    </div>
-                    <div class="containerRow_data ">
-                        <p class="">TAMAÑO</p>
-                        <p class="">LLENO</p>
-                    </div>
-                </div>
-                <div class="containerRow ">
-                    <div class="containerRow_ids ">
-                        <p>ID CONTENEDOR</p>
-                    </div>
-                    <div class="containerRow_data ">
-                        <p class="">TAMAÑO</p>
-                        <p class="">LLENO</p>
-                    </div>
-                </div>
-                <div class="containerRow ">
-                    <div class="containerRow_ids ">
-                        <p>ID CONTENEDOR</p>
-                    </div>
-                    <div class="containerRow_data ">
-                        <p class="">TAMAÑO</p>
-                        <p class="">LLENO</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="detailsContainer">
-
-            <div class="detailsContainer_topRow ">
-                
-                <div class="maneuverOperation">
-                    <table>
-                        <tr class="tableHeader">
-                            <th>ECO</th>
-                            <td>dato ECO</td>
-                        </tr>
-                        <tr class="tableHeader">
-                            <th>OPERADOR</th>
-                            <td>dato COMPLEATO de operador</td>
-                        </tr>
-                        <tr class="tableHeader">
-                            <th>PLACAS</th>
-                            <td>dato PLACAS</td>
-                        </tr>
-                        <tr class="tableHeader">
-                            <th>TRANSPORTISTA</th>
-                            <td>dato línea transportista</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="maneuverOptions">
-                    <button class="widget_btn btn_deleteManeuver">
-                        <img src="img/delete_red.svg" alt="">
-                    </button>
-
-                    <button class="widget_btn btn_gpsManeuver">
-                        <img src="img/location_orange.svg" alt="">
-                    </button>
-
-                    <button class="widget_btn btn_monitorManeuver">
-                        <img src="img/see_orange.svg" alt="">
-                    </button>
-
-                    <button class="widget_btn btn_updateManeuver">
-                        <img src="img/editar.svg" alt="">
-                    </button>
-                </div>
-
-            </div>
-
-            <div class="detailsContainer_botRow">
-                <table>
-                    <tr class="tableHeader">
-                        <th>ECO</th>
-                        <th>OPERADOR</th>
-                        <th>PLACAS</th>
-                        <th>AA</th>
-                        <th>EJECUTIVA</th>
-                        <th>TIPO</th>
-                        <th>PESO</th>
-                        <th>TRANSPORTISTA</th>
-                        <th>CAAT</th>
-                        <th>TERMINAL</th>
-                        <th>DESCARGA</th>
-                        <th>BLOQUE / TURNO</th>
+            <div class="maneuver_top_row">
+                <table class="maneuver_main_table">
+                    <tr>
+                        <th class="tableData_percentage">%</th>
+                        <th class="tableData_cntr">1ER CONTENEDOR</th>
+                        <th class="tableData_cntr">ID MANIOBRA</th>
+                        <th class="tableData_location">UBICACIÓN</th>
+                        <th class="tableData_status">ESTATUS</th>
+                        <th class="tableData_client">CLIENTE</th>
+                        <th class="tableData_mode">MODALIDAD</th>
+                        <th class="tableData_dispatch">F. DESPACHO</th>
+                        <th class="tableData_finish">F. TÉRMINO</th>
                     </tr>
                     <tr>
-                        <td>ECO</td>
-                        <td>OPERADOR</td>
-                        <td>PLACAS</td>
-                        <td>AA</td>
-                        <td>EJECUTIVA</td>
-                        <td>TIPO</td>
-                        <td>PESO</td>
-                        <td>TRANSPORTISTA</td>
-                        <td>CAAT</td>
-                        <td>TERMINAL</td>
-                        <td>DESCARGA</td>
-                        <td>BLOQUE / TURNO</td>
+                        <td>####</td>
+                        <td>contenido largo</td>
+                        <td>contenido largo</td>
+                        <td>
+                            <select name="" id="" class="tableData_location editable_field">
+                                <option value="">test a</option>
+                                <option value="">test b</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="" id="" class="tableData_status editable_field">
+                                <option value="">test a</option>
+                                <option value="">esperando a ser cargado</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="" id="" class="tableData_client editable_field">
+                                <option value="">test a</option>
+                                <option value="">test b</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="" id="" class="tableData_mode editable_field">
+                                <option value="">SENCILLO</option>
+                                <option value="">FULL</option>
+                            </select>
+                        </td>
+                        <td><input type="datetime-local" name="" id="" class="editable_field"></td>
+                        <td>CONTENIDO LARGO</td>
                     </tr>
                 </table>
-
-                <div class="maneuverNotes">
-                    <textarea name="" id="" class="note"></textarea>
-                </div>
+                <button class="expand_btn">
+                    <img src="img/nav_arrow_white.svg" alt="expand row arrow">
+                </button>
             </div>
 
+            <div class="collapsable_row expandable">
+                <div class="maneuver_details_row ">
+                    <div class="operative_details_container">
+                        <table class="man_general_details ">
+                            <tr>
+                                <th>TRANSPORTISTA</th>
+                                <th>ECO</th>
+                                <th>PLACAS</th>
+                                <th>OPERADOR</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="" id="" class="tableData_location editable_field">
+                                        <option value="">test a</option>
+                                        <option value="">test b</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="" id="" class="tableData_location editable_field">
+                                        <option value="">test a</option>
+                                        <option value="">test b</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" name="" id="" class="editable_field"></td>
+                                <td>
+                                    <select name="" id="" class="tableData_location editable_field">
+                                        <option value="">test a</option>
+                                        <option value="">test b</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                     <div class="general_details_container">
+                        <table class="man_general_details ">
+                            <tr>
+                                <th>A. ADUANAL</th>
+                                <th>EJECUTIVA</th>
+                                <th>CAAT</th>
+                                <th>TERMINAL DE CARGA</th>
+                                <th>PATIO DE DESCARGA</th>
+                                <th>BLOQUE TURNO</th>
+                            </tr>
+                            <tr>
+                                <td><input type="text" name="" id="" class="editable_field"></td>
+                                <td><input type="text" name="" id="" class="editable_field"></td>
+                                <td><input type="text" name="" id="" class="editable_field"></td>
+                                <td>
+                                    <select name="" id="" class="tableData_location editable_field">
+                                        <option value="">test a</option>
+                                        <option value="">test b</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="" id="" class="tableData_location editable_field">
+                                        <option value="">test a</option>
+                                        <option value="">test b</option>
+                                    </select>
+                                </td>
+                                <td>contenido largo</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="maneuver_middle_row">
+                        <div class="maneuver_containers">
+
+                            <div class="container_unit cu_1">
+                                <p class=""><input type="text" name="" id="" class="cu_id control"></p>
+                                <div class="container_unit_row">
+                                    <p>TAMAÑO (Ft.)</p>
+                                    <select name="" id="" class="cu_input control">
+                                        <option value="">SELECCIONA</option>
+                                        <option value="20">20Ft.</option>
+                                        <option value="40">40Ft.</option>
+                                    </select>
+                                </div>
+                                <div class="container_unit_row">
+                                    <p>PESO (Tons.)</p>
+                                    <input type="number" min="0" class="cu_input control">
+                                </div>
+                                <div class="container_unit_row">
+                                    <p>TIPO</p>
+                                    <input type="text" class="cu_input control">
+                                </div>
+                                <div class="container_unit_row">
+                                    <p>CONTENIDO</p>
+                                    <select name="" id="" class="cu_input control">
+                                        <option value="">SELECCIONA</option>
+                                        <option value="VACIO">VACÍO</option>
+                                        <option value="LLENO">LLENO</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="container_unit cu_2">
+                                <p class=""><input type="text" name="" id="" class="cu_id control"></p>
+                                <div class="container_unit_row">
+                                    <p>TAMAÑO (Ft.)</p>
+                                    <select name="" id="" class="cu_input control">
+                                        <option value="">SELECCIONA</option>
+                                        <option value="20">20Ft.</option>
+                                        <option value="40">40Ft.</option>
+                                    </select>
+                                </div>
+                                <div class="container_unit_row">
+                                    <p>PESO (Tons.)</p>
+                                    <input type="number" min="0" class="cu_input control">
+                                </div>
+                                <div class="container_unit_row">
+                                    <p>TIPO</p>
+                                    <input type="text" class="cu_input control">
+                                </div>
+                                <div class="container_unit_row">
+                                    <p>CONTENIDO</p>
+                                    <select name="" id="" class="cu_input control">
+                                        <option value="">SELECCIONA</option>
+                                        <option value="VACIO">VACÍO</option>
+                                        <option value="LLENO">LLENO</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="container_unit cu_3">
+                                <p class=""><input type="text" name="" id="" class="cu_id control"></p>
+                                <div class="container_unit_row">
+                                    <p>TAMAÑO (Ft.)</p>
+                                    <select name="" id="" class="cu_input control">
+                                        <option value="">SELECCIONA</option>
+                                        <option value="20">20Ft.</option>
+                                        <option value="40">40Ft.</option>
+                                    </select>
+                                </div>
+                                <div class="container_unit_row">
+                                    <p>PESO (Tons.)</p>
+                                    <input type="number" min="0" class="cu_input control">
+                                </div>
+                                <div class="container_unit_row">
+                                    <p>TIPO</p>
+                                    <input type="text" class="cu_input control">
+                                </div>
+                                <div class="container_unit_row">
+                                    <p>CONTENIDO</p>
+                                    <select name="" id="" class="cu_input control">
+                                        <option value="">SELECCIONA</option>
+                                        <option value="VACIO">VACÍO</option>
+                                        <option value="LLENO">LLENO</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="container_unit cu_4">
+                                <p class=""><input type="text" name="" id="" class="cu_id control"></p>
+                                <div class="container_unit_row">
+                                    <p>TAMAÑO (Ft.)</p>
+                                    <select name="" id="" class="cu_input control">
+                                        <option value="">SELECCIONA</option>
+                                        <option value="20">20Ft.</option>
+                                        <option value="40">40Ft.</option>
+                                    </select>
+                                </div>
+                                <div class="container_unit_row">
+                                    <p>PESO (Tons.)</p>
+                                    <input type="number" min="0" class="cu_input control">
+                                </div>
+                                <div class="container_unit_row">
+                                    <p>TIPO</p>
+                                    <input type="text" class="cu_input control">
+                                </div>
+                                <div class="container_unit_row">
+                                    <p>CONTENIDO</p>
+                                    <select name="" id="" class="cu_input control">
+                                        <option value="">SELECCIONA</option>
+                                        <option value="VACIO">VACÍO</option>
+                                        <option value="LLENO">LLENO</option>
+                                    </select>
+                                </div>
+                            </div>
+                    
+                        </div> 
+
+                        <div class="maneuver_options">
+                            <button class="mo_btn control_btn">
+                                <img src="img/delete_red.svg" alt="">
+                            </button>
+
+                            <input type="checkbox" name="" id="" class="enable_monitor">
+                        </div>
+                    </div>
+
+                    <div class="note_container">
+                        <textarea name="" class="note control" placeholder="Sin observaciones..."></textarea>
+                        <button class="mo_btn control_btn">
+                            <img src="img/editar.svg" alt="">
+                        </button>
+                    </div>
+
+                    <div class="tracking_container">
+                        <div class="timeline_container">
+                            <div class="timeline_item left">
+                                <div class="timeline_item_data">
+                                    <h4>EVENT TIME</h4>
+                                    <P>###%</P>
+                                    <P>EVENT LOCATION</P>
+                                    <P>EVENT STATUS</P>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline_item right">
+                                <div class="timeline_item_data">
+                                    <h4>EVENT TIME</h4>
+                                    <P>###%</P>
+                                    <P>EVENT LOCATION</P>
+                                    <P>EVENT STATUS</P>
+                                </div>
+                            </div>
+                            <div class="timeline_item left">
+                                <div class="timeline_item_data">
+                                    <h4>EVENT TIME</h4>
+                                    <P>###%</P>
+                                    <P>EVENT LOCATION</P>
+                                    <P>EVENT STATUS</P>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline_item right">
+                                <div class="timeline_item_data">
+                                    <h4>EVENT TIME</h4>
+                                    <P>###%</P>
+                                    <P>EVENT LOCATION</P>
+                                    <P>EVENT STATUS</P>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="gps_container">
+                            <div>
+                                <input type="text" class=" control">
+                                <button class="mo_btn control_btn">
+                                    <img src="img/editar.svg" alt="">
+                                 </button>
+                            </div>
+                            <div class="gps_map">
+                                NO DISPONIBLE
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
+
     </div>
-
-
-</div> -->
-
-</div>
 
 </section>
 
