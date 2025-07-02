@@ -449,7 +449,7 @@ $('#filter_btn').click(function()
         let man_transportista = validateField($("#transportista_select").val()) ? $("#transportista_select").val().toUpperCase() : 'SIN DATO ASIGNADO'  
         let man_eco           = validateField($("#eco_select").val())           ? $("#eco_select").val().toUpperCase()           : 'SIN DATO ASIGNADO'  
         let man_operador      = validateField($("#operador_select").val())      ? $("#operador_select").val().toUpperCase()      : 'SIN DATO ASIGNADO'  
-        let man_gpsLink       = validateField($("#gps_input").val())            ? $("#gps_input").val().toUpperCase()            : 'SIN DATO ASIGNADO'  
+        let man_gpsLink       = validateField($("#gps_input").val())            ? $("#gps_input").val()                          : 'SIN DATO ASIGNADO'  
 
         // Block 4 CONTAINER 1...
         let manCont_1_id        = validateField($("#con1ID_input").val())      ? $("#con1ID_input").val().toUpperCase()      : 'NO ASIGNADO' 
@@ -630,13 +630,77 @@ $('#filter_btn').click(function()
 
 var allManeuvers
 var reusableManeuverID
-function getAllManeuversID()
+var client_names
+var all_retrieved_transporters
+var transporters
+
+async function get_transporters(search_this_transporter)
+{
+    search_this_transporter = validateField(search_this_transporter) ? search_this_transporter : '' 
+   
+    return new Promise((resolve,reject) =>{
+        /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
+        let data2Send = {'transporter_name':search_this_transporter}
+        $.ajax({
+            url: API_URL+'/readTransporters',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data2Send),
+            success : (function (data) 
+            {
+                if (data.message == '0') 
+                {
+                    resolve('0')
+                }else
+                {  
+                   resolve(data.transportersFound); 
+                }              
+            }),
+
+            error:function(serverResponse)
+            {
+                reject(-1)
+            }
+        })
+        /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
+    })
+}
+
+async function get_clients()
+{
+    return new Promise((resolve,reject) =>{
+        /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
+        $.ajax({
+            url: API_URL+'/client/readClients',
+            type: "get",
+            dataType: 'json',
+            success : (function (data) 
+            {
+                if (data.message == '0') 
+                {
+                    resolve('0') 
+                }else
+                {  
+                    resolve(data.client_names)
+                }              
+            }),
+
+            error: function(serverResponse) 
+            {   
+                reject("-1")
+            }
+        })
+        /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
+    })
+}
+
+
+async function getAllManeuversID()
 {
     //LOADER...!
-    $('#truck_loader').css('display','flex').hide().fadeIn(200);
-    animationFunction.animateTruck(true)
+    display_loader(true)
 
-    $.ajax({
+        $.ajax({
         url: API_URL+'/man/getAllManeuvers',
         type: "get",
         dataType: 'json',
@@ -644,48 +708,54 @@ function getAllManeuversID()
         {
             if (data.message == '0') 
             {
-                $('.pop-error').removeClass('hidden')
-                $('.pop-error').addClass('pop-up')
-                $('.pop-up').fadeIn(500)
-                $('#errorText').text("⛟ No se encontraron maniobras.")
+                let notification_msg = ['¡No se han encontrado maniobras! ⛟ ','* Puede que no haya registrada ninguna maniobra.']
+                display_notification('warning', notification_msg) 
 
                 actualPage = animationFunction.navigateToView('maneuversPage','homePage',false,'flex') 
             }else
             {  
-                allManeuvers = data.objectsFound
+                allManeuvers = data.objectsFound 
 
-                for (let index = 0; index < data.objectsFound.length; index++) 
-                {
-                    fillIDDashboard(data.objectsFound[index])
-                }
+                //console.log(allManeuvers);
+                
+                  for (let index = 0; index < allManeuvers.length; index++) 
+                                {
+                                    fillIDDashboard(allManeuvers[index])
+                                }
 
-                preloadFilterControls()
-            }              
+                                preloadFilterControls() 
+            }
         }),
 
         error: function(serverResponse) 
         {   
-            //console.log(serverResponse);
-            $('#errorToastPrompt').text("Error al conectar con el servidor")
-            $('.toast-error').css('display','grid').hide().fadeIn(200).delay(2000).fadeOut(200);
+            let notification_msg = ['¡Servidor no responde! ⛟ ','* Hay u problema al conectar con el servidor.','* Contacta al administrador.']
+            display_notification('error', notification_msg) 
         },
+
         complete: function() 
         {
-            $('#truck_loader').fadeOut(500)
-            animationFunction.animateTruck(false)
+            //Loader...!
+                        display_loader(false)
         }, 
 
         //async:false
     })
+
+    //client_names = await get_clients()
+    //console.log(client_names);
+
 }
 
-function fillIDDashboard(parameters)
-{   
-    let isFinished         = validateField(parameters.man_termino) ? parameters.man_termino : "Aún en curso"
+
+
+async function fillIDDashboard(parameters)
+{
+    // Step[1] - Display selected LOCATION & EVENTS when object created... 
     let selectedOptionFlag = ['','','','','','']
     let enabledOptions     = ''
-    let moniEnableStatus   = parameters.man_moni_enable  === 'true' ?  "checked" : ""
 
+    // Evaluate location to fill events SELECT CONTROL...
     switch (parameters.maneuver_current_location) 
     {
         case 'SIN INICIAR':
@@ -853,7 +923,166 @@ function fillIDDashboard(parameters)
         break;
     }
 
-    $('#maneuvuers_scrollableContainer').append(
+
+    // Step[2] - Display selected client and fill available remaining options...
+    client_names = await get_clients()
+
+    let display_clients = ''
+    for (let index = 0; index < client_names.length; index++) 
+    {
+        display_clients = client_names[index] === parameters.man_cliente ? 
+        display_clients += "<option selected value='"+client_names[index]+"'>"+client_names[index]+"</option>"
+        :
+        display_clients += "<option value='"+client_names[index]+"'>"+client_names[index]+"</option>"
+    }
+
+
+    // Step[3] - Display selected transport mode and fill available remaining options...
+    let selected_mode   = ['','']
+    switch (parameters.man_modalidad) 
+    {
+        case 'FULL':
+            selected_mode[0] = 'selected'
+        break;
+        
+        case 'SENCILLO':
+            selected_mode[1] = 'selected'
+        break;
+    }
+
+
+    // Step[4] - Display date of completed if available...    
+    let isFinished = validateField(parameters.man_termino) ? parameters.man_termino : "Aún en curso"
+
+
+    // Step[5] - Display selected TRANSPORTER and fill available remaining options...
+    
+    // Used without searching value to be able too get all objects...
+    all_retrieved_transporters = await get_transporters('') 
+    let display_transporters   = ''    
+    for (let index = 0; index < all_retrieved_transporters.length; index++) 
+    {
+        display_transporters = all_retrieved_transporters[index].transporter_name === parameters.man_transportista ?
+        display_transporters += "<option selected value='"+all_retrieved_transporters[index].transporter_name+"'>"+all_retrieved_transporters[index].transporter_name+"</option>"
+        :
+        display_transporters += "<option value='"+all_retrieved_transporters[index].transporter_name+"'>"+all_retrieved_transporters[index].transporter_name+"</option>"
+    }
+ 
+
+    // Step[6] - Display selected ECO and fill available remaining options...
+    transporters = await get_transporters(parameters.man_transportista) 
+
+    let display_ecos
+    for (let index = 0; index < transporters[0].transporter_equipment.length; index++) 
+    {
+        display_ecos = transporters[0].transporter_equipment[index] === parameters.man_eco ?
+        display_ecos += "<option selected value='"+transporters[0].transporter_equipment[index]+"'>"+transporters[0].transporter_equipment[index]+"</option>"
+        :
+        display_ecos += "<option value='"+transporters[0].transporter_equipment[index]+"'>"+transporters[0].transporter_equipment[index]+"</option>"
+    }
+
+
+    // Step[7] - Display selected OPERATOR and fill available remaining options...
+    let display_operators
+    for (let index = 0; index < transporters[0].transporter_operators.length; index++) 
+    {
+        //console.log(transporters[index].transporter_operators);   
+        display_operators = transporters[0].transporter_operators[index] === parameters.man_eco ?
+        display_operators += "<option selected value='"+transporters[0].transporter_operators[index]+"'>"+transporters[0].transporter_operators[index]+"</option>"
+        :
+        display_operators += "<option value='"+transporters[0].transporter_operators[index]+"'>"+transporters[0].transporter_operators[index]+"</option>"
+    }
+
+
+    // Step[8] - Process CONTAINERS data... 
+    //Fill array with containers data...
+    let containers_used = [ validateField(parameters.manCont_1_id)        ? (parameters.manCont_1_id != 'NO ASIGNADO' ? parameters.manCont_1_id        : '') : '',
+                            validateField(parameters.manCont_1_size)      ? (parameters.manCont_1_size != '-'         ? parameters.manCont_1_size      : '') : '',  
+                            validateField(parameters.manCont_1_peso)      ? (parameters.manCont_1_peso != '-'         ? parameters.manCont_1_peso      : '') : '',  
+                            validateField(parameters.manCont_1_tipo)      ? (parameters.manCont_1_tipo != '-'         ? parameters.manCont_1_tipo      : '') : '',
+                            validateField(parameters.manCont_1_contenido) ? (parameters.manCont_1_contenido != '-'    ? parameters.manCont_1_contenido : '') : '',
+                            validateField(parameters.manCont_2_id)        ? (parameters.manCont_2_id != 'NO ASIGNADO' ? parameters.manCont_2_id        : '') : '',
+                            validateField(parameters.manCont_2_size)      ? (parameters.manCont_2_size != '-'         ? parameters.manCont_2_size      : '') : '',  
+                            validateField(parameters.manCont_2_peso)      ? (parameters.manCont_2_peso != '-'         ? parameters.manCont_2_peso      : '') : '',  
+                            validateField(parameters.manCont_2_tipo)      ? (parameters.manCont_2_tipo != '-'         ? parameters.manCont_2_tipo      : '') : '',
+                            validateField(parameters.manCont_2_contenido) ? (parameters.manCont_2_contenido != '-'    ? parameters.manCont_2_contenido : '') : '',
+                            validateField(parameters.manCont_3_id)        ? (parameters.manCont_3_id != 'NO ASIGNADO' ? parameters.manCont_3_id        : '') : '',
+                            validateField(parameters.manCont_3_size)      ? (parameters.manCont_3_size != '-'         ? parameters.manCont_3_size      : '') : '',  
+                            validateField(parameters.manCont_3_peso)      ? (parameters.manCont_3_peso != '-'         ? parameters.manCont_3_peso      : '') : '',  
+                            validateField(parameters.manCont_3_tipo)      ? (parameters.manCont_3_tipo != '-'         ? parameters.manCont_3_tipo      : '') : '',
+                            validateField(parameters.manCont_3_contenido) ? (parameters.manCont_3_contenido != '-'    ? parameters.manCont_3_contenido : '') : '',
+                            validateField(parameters.manCont_4_id)        ? (parameters.manCont_4_id != 'NO ASIGNADO' ? parameters.manCont_4_id        : '') : '',
+                            validateField(parameters.manCont_4_size)      ? (parameters.manCont_4_size != '-'         ? parameters.manCont_4_size      : '') : '',  
+                            validateField(parameters.manCont_4_peso)      ? (parameters.manCont_4_peso != '-'         ? parameters.manCont_4_peso      : '') : '',  
+                            validateField(parameters.manCont_4_tipo)      ? (parameters.manCont_4_tipo != '-'         ? parameters.manCont_4_tipo      : '') : '',
+                            validateField(parameters.manCont_4_contenido) ? (parameters.manCont_4_contenido != '-'    ? parameters.manCont_4_contenido : '') : '',
+                          ]
+
+    let set_container_class       = ['','','','']
+    let display_container_size    = ['','','','']
+
+    for (let index = 0; index < containers_used.length / 5; index++) 
+    {
+        //Means there is a valid container...
+        if (validateField(containers_used[index * 5])) 
+        {
+            //set_container_class[index] = 'CLASS'
+            switch (containers_used[index * 5 + 1]) 
+            {
+                case "20":
+                    set_container_class[index] = (containers_used[index * 5  + 2]) > 20  && (containers_used[index * 5 + 2]) <= 26 ? 'cu_2' : ((containers_used[index * 5 + 2]) > 26 ? 'cu_3' : 'cu_1')
+                    display_container_size[index] = "<option selected value='20'>20</option><option value='40'>40</option>"
+                break;
+            
+                case "40":
+                    set_container_class[index] = (containers_used[index * 5  + 2]) > 26  && (containers_used[index * 5 + 2]) <= 30 ? 'cu_2' : ((containers_used[index * 5 + 2]) > 30 ? 'cu_3' : 'cu_1')
+                    display_container_size[index] = "<option value='20'>20</option><option selected value='40'>40</option>"
+                break;
+
+                case "-":
+                    set_container_class[index] = 'cu_4'
+                break;
+            }
+        }
+        else //Means this one is not used...
+        {
+            set_container_class[index] = 'cu_4'
+        }
+    }
+
+
+
+
+
+
+
+
+    //To display GPS map if available...
+    let display_gps_data = ['','']    
+
+    if (parameters.man_gpsLink === 'SIN DATO ASIGNADO') 
+    {
+        display_gps_data[0]  = "<h3>MAPA NO DISPONIBLE POR EL MOMENTO</h3>"
+        display_gps_data[1] = ""   
+    } else 
+    {
+        display_gps_data[0] = "<embed src='"+parameters.man_gpsLink+"'>" ;
+        display_gps_data[1] = "<a href="+parameters.man_gpsLink+" target='_blank' rel='noopener noreferrer'>PULSA PARA VER EN OTRA VENTANA</a>"   
+    }
+
+     
+
+    let moniEnableStatus   = parameters.man_moni_enable  === 'TRUE' ?  "checked" : ""
+
+
+
+    console.log(moniEnableStatus);
+
+
+
+
+
+/*     $('#maneuvuers_scrollableContainer').append(
     "<div class='maneuverContainer'>"+
     "<div class='mainRow'>"+
     "<table class='briefingTable'>"+
@@ -1009,7 +1238,347 @@ function fillIDDashboard(parameters)
     "</div>"+
     "</div>"+
     "</div>"  
+    ) */
+
+    $('#maneuvuers_scrollableContainer').append(
+    "<div class='maneuver_item'>"+
+    "<div class='maneuver_top_row'>"+
+    "<table class='maneuver_main_table'>"+
+    "<tr>"+
+    "<th class='tableData_percentage'>%</th>"+
+    "<th class='tableData_cntr'>1ER CONTENEDOR</th>"+
+    "<th class='tableData_cntr'>ID MANIOBRA</th>"+
+    "<th class='tableData_location'>UBICACIÓN</th>"+
+    "<th class='tableData_status'>ESTATUS</th>"+
+    "<th class='tableData_client'>CLIENTE</th>"+
+    "<th class='tableData_mode'>MODALIDAD</th>"+
+    "<th class='tableData_dispatch'>F. DESPACHO</th>"+
+    "<th class='tableData_finish'>F. TÉRMINO</th>"+
+    "</tr>"+
+    "<tr>"+
+    "<td>"+parameters.maneuver_events[parameters.maneuver_events.length-1]+"</td>"+
+    "<td>"+parameters.manCont_1_id+"</td>"+
+    "<td class='folio_data'>"+parameters.man_folio+"</td>"+
+    "<td>"+
+    "<select class='tableData_location editable_field'>"+
+    "<option value='SIN INICIAR' "+selectedOptionFlag[0]+">SIN INICIAR</option>"+
+    "<option value='ASLA' "+selectedOptionFlag[1]+">ASLA</option>"+
+    "<option value='EN RUTA' "+selectedOptionFlag[2]+">EN RUTA</option>"+
+    "<option value='EN TERMINAL' "+selectedOptionFlag[3]+">EN TERMINAL</option>"+
+    "<option value='RUTA FISCAL / MODULACIÓN' "+selectedOptionFlag[4]+">RUTA FISCAL / MODULACIÓN</option>"+
+    "<option value='EN PATIO' "+selectedOptionFlag[5]+">EN PATIO</option>"+
+    "</select>"+
+    "</td>"+
+    "<td>"+
+    "<select class='tableData_status editable_field'>"+
+    enabledOptions+
+    "</select>"+
+    "</td>"+
+    "<td>"+
+    "<select class='tableData_client editable_field'>"+
+    //"<option value='"+parameters.man_cliente+"'>"+parameters.man_cliente+"</option>"+
+    display_clients+
+    "</select>"+
+    "</td>"+
+    "<td>"+
+    "<select class='tableData_mode editable_field'>"+
+    "<option value='FULL' "+selected_mode[0]+">FULL</option>"+
+    "<option value='SENCILLO' "+selected_mode[1]+">SENCILLO</option>"+
+    "</select>"+
+    "</td>"+
+    "<td><input type='datetime-local' class='editable_field' value='"+parameters.man_despacho+"'></td>"+
+    "<td>"+isFinished+"</td>"+
+    "</tr>"+
+    "</table>"+
+    "<button class='expand_btn'>"+
+    "<img src='img/nav_arrow_white.svg' alt='expand row arrow'>"+
+    "</button>"+
+    "</div>"+
+    "<div class='collapsable_row expandable'>"+
+    "<div class='maneuver_details_row '>"+
+    "<div class='operative_details_container'>"+
+    "<table class='man_general_details '>"+
+    "<tr>"+
+    "<th>TRANSPORTISTA</th>"+
+    "<th>ECO</th>"+
+    "<th>PLACAS</th>"+
+    "<th>OPERADOR</th>"+
+    "</tr>"+
+    "<tr>"+
+    "<td>"+
+    "<select class='tableData_location editable_field'>"+
+    //"<option value='"+parameters.man_transportista+"'>"+parameters.man_transportista+"</option>"+
+    display_transporters+
+    "</select>"+
+    "</td>"+
+    "<td>"+
+    "<select class='tableData_location editable_field'>"+
+    //"<option value='"+parameters.man_eco+"'>"+parameters.man_eco+"</option>"+
+    display_ecos+
+    "</select>"+
+    "</td>"+
+    "<td>"+parameters.man_placas+"</td>"+
+    "<td>"+
+    "<select class='editable_field'>"+
+    //"<option value='"+parameters.man_operador+"'>"+parameters.man_operador+"</option>"+
+    display_operators+
+    "</select>"+
+    "</td>"+
+    "</tr>"+
+    "</table>"+
+    "</div>"+
+    "<div class='general_details_container'>"+
+    "<table class='man_general_details '>"+
+    "<tr>"+
+    "<th>A. ADUANAL</th>"+
+    "<th>EJECUTIVA</th>"+
+    "<th>CAAT</th>"+
+    "<th>TERMINAL DE CARGA</th>"+
+    "<th>PATIO DE DESCARGA</th>"+
+    "<th>BLOQUE TURNO</th>"+
+    "</tr>"+
+    "<tr>"+
+    "<td><input type='text'  class='editable_field' value='"+parameters.man_aa+"'></td>"+
+    "<td><input type='text'  class='editable_field' value='"+parameters.man_ejecutiva+"'></td>"+
+    "<td><input type='text'  class='editable_field' value='"+parameters.man_caat+"'></td>"+
+    "<td><input type='text'  class='editable_field' value='"+parameters.man_terminal+"'></td>"+
+    "<td><input type='text'  class='editable_field' value='"+parameters.man_descarga+"'></td>"+
+    "<td>"+parameters.man_despacho+"</td>"+
+    "</tr>"+
+    "</table>"+
+    "</div>"+
+    "<div class='maneuver_middle_row'>"+
+    "<div class='maneuver_containers'>"+
+    "<div class='container_unit "+set_container_class[0]+"'>"+
+    "<p><input type='text' class='cu_id control' value = '"+parameters.manCont_1_id+"'></p>"+
+    "<div class='container_unit_row'>"+
+    "<p>TAMAÑO (Ft.)</p>"+
+    "<select class='cu_input control'>"+
+/*     "<option value=''>SELECCIONA</option>"+
+    "<option value='20'>20Ft.</option>"+
+    "<option value='40'>40Ft.</option>"+ */
+    display_container_size[0]+
+    "</select>"+
+    "</div>"+
+    "<div class='container_unit_row'>"+
+    "<p>PESO (Tons.)</p>"+
+    "<input type='number' min='0' class='cu_input control' value = '"+parameters.manCont_1_peso+"'>"+
+    "</div>"+
+    "<div class='container_unit_row'>"+
+    "<p>TIPO</p>"+
+    "<input type='text' class='cu_input control' value = '"+parameters.manCont_1_tipo+"'>"+
+    "</div>"+
+    "<div class='container_unit_row'>"+
+    "<p>CONTENIDO</p>"+
+/*     "<select class='cu_input control'>"+
+    "<option value=''>SELECCIONA</option>"+
+    "<option value='VACIO'>VACÍO</option>"+
+    "<option value='LLENO'>LLENO</option>"+
+    "</select>"+ */
+    "<input type='text' class='cu_input control' value = '"+parameters.manCont_1_contenido+"'>"+
+    "</div>"+
+    "</div>"+
+    "<div class='container_unit "+set_container_class[1]+"'>"+
+    "<p><input type='text' class='cu_id control' value = '"+parameters.manCont_2_id+"'></p>"+
+    "<div class='container_unit_row'>"+
+    "<p>TAMAÑO (Ft.)</p>"+
+    "<select class='cu_input control'>"+
+  /*   "<option value=''>SELECCIONA</option>"+
+    "<option value='20'>20Ft.</option>"+
+    "<option value='40'>40Ft.</option>"+ */
+    display_container_size[1]+
+    "</select>"+
+    "</div>"+
+    "<div class='container_unit_row'>"+
+    "<p>PESO (Tons.)</p>"+
+    "<input type='number' min='0' class='cu_input control' value = '"+parameters.manCont_2_peso+"'>"+
+    "</div>"+
+    "<div class='container_unit_row'>"+
+    "<p>TIPO</p>"+
+    "<input type='text' class='cu_input control' value = '"+parameters.manCont_2_tipo+"'>"+
+    "</div>"+
+    "<div class='container_unit_row'>"+
+    "<p>CONTENIDO</p>"+
+/*     "<select class='cu_input control'>"+
+    "<option value=''>SELECCIONA</option>"+
+    "<option value='VACIO'>VACÍO</option>"+
+    "<option value='LLENO'>LLENO</option>"+
+    "</select>"+ */
+    "<input type='text' class='cu_input control' value = '"+parameters.manCont_2_contenido+"'>"+
+    "</div>"+
+    "</div>"+
+    "<div class='container_unit "+set_container_class[2]+"'>"+
+    "<p><input type='text' class='cu_id control' value = '"+parameters.manCont_3_id+"'></p>"+
+    "<div class='container_unit_row'>"+
+    "<p>TAMAÑO (Ft.)</p>"+
+    "<select class='cu_input control'>"+
+/*     "<option value=''>SELECCIONA</option>"+
+    "<option value='20'>20Ft.</option>"+
+    "<option value='40'>40Ft.</option>"+ */
+    display_container_size[2]+
+    "</select>"+
+    "</div>"+
+    "<div class='container_unit_row'>"+
+    "<p>PESO (Tons.)</p>"+
+    "<input type='number' min='0' class='cu_input control' value = '"+parameters.manCont_3_peso+"'>"+
+    "</div>"+
+    "<div class='container_unit_row'>"+
+    "<p>TIPO</p>"+
+    "<input type='text' class='cu_input control' value = '"+parameters.manCont_3_tipo+"'>"+
+    "</div>"+
+    "<div class='container_unit_row'>"+
+    "<p>CONTENIDO</p>"+
+/*     "<select class='cu_input control'>"+
+    "<option value=''>SELECCIONA</option>"+
+    "<option value='VACIO'>VACÍO</option>"+
+    "<option value='LLENO'>LLENO</option>"+
+    "</select>"+ */
+    "<input type='text' class='cu_input control' value = '"+parameters.manCont_3_contenido+"'>"+
+    "</div>"+
+    "</div>"+
+    "<div class='container_unit "+set_container_class[3]+"'>"+
+    "<p><input type='text' class='cu_id control' value = '"+parameters.manCont_4_id+"'></p>"+
+    "<div class='container_unit_row'>"+
+    "<p>TAMAÑO (Ft.)</p>"+
+    "<select class='cu_input control'>"+
+ /*    "<option value=''>SELECCIONA</option>"+
+    "<option value='20'>20Ft.</option>"+
+    "<option value='40'>40Ft.</option>"+ */
+    display_container_size[3]+
+    "</select>"+
+    "</div>"+
+    "<div class='container_unit_row'>"+
+    "<p>PESO (Tons.)</p>"+
+    "<input type='number' min='0' class='cu_input control' value = '"+parameters.manCont_3_peso+"'>"+
+    "</div>"+
+    "<div class='container_unit_row'>"+
+    "<p>TIPO</p>"+
+    "<input type='text' class='cu_input control' value = '"+parameters.manCont_4_tipo+"'>"+
+    "</div>"+
+    "<div class='container_unit_row'>"+
+    "<p>CONTENIDO</p>"+
+/*     "<select class='cu_input control'>"+
+    "<option value=''>SELECCIONA</option>"+
+    "<option value='VACIO'>VACÍO</option>"+
+    "<option value='LLENO'>LLENO</option>"+
+    "</select>"+ */
+    "<input type='text' class='cu_input control' value = '"+parameters.manCont_4_contenido+"'>"+
+    "</div>"+
+    "</div>"+
+    "</div>"+
+    "<div class='maneuver_options'>"+
+    "<button class='mo_btn control_btn'>"+
+    "<img src='img/delete_red.svg'>"+
+    "</button>"+
+    //"<input type='checkbox' class='enable_monitor' "+parameters.monitor_enabled+">"+
+    "<input type='checkbox' class='enable_monitor' "+moniEnableStatus+">"+
+    "</div>"+
+    "</div>"+
+    "<div class='note_container'>"+
+    "<textarea  class='note control' placeholder='Aquí puedes agregar anotaciones...' >"+parameters.man_note+"</textarea>"+
+    "<button class='mo_btn control_btn'>"+
+    "<img src='img/editar.svg'>"+
+    "</button>"+
+    "</div>"+
+    "<div class='tracking_container'>"+
+    "<div class='timeline_container'>"+
+    fillTimeline(parameters)+
+/*     "<div class='timeline_item left'>"+
+    "<div class='timeline_item_data'>"+
+    "<h4>EVENT TIME</h4>"+
+    "<P>###%</P>"+
+    "<P>EVENT LOCATION</P>"+
+    "<P>EVENT STATUS</P>"+
+    "</div>"+
+    "</div>"+
+    "<div class='timeline_item right'>"+
+    "<div class='timeline_item_data'>"+
+    "<h4>EVENT TIME</h4>"+
+    "<P>###%</P>"+
+    "<P>EVENT LOCATION</P>"+
+    "<P>EVENT STATUS</P>"+
+    "</div>"+
+    "</div>"+
+    "<div class='timeline_item left'>"+
+    "<div class='timeline_item_data'>"+
+    "<h4>EVENT TIME</h4>"+
+    "<P>###%</P>"+
+    "<P>EVENT LOCATION</P>"+
+    "<P>EVENT STATUS</P>"+
+    "</div>"+
+    "</div>"+
+    "<div class='timeline_item right'>"+
+    "<div class='timeline_item_data'>"+
+    "<h4>EVENT TIME</h4>"+
+    "<P>###%</P>"+
+    "<P>EVENT LOCATION</P>"+
+    "<P>EVENT STATUS</P>"+
+    "</div>"+
+    "</div>"+ */
+    "</div>"+
+    "<div class='gps_container'>"+
+    "<div class='gps_controls '>"+
+    "<input type='text' class='gps_update_input control'>"+
+    "<button class='gps_btn control_btn'>"+
+    "<img src='img/ubicacion_orange.svg'>"+
+    "</button>"+
+    "</div>"+
+    "<div class='gps_map'>"+
+    //"<embed src='"+parameters.man_gpsLink+"'>"+
+    display_gps_data[0]+
+    "</div>"+
+    //"<a href='http://'>PULSA PARA VER EN OTRA VENTANA</a>"+
+    display_gps_data[1]+
+    "</div>"+
+    "</div>"+
+    "</div>"+
+    "</div>"+
+    "</div>"
     )
+}
+
+function fillTimeline(maneuver_events)
+{
+    let tl_content = ''
+    let tl_class   = ''
+
+    //FORWARD...
+    /* for (let index = 0; index < (maneuver_events.maneuver_events.length / 4); index++) 
+    {
+        tl_class = index % 2 === 0 ? "left" : "right" 
+
+        tl_content+="<div class='timeline_item "+tl_class+"'>"+
+        "<div class='timeline_item_data'>"+
+        "<h4>"+maneuver_events.maneuver_events[index*4]+"</h4>"+
+        "<P>"+maneuver_events.maneuver_events[index*4+3]+"</P>"+
+        "<P>"+maneuver_events.maneuver_events[index*4+1]+"</P>"+
+        "<P>"+maneuver_events.maneuver_events[index*4+2]+"</P>"+
+        "</div>"+
+        "</div>"
+    } */
+
+    //BACKWARD...
+    for (let index = maneuver_events.maneuver_events.length / 4; index > 0; index--) 
+    {
+        if ((maneuver_events.maneuver_events.length / 4) % 2 === 0) 
+        {
+            tl_class = index % 2 === 0 ? "left" : "right" 
+        } else 
+        {
+            tl_class = index % 2 === 0 ? "right" : "left" 
+        }
+
+        tl_content+="<div class='timeline_item "+tl_class+"'>"+
+        "<div class='timeline_item_data'>"+
+        "<h4>"+maneuver_events.maneuver_events[index*4 - 4]+"</h4>"+
+        "<P>"+maneuver_events.maneuver_events[index*4 - 3]+"</P>"+
+        "<P>"+maneuver_events.maneuver_events[index*4 - 1]+"</P>"+
+        "<P>"+maneuver_events.maneuver_events[index*4 - 2]+"</P>"+
+        "</div>"+
+        "</div>"
+    }
+
+    return tl_content
 }
 
 function preloadFilterControls()
@@ -1452,8 +2021,6 @@ $('#updateGPS_container_save').click(function()
 //EXPAND MANEUVER ROW...
 $('#maneuvuers_scrollableContainer').on('click','.expand_btn', (e)=>
 {
-
-    console.log('test');
     //$(e.target).closest('.maneuverContainer').find('.detailsRow').toggleClass('hidden')
 
     const $detailsRow = $(e.target).closest('.maneuver_item').find('.collapsable_row')
@@ -1657,7 +2224,7 @@ $('#maneuvuers_scrollableContainer').on('click','.btn_updateNote',(e)=>
 })
 
 //UPDATE enable monitor...
-$('#maneuvuers_scrollableContainer').on('change','.enable_monitor',(e)=>
+$('#maneuvuers_scrollableContainer').on('change','.enable_monitors',(e)=>
 { 
     reusableManeuverID = $(e.target).closest('.maneuverContainer')
     .find('.mainRow')
@@ -1727,8 +2294,10 @@ $('#maneuvuers_scrollableContainer').on('change','.enable_monitor',(e)=>
 /* +==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+
  * + [⚑] SELECT OPTIONS...                                                                          +                                                                +
  * +==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+*/ 
-$('#maneuvuers_scrollableContainer').on('change','.tableData_event', (e)=> 
+$('#maneuvuers_scrollableContainer').on('change','.editable_field', (e)=> 
 {
+    
+
     /*      console.log($(e.target).closest('.maneuverContainer')
     .find('.mainRow')
     .find('.briefingTable')
@@ -1740,12 +2309,19 @@ $('#maneuvuers_scrollableContainer').on('change','.tableData_event', (e)=>
     .find('.briefingTable')
     .find('.tableData')
     .find('.tableData_location').val());  */
-
+/* 
     let man_folio = $(e.target).closest('.maneuverContainer')
     .find('.mainRow')
     .find('.briefingTable')
     .find('.tableData')
-    .find('.tableData_folio').text();
+    .find('.tableData_folio').text(); */
+
+    let man_folio = $(e.target).closest('.maneuver_item')
+    .find('.maneuver_top_row')
+    .find('.maneuver_main_table')
+    .find('.folio_data').text();
+
+    console.log(man_folio);
 
     let location_update = $(e.target).closest('.maneuverContainer')
     .find('.mainRow')
@@ -1768,7 +2344,7 @@ $('#maneuvuers_scrollableContainer').on('change','.tableData_event', (e)=>
 
     let data2send = {'man_folio':man_folio, 'man_location':location_update,'man_event':event_update}
     
-
+/* 
      $.ajax({
         url: API_URL+'/man/updateManeuverEvents',
         type: 'PATCH',
@@ -1802,7 +2378,7 @@ $('#maneuvuers_scrollableContainer').on('change','.tableData_event', (e)=>
         },
     
         //async:false
-    })  
+    })   */
 });
 
 $('#maneuvuers_scrollableContainer').on('change','.tableData_location', (e)=> 
@@ -2422,6 +2998,7 @@ function resetForm(formClass){ $("."+formClass+"").find(':input').val('') }
 
 
 
+//Used to display a mesagge pop-up...
 function display_notification(status,messages)
 {
     $('.notify_pop_up').css('display','flex').hide().fadeIn(200)
@@ -2444,23 +3021,40 @@ function display_notification(status,messages)
     {
         case 'ok':
             $('.notify_container').addClass('notify_ok')
-            $('.notify_img').append('<img src="img/ok_white.svg" alt="">')
+            $('.notify_img').append('<img src="img/ok_white.svg">')
         break;
     
         case 'error':
             $('.notify_container').addClass('notify_error')
-            $('.notify_img').append('<img src="img/error_white.svg" alt="">')
+            $('.notify_img').append('<img src="img/error_white.svg">')
         break;
 
-        default:
+        case 'warning':
             $('.notify_container').addClass('notify_warning')
-            $('.notify_img').append('<img src="img/warning_white.svg" alt="">')
+            $('.notify_img').append('<img src="img/warning_white.svg">')
         break;
     }
 }
 
 $('#close_notify').click(function() { $('.notify_pop_up').fadeOut(200) })
 
+
+
+
+
+//Used to display / hide loader...
+function display_loader(display)
+{
+    if (display) 
+    {
+        $('#truck_loader').css('display','flex').hide().fadeIn(200);
+        animationFunction.animateTruck(true)
+    }else 
+    {
+        $('#truck_loader').fadeOut(500)
+        animationFunction.animateTruck(false)
+    }
+}
 
 //#endregion [AUXILIARY COMMON FUCTIONS]
 
@@ -2833,7 +3427,7 @@ function showGPS(maneuverGPSlink)
 /** Execute this to fill timeline elements...
  * 
  */
-function fillTimeline(eventTime,eventLocation,eventStatus,eventPercentage,completed)
+/* function fillTimeline(eventTime,eventLocation,eventStatus,eventPercentage,completed)
 {
     
     if (!completed) 
@@ -2905,7 +3499,7 @@ function fillTimeline(eventTime,eventLocation,eventStatus,eventPercentage,comple
     }
 
 
-}
+} */
 
 
 /** - Execute this everytime form formStep_A 
