@@ -53,7 +53,7 @@ $('#save_btn').click(function()
     switch (actualPage) 
     {
         case 'maneuversPage':
-
+            saveEvents()
         break;
 
         case 'addManeuverPage':
@@ -694,7 +694,6 @@ async function get_clients()
     })
 }
 
-
 async function getAllManeuversID()
 {
     //LOADER...!
@@ -746,8 +745,6 @@ async function getAllManeuversID()
     //console.log(client_names);
 
 }
-
-
 
 async function fillIDDashboard(parameters)
 {
@@ -1050,13 +1047,6 @@ async function fillIDDashboard(parameters)
         }
     }
 
-
-
-
-
-
-
-
     //To display GPS map if available...
     let display_gps_data = ['','']    
 
@@ -1073,13 +1063,6 @@ async function fillIDDashboard(parameters)
      
 
     let moniEnableStatus   = parameters.man_moni_enable  === 'TRUE' ?  "checked" : ""
-
-
-
-    console.log(moniEnableStatus);
-
-
-
 
 
 /*     $('#maneuvuers_scrollableContainer').append(
@@ -1245,15 +1228,15 @@ async function fillIDDashboard(parameters)
     "<div class='maneuver_top_row'>"+
     "<table class='maneuver_main_table'>"+
     "<tr>"+
-    "<th class='tableData_percentage'>%</th>"+
-    "<th class='tableData_cntr'>1ER CONTENEDOR</th>"+
-    "<th class='tableData_cntr'>ID MANIOBRA</th>"+
-    "<th class='tableData_location'>UBICACIÓN</th>"+
-    "<th class='tableData_status'>ESTATUS</th>"+
-    "<th class='tableData_client'>CLIENTE</th>"+
-    "<th class='tableData_mode'>MODALIDAD</th>"+
-    "<th class='tableData_dispatch'>F. DESPACHO</th>"+
-    "<th class='tableData_finish'>F. TÉRMINO</th>"+
+    "<th class=''>%</th>"+
+    "<th class=''>1ER CONTENEDOR</th>"+
+    "<th class=''>ID MANIOBRA</th>"+
+    "<th class=''>UBICACIÓN</th>"+
+    "<th class=''>ESTATUS</th>"+
+    "<th class=''>CLIENTE</th>"+
+    "<th class=''>MODALIDAD</th>"+
+    "<th class=''>F. DESPACHO</th>"+
+    "<th class=''>F. TÉRMINO</th>"+
     "</tr>"+
     "<tr>"+
     "<td>"+parameters.maneuver_events[parameters.maneuver_events.length-1]+"</td>"+
@@ -1286,7 +1269,7 @@ async function fillIDDashboard(parameters)
     "<option value='SENCILLO' "+selected_mode[1]+">SENCILLO</option>"+
     "</select>"+
     "</td>"+
-    "<td><input type='datetime-local' class='editable_field' value='"+parameters.man_despacho+"'></td>"+
+    "<td><input type='datetime-local' class='tableData_start editable_field' value='"+parameters.man_despacho+"'></td>"+
     "<td>"+isFinished+"</td>"+
     "</tr>"+
     "</table>"+
@@ -1306,20 +1289,20 @@ async function fillIDDashboard(parameters)
     "</tr>"+
     "<tr>"+
     "<td>"+
-    "<select class='tableData_location editable_field'>"+
+    "<select class='tableData_transporter editable_field'>"+
     //"<option value='"+parameters.man_transportista+"'>"+parameters.man_transportista+"</option>"+
     display_transporters+
     "</select>"+
     "</td>"+
     "<td>"+
-    "<select class='tableData_location editable_field'>"+
+    "<select class='tableData_eco editable_field'>"+
     //"<option value='"+parameters.man_eco+"'>"+parameters.man_eco+"</option>"+
     display_ecos+
     "</select>"+
     "</td>"+
-    "<td>"+parameters.man_placas+"</td>"+
+    "<td class='tableData_placas'>"+parameters.man_placas+"</td>"+
     "<td>"+
-    "<select class='editable_field'>"+
+    "<select class='tableData_operador editable_field'>"+
     //"<option value='"+parameters.man_operador+"'>"+parameters.man_operador+"</option>"+
     display_operators+
     "</select>"+
@@ -1338,11 +1321,11 @@ async function fillIDDashboard(parameters)
     "<th>BLOQUE TURNO</th>"+
     "</tr>"+
     "<tr>"+
-    "<td><input type='text'  class='editable_field' value='"+parameters.man_aa+"'></td>"+
-    "<td><input type='text'  class='editable_field' value='"+parameters.man_ejecutiva+"'></td>"+
-    "<td><input type='text'  class='editable_field' value='"+parameters.man_caat+"'></td>"+
-    "<td><input type='text'  class='editable_field' value='"+parameters.man_terminal+"'></td>"+
-    "<td><input type='text'  class='editable_field' value='"+parameters.man_descarga+"'></td>"+
+    "<td><input type='text'  class='tableData_aa editable_field' value='"+parameters.man_aa+"'></td>"+
+    "<td><input type='text'  class='tableData_ejecutiva editable_field' value='"+parameters.man_ejecutiva+"'></td>"+
+    "<td><input type='text'  class='tableData_caat editable_field' value='"+parameters.man_caat+"'></td>"+
+    "<td><input type='text'  class='tableData_terminal editable_field' value='"+parameters.man_terminal+"'></td>"+
+    "<td><input type='text'  class='tableData_descarga editable_field' value='"+parameters.man_descarga+"'></td>"+
     "<td>"+parameters.man_despacho+"</td>"+
     "</tr>"+
     "</table>"+
@@ -1350,119 +1333,87 @@ async function fillIDDashboard(parameters)
     "<div class='maneuver_middle_row'>"+
     "<div class='maneuver_containers'>"+
     "<div class='container_unit "+set_container_class[0]+"'>"+
-    "<p><input type='text' class='cu_id control' value = '"+parameters.manCont_1_id+"'></p>"+
+    "<p><input type='text' class='cu_id cu_id_1 control' value = '"+parameters.manCont_1_id+"'></p>"+
     "<div class='container_unit_row'>"+
     "<p>TAMAÑO (Ft.)</p>"+
-    "<select class='cu_input control'>"+
-/*     "<option value=''>SELECCIONA</option>"+
-    "<option value='20'>20Ft.</option>"+
-    "<option value='40'>40Ft.</option>"+ */
+    "<select class='cu_input c1_size control'>"+
     display_container_size[0]+
     "</select>"+
     "</div>"+
     "<div class='container_unit_row'>"+
     "<p>PESO (Tons.)</p>"+
-    "<input type='number' min='0' class='cu_input control' value = '"+parameters.manCont_1_peso+"'>"+
+    "<input type='number' min='0' class='cu_input c1_weight control' value = '"+parameters.manCont_1_peso+"'>"+
     "</div>"+
     "<div class='container_unit_row'>"+
     "<p>TIPO</p>"+
-    "<input type='text' class='cu_input control' value = '"+parameters.manCont_1_tipo+"'>"+
+    "<input type='text' class='cu_input c1_type control' value = '"+parameters.manCont_1_tipo+"'>"+
     "</div>"+
     "<div class='container_unit_row'>"+
     "<p>CONTENIDO</p>"+
-/*     "<select class='cu_input control'>"+
-    "<option value=''>SELECCIONA</option>"+
-    "<option value='VACIO'>VACÍO</option>"+
-    "<option value='LLENO'>LLENO</option>"+
-    "</select>"+ */
-    "<input type='text' class='cu_input control' value = '"+parameters.manCont_1_contenido+"'>"+
+    "<input type='text' class='cu_input c1_content control' value = '"+parameters.manCont_1_contenido+"'>"+
     "</div>"+
     "</div>"+
     "<div class='container_unit "+set_container_class[1]+"'>"+
-    "<p><input type='text' class='cu_id control' value = '"+parameters.manCont_2_id+"'></p>"+
+    "<p><input type='text' class='cu_id cu_id_2 control' value = '"+parameters.manCont_2_id+"'></p>"+
     "<div class='container_unit_row'>"+
     "<p>TAMAÑO (Ft.)</p>"+
-    "<select class='cu_input control'>"+
-  /*   "<option value=''>SELECCIONA</option>"+
-    "<option value='20'>20Ft.</option>"+
-    "<option value='40'>40Ft.</option>"+ */
+    "<select class='cu_input c2_size control'>"+
     display_container_size[1]+
     "</select>"+
     "</div>"+
     "<div class='container_unit_row'>"+
     "<p>PESO (Tons.)</p>"+
-    "<input type='number' min='0' class='cu_input control' value = '"+parameters.manCont_2_peso+"'>"+
+    "<input type='number' min='0' class='cu_input c2_weight control' value = '"+parameters.manCont_2_peso+"'>"+
     "</div>"+
     "<div class='container_unit_row'>"+
     "<p>TIPO</p>"+
-    "<input type='text' class='cu_input control' value = '"+parameters.manCont_2_tipo+"'>"+
+    "<input type='text' class='cu_input c2_type control' value = '"+parameters.manCont_2_tipo+"'>"+
     "</div>"+
     "<div class='container_unit_row'>"+
     "<p>CONTENIDO</p>"+
-/*     "<select class='cu_input control'>"+
-    "<option value=''>SELECCIONA</option>"+
-    "<option value='VACIO'>VACÍO</option>"+
-    "<option value='LLENO'>LLENO</option>"+
-    "</select>"+ */
-    "<input type='text' class='cu_input control' value = '"+parameters.manCont_2_contenido+"'>"+
+    "<input type='text' class='cu_input c2_content control' value = '"+parameters.manCont_2_contenido+"'>"+
     "</div>"+
     "</div>"+
     "<div class='container_unit "+set_container_class[2]+"'>"+
-    "<p><input type='text' class='cu_id control' value = '"+parameters.manCont_3_id+"'></p>"+
+    "<p><input type='text' class='cu_id cu_id_3 control' value = '"+parameters.manCont_3_id+"'></p>"+
     "<div class='container_unit_row'>"+
     "<p>TAMAÑO (Ft.)</p>"+
-    "<select class='cu_input control'>"+
-/*     "<option value=''>SELECCIONA</option>"+
-    "<option value='20'>20Ft.</option>"+
-    "<option value='40'>40Ft.</option>"+ */
+    "<select class='cu_input c3_size control'>"+
     display_container_size[2]+
     "</select>"+
     "</div>"+
     "<div class='container_unit_row'>"+
     "<p>PESO (Tons.)</p>"+
-    "<input type='number' min='0' class='cu_input control' value = '"+parameters.manCont_3_peso+"'>"+
+    "<input type='number' min='0' class='cu_input c3_weight control' value = '"+parameters.manCont_3_peso+"'>"+
     "</div>"+
     "<div class='container_unit_row'>"+
     "<p>TIPO</p>"+
-    "<input type='text' class='cu_input control' value = '"+parameters.manCont_3_tipo+"'>"+
+    "<input type='text' class='cu_input c3_type control' value = '"+parameters.manCont_3_tipo+"'>"+
     "</div>"+
     "<div class='container_unit_row'>"+
     "<p>CONTENIDO</p>"+
-/*     "<select class='cu_input control'>"+
-    "<option value=''>SELECCIONA</option>"+
-    "<option value='VACIO'>VACÍO</option>"+
-    "<option value='LLENO'>LLENO</option>"+
-    "</select>"+ */
-    "<input type='text' class='cu_input control' value = '"+parameters.manCont_3_contenido+"'>"+
+    "<input type='text' class='cu_input c3_content control' value = '"+parameters.manCont_3_contenido+"'>"+
     "</div>"+
     "</div>"+
     "<div class='container_unit "+set_container_class[3]+"'>"+
-    "<p><input type='text' class='cu_id control' value = '"+parameters.manCont_4_id+"'></p>"+
+    "<p><input type='text' class='cu_id cu_id_4 control' value = '"+parameters.manCont_4_id+"'></p>"+
     "<div class='container_unit_row'>"+
     "<p>TAMAÑO (Ft.)</p>"+
-    "<select class='cu_input control'>"+
- /*    "<option value=''>SELECCIONA</option>"+
-    "<option value='20'>20Ft.</option>"+
-    "<option value='40'>40Ft.</option>"+ */
+    "<select class='cu_input c4_size control'>"+
     display_container_size[3]+
     "</select>"+
     "</div>"+
     "<div class='container_unit_row'>"+
     "<p>PESO (Tons.)</p>"+
-    "<input type='number' min='0' class='cu_input control' value = '"+parameters.manCont_3_peso+"'>"+
+    "<input type='number' min='0' class='cu_input c4_weight control' value = '"+parameters.manCont_3_peso+"'>"+
     "</div>"+
     "<div class='container_unit_row'>"+
     "<p>TIPO</p>"+
-    "<input type='text' class='cu_input control' value = '"+parameters.manCont_4_tipo+"'>"+
+    "<input type='text' class='cu_input c4_type control' value = '"+parameters.manCont_4_tipo+"'>"+
     "</div>"+
     "<div class='container_unit_row'>"+
     "<p>CONTENIDO</p>"+
-/*     "<select class='cu_input control'>"+
-    "<option value=''>SELECCIONA</option>"+
-    "<option value='VACIO'>VACÍO</option>"+
-    "<option value='LLENO'>LLENO</option>"+
-    "</select>"+ */
-    "<input type='text' class='cu_input control' value = '"+parameters.manCont_4_contenido+"'>"+
+    "<input type='text' class='cu_input c4_content control' value = '"+parameters.manCont_4_contenido+"'>"+
     "</div>"+
     "</div>"+
     "</div>"+
@@ -1842,7 +1793,7 @@ function useFilter(allManeuvers)
     {
         containersID_search = usedFilters[2].split(",")
         containersID_search = containersID_search.filter(nonEmpty => nonEmpty !=="")
-        console.log(containersID_search);
+        //console.log(containersID_search);
         
         for (let i = 0; i < containersID_search.length; i++) 
         {
@@ -2321,7 +2272,7 @@ $('#maneuvuers_scrollableContainer').on('change','.editable_field', (e)=>
     .find('.maneuver_main_table')
     .find('.folio_data').text();
 
-    console.log(man_folio);
+    //console.log(man_folio);
 
     let location_update = $(e.target).closest('.maneuverContainer')
     .find('.mainRow')
@@ -2381,60 +2332,33 @@ $('#maneuvuers_scrollableContainer').on('change','.editable_field', (e)=>
     })   */
 });
 
+// ⚑ Change EVENTS select control according to LOCATION select control...
 $('#maneuvuers_scrollableContainer').on('change','.tableData_location', (e)=> 
 {
-/*     console.log($(e.target).closest('.maneuverContainer')
-    .find('.mainRow')
-    .find('.briefingTable')
-    .find('.tableData')
-    .find('.tableData_location').val());   */
-/* 
-    let man_folio = $(e.target).closest('.maneuverContainer')
-    .find('.mainRow')
-    .find('.briefingTable')
-    .find('.tableData')
-    .find('.tableData_folio').text();
-
-    let location_update = $(e.target).closest('.maneuverContainer')
-    .find('.mainRow')
-    .find('.briefingTable')
-    .find('.tableData')
-    .find('.tableData_location').val()
-
-    let event_update = $(e.target).closest('.maneuverContainer')
-    .find('.mainRow')
-    .find('.briefingTable')
-    .find('.tableData')
-    .find('.tableData_event').val()  */
-
-    let selectedLocation = $(e.target).closest('.maneuverContainer')
-    .find('.mainRow')
-    .find('.briefingTable')
-    .find('.tableData')
-    .find('.tableData_location').val();  
+    let selectedLocation = $(e.target).closest('.maneuver_item')
+    .find('.maneuver_top_row')
+    .find('.maneuver_main_table')
+    .find('.tableData_location').val();
 
     switch (selectedLocation) 
     {
         case 'SIN INICIAR':
-            $(e.target).closest('.maneuverContainer')
-            .find('.mainRow')
-            .find('.briefingTable')
-            .find('.tableData')
-            .find('.tableData_event').empty()
+            $(e.target).closest('.maneuver_item')
+            .find('.maneuver_top_row')
+            .find('.maneuver_main_table')
+            .find('.tableData_status').empty();
         break;
     
         case 'ASLA':
-            $(e.target).closest('.maneuverContainer')
-            .find('.mainRow')
-            .find('.briefingTable')
-            .find('.tableData')
-            .find('.tableData_event').empty()
+            $(e.target).closest('.maneuver_item')
+            .find('.maneuver_top_row')
+            .find('.maneuver_main_table')
+            .find('.tableData_status').empty()
 
-            $(e.target).closest('.maneuverContainer')
-            .find('.mainRow')
-            .find('.briefingTable')
-            .find('.tableData')
-            .find('.tableData_event').append(
+            $(e.target).closest('.maneuver_item')
+            .find('.maneuver_top_row')
+            .find('.maneuver_main_table')
+            .find('.tableData_status').append(
                 "<option value=''>SELECCIONAR</option>"+
                 "<option value='EN ESPERA'>EN ESPERA</option>"+
                 "<option value='LLAMADO'>LLAMADO</option>"+
@@ -2443,17 +2367,15 @@ $('#maneuvuers_scrollableContainer').on('change','.tableData_location', (e)=>
         break;
 
         case 'EN RUTA':
-            $(e.target).closest('.maneuverContainer')
-            .find('.mainRow')
-            .find('.briefingTable')
-            .find('.tableData')
-            .find('.tableData_event').empty()
+            $(e.target).closest('.maneuver_item')
+            .find('.maneuver_top_row')
+            .find('.maneuver_main_table')
+            .find('.tableData_status').empty()
 
-            $(e.target).closest('.maneuverContainer')
-            .find('.mainRow')
-            .find('.briefingTable')
-            .find('.tableData')
-            .find('.tableData_event').append(
+            $(e.target).closest('.maneuver_item')
+            .find('.maneuver_top_row')
+            .find('.maneuver_main_table')
+            .find('.tableData_status').append(
                 "<option value=''>SELECCIONAR</option>"+
                 "<option value='EN RUTA A TERMINAL'>EN RUTA A TERMINAL</option>"+
                 "<option value='EN RUTA A PATIO'>EN RUTA A PATIO</option>"+
@@ -2461,17 +2383,15 @@ $('#maneuvuers_scrollableContainer').on('change','.tableData_location', (e)=>
         break;
 
         case 'EN TERMINAL':
-            $(e.target).closest('.maneuverContainer')
-            .find('.mainRow')
-            .find('.briefingTable')
-            .find('.tableData')
-            .find('.tableData_event').empty()
+            $(e.target).closest('.maneuver_item')
+            .find('.maneuver_top_row')
+            .find('.maneuver_main_table')
+            .find('.tableData_status').empty()
 
-            $(e.target).closest('.maneuverContainer')
-            .find('.mainRow')
-            .find('.briefingTable')
-            .find('.tableData')
-            .find('.tableData_event').append(
+            $(e.target).closest('.maneuver_item')
+            .find('.maneuver_top_row')
+            .find('.maneuver_main_table')
+            .find('.tableData_status').append(
                 "<option value=''>SELECCIONAR</option>"+
                 "<option value='ESPERANDO A SER CARGADO'>ESPERANDO A SER CARGADO</option>"+
                 "<option value='CARGADO'>CARGADO</option>"+
@@ -2479,17 +2399,15 @@ $('#maneuvuers_scrollableContainer').on('change','.tableData_location', (e)=>
         break;
 
         case 'RUTA FISCAL / MODULACIÓN':
-            $(e.target).closest('.maneuverContainer')
-            .find('.mainRow')
-            .find('.briefingTable')
-            .find('.tableData')
-            .find('.tableData_event').empty()
+            $(e.target).closest('.maneuver_item')
+            .find('.maneuver_top_row')
+            .find('.maneuver_main_table')
+            .find('.tableData_status').empty()
 
-            $(e.target).closest('.maneuverContainer')
-            .find('.mainRow')
-            .find('.briefingTable')
-            .find('.tableData')
-            .find('.tableData_event').append(
+            $(e.target).closest('.maneuver_item')
+            .find('.maneuver_top_row')
+            .find('.maneuver_main_table')
+            .find('.tableData_status').append(
                 "<option value=''>SELECCIONAR</option>"+
                 "<option value='SIN MODULAR'>SIN MODULAR</option>"+
                 "<option value='VERDE'>VERDE</option>"+
@@ -2499,26 +2417,356 @@ $('#maneuvuers_scrollableContainer').on('change','.tableData_location', (e)=>
         break;
 
         case 'EN PATIO':
-            $(e.target).closest('.maneuverContainer')
-            .find('.mainRow')
-            .find('.briefingTable')
-            .find('.tableData')
-            .find('.tableData_event').empty()
+            $(e.target).closest('.maneuver_item')
+            .find('.maneuver_top_row')
+            .find('.maneuver_main_table')
+            .find('.tableData_status').empty()
 
-            $(e.target).closest('.maneuverContainer')
-            .find('.mainRow')
-            .find('.briefingTable')
-            .find('.tableData')
-            .find('.tableData_event').append(
+            $(e.target).closest('.maneuver_item')
+            .find('.maneuver_top_row')
+            .find('.maneuver_main_table')
+            .find('.tableData_status').append(
                 "<option value=''>SELECCIONAR</option>"+
                 "<option value='ESPERANDO A SER DESCARGADO'>ESPERANDO A SER DESCARGADO</option>"+
                 "<option value='FINALIZADO'>FINALIZADO</option>"+
                 "<option value='EVENTO EXTRA'>EVENTO EXTRA</option>")
         break;
     }
+});
 
+// ⚑ Change DEPENDANDT select control values according to TRANSPORTER select control...
+$('#maneuvuers_scrollableContainer').on('change','.tableData_transporter', (e)=> 
+{
+    // Step[1] -  Get master value for dependant values...
+    let selected_transporter = $(e.target).closest('.maneuver_item')
+    .find('.collapsable_row')
+    .find('.maneuver_details_row')
+    .find('.operative_details_container')
+    .find('.tableData_transporter').val();
+
+    // Step[2] - Get actual master value from all transporters...
+    let found_master_object = all_retrieved_transporters.find(({transporter_name}) => transporter_name === selected_transporter)
+
+    // Step[3] - Clear all select control options and execute function to build all remaining options...
+    //ECO...
+    $(e.target).closest('.maneuver_item')
+    .find('.collapsable_row')
+    .find('.maneuver_details_row')
+    .find('.operative_details_container')
+    .find('.tableData_eco').empty();
+
+    $(e.target).closest('.maneuver_item')
+    .find('.collapsable_row')
+    .find('.maneuver_details_row')
+    .find('.operative_details_container')
+    .find('.tableData_eco').append(build_select_options(found_master_object.transporter_equipment));
+
+    //PLATES...
+    $(e.target).closest('.maneuver_item')
+    .find('.collapsable_row')
+    .find('.maneuver_details_row')
+    .find('.operative_details_container')
+    .find('.tableData_placas').text("");
+
+    //OPERATOR...
+    $(e.target).closest('.maneuver_item')
+    .find('.collapsable_row')
+    .find('.maneuver_details_row')
+    .find('.operative_details_container')
+    .find('.tableData_operador').empty();
+
+    $(e.target).closest('.maneuver_item')
+    .find('.collapsable_row')
+    .find('.maneuver_details_row')
+    .find('.operative_details_container')
+    .find('.tableData_operador').append(build_select_options(found_master_object.transporter_operators));
 
 });
+
+function saveEvents() 
+{
+    let object_to_save = []
+
+    $('.maneuver_item').each(function ()
+    {
+        let updated_object = {}
+
+        // Step [1] - Get values from UI...
+        // Main row data...
+        let maneuver_id = $(this).find('.maneuver_top_row')
+        .find('.maneuver_main_table')
+        .find('.folio_data').text()
+     
+        let new_location = $(this).find('.maneuver_top_row')
+        .find('.maneuver_main_table')
+        .find('.tableData_location').val()
+          
+        let new_status = $(this).find('.maneuver_top_row')
+        .find('.maneuver_main_table')
+        .find('.tableData_status').val()
+
+        validateField(new_status) ? new_status = new_status : new_status = 'SIN INICIAR'
+     
+        let new_client = $(this).find('.maneuver_top_row')
+        .find('.maneuver_main_table')
+        .find('.tableData_client').val()
+
+        let new_mode = $(this).find('.maneuver_top_row')
+        .find('.maneuver_main_table')
+        .find('.tableData_mode').val()
+
+        let new_start_date = $(this).find('.maneuver_top_row')
+        .find('.maneuver_main_table')
+        .find('.tableData_start').val()
+
+        // Transporter data...
+        let new_transporter = $(this).find('.collapsable_row')
+        .find('.maneuver_details_row')
+        .find('.operative_details_container')
+        .find('.tableData_transporter').val();
+
+        let new_eco = $(this).find('.collapsable_row')
+        .find('.maneuver_details_row')
+        .find('.operative_details_container')
+        .find('.tableData_eco').val();
+
+        let new_operator = $(this).find('.collapsable_row')
+        .find('.maneuver_details_row')
+        .find('.operative_details_container')
+        .find('.tableData_operador').val();
+
+        // General data...
+        let new_aa = $(this).find('.collapsable_row')
+        .find('.maneuver_details_row')
+        .find('.general_details_container')
+        .find('.tableData_aa').val();
+
+        validateField(new_aa) ? new_aa = new_aa : new_aa = 'SIN ASIGNAR'
+
+        let new_executive = $(this).find('.collapsable_row')
+        .find('.maneuver_details_row')
+        .find('.general_details_container')
+        .find('.tableData_ejecutiva').val();
+
+        validateField(new_executive) ? new_executive = new_executive : new_executive = 'SIN ASIGNAR'
+
+        let new_caat = $(this).find('.collapsable_row')
+        .find('.maneuver_details_row')
+        .find('.general_details_container')
+        .find('.tableData_caat').val();
+
+        validateField(new_caat) ? new_caat = new_caat : new_caat = 'SIN ASIGNAR'
+
+        let new_terminal = $(this).find('.collapsable_row')
+        .find('.maneuver_details_row')
+        .find('.general_details_container')
+        .find('.tableData_terminal').val();
+
+        validateField(new_terminal) ? new_terminal = new_terminal : new_terminal = 'SIN ASIGNAR'
+
+        let new_unload = $(this).find('.collapsable_row')
+        .find('.maneuver_details_row')
+        .find('.general_details_container')
+        .find('.tableData_descarga').val();
+
+        validateField(new_unload) ? new_unload = new_unload : new_unload = 'SIN ASIGNAR'
+
+        // Containers data...
+        let new_container_1 = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.cu_id_1').val();
+
+        validateField(new_container_1) ? new_container_1 = new_container_1 : new_container_1 = 'SIN ASIGNAR'
+
+        let new_container_1_size = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.c1_size').val();
+
+        validateField(new_container_1_size) ? new_container_1_size = new_container_1_size : new_container_1_size = 'SIN ASIGNAR'
+
+        let new_container_1_weight = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.c1_weight').val();
+
+        validateField(new_container_1_weight) ? new_container_1_weight = new_container_1_weight : new_container_1_weight = 'SIN ASIGNAR'
+
+        let new_container_1_type = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.c1_type').val();
+
+        validateField(new_container_1_type) ? new_container_1_type = new_container_1_type : new_container_1_type = 'SIN ASIGNAR'
+
+        let new_container_1_content = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.c1_content').val();
+
+        validateField(new_container_1_content) ? new_container_1_content = new_container_1_content : new_container_1_content = 'SIN ASIGNAR'
+        
+        let new_container_2 = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.cu_id_2').val();
+
+        validateField(new_container_2) ? new_container_2 = new_container_2 : new_container_2 = 'SIN ASIGNAR'
+
+        let new_container_2_size = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.c2_size').val();
+
+        validateField(new_container_2_size) ? new_container_2_size = new_container_2_size : new_container_2_size = 'SIN ASIGNAR'
+
+        let new_container_2_weight = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.c2_weight').val();
+
+        validateField(new_container_2_weight) ? new_container_2_weight = new_container_2_weight : new_container_2_weight = 'SIN ASIGNAR'
+
+        let new_container_2_type = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.c2_type').val();
+
+        validateField(new_container_2_type) ? new_container_2_type = new_container_2_type : new_container_2_type = 'SIN ASIGNAR'
+
+        let new_container_2_content = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.c2_content').val();
+
+        validateField(new_container_2_content) ? new_container_2_content = new_container_2_content : new_container_2_content = 'SIN ASIGNAR'
+
+        let new_container_3 = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.cu_id_3').val();
+
+        validateField(new_container_3) ? new_container_3 = new_container_3 : new_container_3 = 'SIN ASIGNAR'
+
+        let new_container_3_size = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.c3_size').val();
+
+        validateField(new_container_3_size) ? new_container_3_size = new_container_3_size : new_container_3_size = 'SIN ASIGNAR'
+
+        let new_container_3_weight = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.c3_weight').val();
+
+        validateField(new_container_3_weight) ? new_container_3_weight = new_container_3_weight : new_container_3_weight = 'SIN ASIGNAR'
+
+        let new_container_3_type = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.c3_type').val();
+
+        validateField(new_container_3_type) ? new_container_3_type = new_container_3_type : new_container_3_type = 'SIN ASIGNAR'
+
+        let new_container_3_content = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.c3_content').val();
+
+        validateField(new_container_3_content) ? new_container_3_content = new_container_3_content : new_container_3_content = 'SIN ASIGNAR'
+
+        let new_container_4 = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.cu_id_4').val();
+
+        validateField(new_container_4) ? new_container_4 = new_container_4 : new_container_4 = 'SIN ASIGNAR'
+
+        let new_container_4_size = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.c4_size').val();
+
+        validateField(new_container_4_size) ? new_container_4_size = new_container_4_size : new_container_4_size = 'SIN ASIGNAR'
+
+        let new_container_4_weight = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.c4_weight').val();
+
+        validateField(new_container_4_weight) ? new_container_4_weight = new_container_4_weight : new_container_4_weight = 'SIN ASIGNAR'
+
+        let new_container_4_type = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.c4_type').val();
+
+        validateField(new_container_4_type) ? new_container_4_type = new_container_4_type : new_container_4_type = 'SIN ASIGNAR'
+
+        let new_container_4_content = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.maneuver_containers')
+        .find('.c4_content').val();
+
+        validateField(new_container_4_content) ? new_container_4_content = new_container_4_content : new_container_4_content = 'SIN ASIGNAR'
+
+        // Get VISIBLE check status...
+        let enable_moni = $(this).find('.collapsable_row')
+        .find('.maneuver_middle_row')
+        .find('.enable_monitor')
+
+        let is_active = enable_moni.is(':checked') ? 'true':'false'
+
+        // Get note
+
+        // Step [2] - Build new object to be sent to the server...
+        updated_object.man_folio                 = maneuver_id             
+        updated_object.maneuver_current_location = new_location
+        updated_object.maneuver_current_status   = new_status
+        updated_object.man_cliente               = new_client
+        updated_object.man_modalidad             = new_mode
+        updated_object.man_despacho              = new_start_date
+        updated_object.man_transportista         = new_transporter
+        updated_object.man_eco                   = new_eco
+        updated_object.man_operador              = new_operator
+        updated_object.man_aa                    = new_aa
+        updated_object.man_ejecutiva             = new_executive
+        updated_object.man_caat                  = new_caat
+        updated_object.man_terminal              = new_terminal
+        updated_object.man_descarga              = new_unload
+        updated_object.man_Cont_1_id             = new_container_1
+        updated_object.man_Cont_1_size           = new_container_1_size
+        updated_object.man_Cont_1_peso           = new_container_1_weight
+        updated_object.man_Cont_1_tipo           = new_container_1_type
+        updated_object.man_Cont_1_contenido      = new_container_1_content
+        updated_object.man_Cont_2_id             = new_container_2
+        updated_object.man_Cont_2_size           = new_container_2_size
+        updated_object.man_Cont_2_peso           = new_container_2_weight
+        updated_object.man_Cont_2_tipo           = new_container_2_type
+        updated_object.man_Cont_2_contenido      = new_container_2_content
+        updated_object.man_Cont_3_id             = new_container_3
+        updated_object.man_Cont_3_size           = new_container_3_size
+        updated_object.man_Cont_3_peso           = new_container_3_weight
+        updated_object.man_Cont_3_tipo           = new_container_3_type
+        updated_object.man_Cont_3_contenido      = new_container_3_content
+        updated_object.man_Cont_4_id             = new_container_4
+        updated_object.man_Cont_4_size           = new_container_4_size
+        updated_object.man_Cont_4_peso           = new_container_4_weight
+        updated_object.man_Cont_4_tipo           = new_container_4_type
+        updated_object.man_Cont_4_contenido      = new_container_4_content
+        updated_object.man_moni_enable           = is_active
+
+        object_to_save.push(updated_object)
+    })
+
+    console.log(object_to_save);
+    //console.log(allManeuvers);
+}
+
+
+
 
 //#endregion [ MANEUVERS PAGE ]
 
@@ -3054,6 +3302,20 @@ function display_loader(display)
         $('#truck_loader').fadeOut(500)
         animationFunction.animateTruck(false)
     }
+}
+
+
+
+
+
+// Used to build all HTML SELECT CONTROL options dinamically...
+function build_select_options(master_object) 
+{
+    let built_options = '<option value="">SELECCIONA</option>'
+ 
+    master_object.forEach(element => { built_options += "<option value='"+element+"'>"+element+"</option>" });
+
+    return built_options
 }
 
 //#endregion [AUXILIARY COMMON FUCTIONS]

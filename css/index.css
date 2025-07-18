@@ -19,7 +19,7 @@ html, body
     overflow-y: hidden;
     overflow-x: hidden;
     
-    font-family: 'Roboto', sans-serif;
+   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
     background-color: #233243;
 
@@ -106,10 +106,10 @@ header::after
 #bannerText
 {
     height: 100%;
+
     padding: 0.25rem 0.25rem;
 
-    transition: font-size 0.5s ease;
-    font-weight: 900;
+    font-weight: 500;
     color: #f28617;
 
     display:         flex;
@@ -153,10 +153,12 @@ header::after
 
     border-radius: 25px;
 
-    background:             rgba(120, 120, 120, 0.5);
+    /* GLASS EFFECT + SHADOW */
+    /*background:             rgba(61, 65, 73, 0.8);*/
+    background:             rgba(255, 255, 255, 0.125);
     box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.25);
-    backdrop-filter:            blur(8px);
-    -webkit-backdrop-filter:    blur(8px);
+    backdrop-filter:            blur(50px);
+    -webkit-backdrop-filter:    blur(50px);
 
     transition: width 0.5s ease;
 }
@@ -217,7 +219,7 @@ header::after
 /****************************************************************************************************************/
 /* #region [ HOME PAGE ] */
 
-#homePage{position: relative;}
+#homePage{ position: relative; }
 
 #homePage_btnsWidget
 {
@@ -234,12 +236,14 @@ header::after
     align-items:     center;
     justify-content: space-evenly;
 
-    border-radius: 25px;
+    /* GLASS EFFECT + SHADOW */
+    /*background:             rgba(61, 65, 73, 0.8);*/
+    background:             rgba(255, 255, 255, 0.125);
+    box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.25);
+    backdrop-filter:            blur(50px);
+    -webkit-backdrop-filter:    blur(50px);
 
-    background: rgba(120, 120, 120, 0.5);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    border-radius: 10px;
 }
 
 .homePage_btn
@@ -255,8 +259,17 @@ header::after
 
     background-color: #f28617;
 
-    border-radius: 15px;
+    border-radius: 10px;
+
+    transition: all ease-out 0.2s;
 }
+
+.homePage_btn:hover 
+{ 
+    filter: brightness(0.8);
+    cursor: pointer;
+}
+
 /* #endregion [ HOME PAGE ] */
 /****************************************************************************************************************/
 
@@ -411,10 +424,11 @@ header::after
     align-items:     center;
     justify-content: space-evenly;
 
-    /*LIGHT GLASS EFFECT*/
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter:         blur(5px);
-    -webkit-backdrop-filter: blur(5px); 
+    /* GLASS EFFECT + SHADOW */
+    background:             rgba(255, 255, 255, 0.125);
+    box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.25);
+    backdrop-filter:            blur(50px);
+    -webkit-backdrop-filter:    blur(50px);
 
     border-radius: 5px;
 

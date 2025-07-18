@@ -138,7 +138,7 @@ function displayNavBar(actualPage)
             {
                 case 'maneuversPage':
                     $('#goBack_btn').css('display','flex')
-                    $('#save_btn').css('display','none')
+                    $('#save_btn').css('display','flex')
                     $('#filter_btn').css('display','flex')
                 break;
 
