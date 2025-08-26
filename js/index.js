@@ -4,8 +4,8 @@ import * as animationFunction from '/js/gsap/indexAnimations.js';
 var actualPage = ''
 
 // Used for local testing...
-var API_URL = 'http://127.0.0.1:8080'
-//var API_URL = 'https://maylob-backend.onrender.com'
+//const API_URL = 'http://127.0.0.1:8080'
+const API_URL = 'https://maylob-backend.onrender.com'
 
 //#region [ INITIAL VIEW ]
 
@@ -17,8 +17,6 @@ $('#go2addManeuvers').click(function()
 
 $('#go2maneuversID').click(function()
 {
-    actualPage = animationFunction.navigateToView('homePage','maneuversPage',false,'flex')
-
     $('#maneuvuers_scrollableContainer').empty()
     getAllManeuversID()
 });
@@ -53,7 +51,7 @@ $('#save_btn').click(function()
     switch (actualPage) 
     {
         case 'maneuversPage':
-            saveEvents()
+            update_maneuvers()
         break;
 
         case 'addManeuverPage':
@@ -452,32 +450,32 @@ $('#filter_btn').click(function()
         let man_gpsLink       = validateField($("#gps_input").val())            ? $("#gps_input").val()                          : 'SIN DATO ASIGNADO'  
 
         // Block 4 CONTAINER 1...
-        let manCont_1_id        = validateField($("#con1ID_input").val())      ? $("#con1ID_input").val().toUpperCase()      : 'NO ASIGNADO' 
-        let manCont_1_size      = validateField($("#con1Size_select").val())   ? $("#con1Size_select").val().toUpperCase()   : '-' 
-        let manCont_1_contenido = validateField($("#con1Content_input").val()) ? $("#con1Content_input").val().toUpperCase() : '-' 
-        let manCont_1_peso      = validateField($("#con1weight_input").val())  ? $("#con1weight_input").val().toUpperCase()  : '-' 
-        let manCont_1_tipo      = validateField($("#con1type_input").val())    ? $("#con1type_input").val().toUpperCase()    : '-' 
+        let manCont_1_id        = validateField($("#con1ID_input").val())      ? $("#con1ID_input").val().toUpperCase()      : '' 
+        let manCont_1_size      = validateField($("#con1Size_select").val())   ? $("#con1Size_select").val().toUpperCase()   : '' 
+        let manCont_1_contenido = validateField($("#con1Content_input").val()) ? $("#con1Content_input").val().toUpperCase() : '' 
+        let manCont_1_peso      = validateField($("#con1weight_input").val())  ? $("#con1weight_input").val().toUpperCase()  : '' 
+        let manCont_1_tipo      = validateField($("#con1type_input").val())    ? $("#con1type_input").val().toUpperCase()    : '' 
 
         // Block 5 CONTAINER 2...
-        let manCont_2_id        = validateField($("#con2ID_input").val())      ? $("#con2ID_input").val().toUpperCase()      : 'NO ASIGNADO' 
-        let manCont_2_size      = validateField($("#con2Size_select").val())   ? $("#con2Size_select").val().toUpperCase()   : '-' 
-        let manCont_2_contenido = validateField($("#con2Content_input").val()) ? $("#con2Content_input").val().toUpperCase() : '-' 
-        let manCont_2_peso      = validateField($("#con2weight_input").val())  ? $("#con2weight_input").val().toUpperCase()  : '-' 
-        let manCont_2_tipo      = validateField($("#con2type_input").val())    ? $("#con2type_input").val().toUpperCase()    : '-' 
+        let manCont_2_id        = validateField($("#con2ID_input").val())      ? $("#con2ID_input").val().toUpperCase()      : '' 
+        let manCont_2_size      = validateField($("#con2Size_select").val())   ? $("#con2Size_select").val().toUpperCase()   : '' 
+        let manCont_2_contenido = validateField($("#con2Content_input").val()) ? $("#con2Content_input").val().toUpperCase() : '' 
+        let manCont_2_peso      = validateField($("#con2weight_input").val())  ? $("#con2weight_input").val().toUpperCase()  : '' 
+        let manCont_2_tipo      = validateField($("#con2type_input").val())    ? $("#con2type_input").val().toUpperCase()    : '' 
 
         // Block 6 CONTAINER 3...
-        let manCont_3_id        = validateField($("#con3ID_input").val())      ? $("#con3ID_input").val().toUpperCase()      : 'NO ASIGNADO' 
-        let manCont_3_size      = validateField($("#con3Size_select").val())   ? $("#con3Size_select").val().toUpperCase()   : '-' 
-        let manCont_3_contenido = validateField($("#con3Content_input").val()) ? $("#con3Content_input").val().toUpperCase() : '-' 
-        let manCont_3_peso      = validateField($("#con3weight_input").val())  ? $("#con3weight_input").val().toUpperCase()  : '-' 
-        let manCont_3_tipo      = validateField($("#con3type_input").val())    ? $("#con3type_input").val().toUpperCase()    : '-' 
+        let manCont_3_id        = validateField($("#con3ID_input").val())      ? $("#con3ID_input").val().toUpperCase()      : '' 
+        let manCont_3_size      = validateField($("#con3Size_select").val())   ? $("#con3Size_select").val().toUpperCase()   : '' 
+        let manCont_3_contenido = validateField($("#con3Content_input").val()) ? $("#con3Content_input").val().toUpperCase() : '' 
+        let manCont_3_peso      = validateField($("#con3weight_input").val())  ? $("#con3weight_input").val().toUpperCase()  : '' 
+        let manCont_3_tipo      = validateField($("#con3type_input").val())    ? $("#con3type_input").val().toUpperCase()    : '' 
 
         // Block 7 CONTAINER 4...
-        let manCont_4_id        = validateField($("#con4ID_input").val())      ? $("#con4ID_input").val().toUpperCase()      : 'NO ASIGNADO' 
-        let manCont_4_size      = validateField($("#con4Size_select").val())   ? $("#con4Size_select").val().toUpperCase()   : '-' 
-        let manCont_4_contenido = validateField($("#con4Content_input").val()) ? $("#con4Content_input").val().toUpperCase() : '-' 
-        let manCont_4_peso      = validateField($("#con4weight_input").val())  ? $("#con4weight_input").val().toUpperCase()  : '-' 
-        let manCont_4_tipo      = validateField($("#con4type_input").val())    ? $("#con4type_input").val().toUpperCase()    : '-' 
+        let manCont_4_id        = validateField($("#con4ID_input").val())      ? $("#con4ID_input").val().toUpperCase()      : '' 
+        let manCont_4_size      = validateField($("#con4Size_select").val())   ? $("#con4Size_select").val().toUpperCase()   : '' 
+        let manCont_4_contenido = validateField($("#con4Content_input").val()) ? $("#con4Content_input").val().toUpperCase() : '' 
+        let manCont_4_peso      = validateField($("#con4weight_input").val())  ? $("#con4weight_input").val().toUpperCase()  : '' 
+        let manCont_4_tipo      = validateField($("#con4type_input").val())    ? $("#con4type_input").val().toUpperCase()    : '' 
 
         let data2Send = 
         {
@@ -642,11 +640,11 @@ async function get_transporters(search_this_transporter)
         /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
         let data2Send = {'transporter_name':search_this_transporter}
         $.ajax({
-            url: API_URL+'/readTransporters',
-            type: 'POST',
+            url:         API_URL+'/readTransporters',
+            type:        'POST',
             contentType: 'application/json',
-            data: JSON.stringify(data2Send),
-            success : (function (data) 
+            data:         JSON.stringify(data2Send),
+            success :     (function (data) 
             {
                 if (data.message == '0') 
                 {
@@ -671,8 +669,8 @@ async function get_clients()
     return new Promise((resolve,reject) =>{
         /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
         $.ajax({
-            url: API_URL+'/client/readClients',
-            type: "get",
+            url:      API_URL+'/client/readClients',
+            type:     "GET",
             dataType: 'json',
             success : (function (data) 
             {
@@ -698,10 +696,11 @@ async function getAllManeuversID()
 {
     //LOADER...!
     display_loader(true)
-
+    
+    /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
         $.ajax({
-        url: API_URL+'/man/getAllManeuvers',
-        type: "get",
+        url:      API_URL+'/man/getAllManeuvers',
+        type:     "get",
         dataType: 'json',
         success : (function (data) 
         {
@@ -709,40 +708,36 @@ async function getAllManeuversID()
             {
                 let notification_msg = ['¡No se han encontrado maniobras! ⛟ ','* Puede que no haya registrada ninguna maniobra.']
                 display_notification('warning', notification_msg) 
-
-                actualPage = animationFunction.navigateToView('maneuversPage','homePage',false,'flex') 
             }else
             {  
                 allManeuvers = data.objectsFound 
-
-                //console.log(allManeuvers);
                 
-                  for (let index = 0; index < allManeuvers.length; index++) 
-                                {
-                                    fillIDDashboard(allManeuvers[index])
-                                }
+                for (let index = 0; index < allManeuvers.length; index++) 
+                {
+                    fillIDDashboard(allManeuvers[index])
+                }
 
-                                preloadFilterControls() 
+                preloadFilterControls() 
+
+                actualPage = animationFunction.navigateToView('homePage','maneuversPage',false,'flex')
             }
         }),
 
         error: function(serverResponse) 
         {   
-            let notification_msg = ['¡Servidor no responde! ⛟ ','* Hay u problema al conectar con el servidor.','* Contacta al administrador.']
+            let notification_msg = ['¡Servidor no responde! ⛟ ','* Hay un problema al conectar con el servidor.','* Contacta al administrador.']
             display_notification('error', notification_msg) 
         },
 
         complete: function() 
         {
             //Loader...!
-                        display_loader(false)
+            display_loader(false)
         }, 
 
         //async:false
     })
-
-    //client_names = await get_clients()
-    //console.log(client_names);
+    /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
 
 }
 
@@ -920,7 +915,6 @@ async function fillIDDashboard(parameters)
         break;
     }
 
-
     // Step[2] - Display selected client and fill available remaining options...
     client_names = await get_clients()
 
@@ -932,7 +926,6 @@ async function fillIDDashboard(parameters)
         :
         display_clients += "<option value='"+client_names[index]+"'>"+client_names[index]+"</option>"
     }
-
 
     // Step[3] - Display selected transport mode and fill available remaining options...
     let selected_mode   = ['','']
@@ -965,7 +958,6 @@ async function fillIDDashboard(parameters)
         display_transporters += "<option value='"+all_retrieved_transporters[index].transporter_name+"'>"+all_retrieved_transporters[index].transporter_name+"</option>"
     }
  
-
     // Step[6] - Display selected ECO and fill available remaining options...
     transporters = await get_transporters(parameters.man_transportista) 
 
@@ -978,7 +970,6 @@ async function fillIDDashboard(parameters)
         display_ecos += "<option value='"+transporters[0].transporter_equipment[index]+"'>"+transporters[0].transporter_equipment[index]+"</option>"
     }
 
-
     // Step[7] - Display selected OPERATOR and fill available remaining options...
     let display_operators
     for (let index = 0; index < transporters[0].transporter_operators.length; index++) 
@@ -989,7 +980,6 @@ async function fillIDDashboard(parameters)
         :
         display_operators += "<option value='"+transporters[0].transporter_operators[index]+"'>"+transporters[0].transporter_operators[index]+"</option>"
     }
-
 
     // Step[8] - Process CONTAINERS data... 
     //Fill array with containers data...
@@ -1018,7 +1008,7 @@ async function fillIDDashboard(parameters)
     let set_container_class       = ['','','','']
     let display_container_size    = ['','','','']
 
-    for (let index = 0; index < containers_used.length / 5; index++) 
+     for (let index = 0; index < containers_used.length / 5; index++) 
     {
         //Means there is a valid container...
         if (validateField(containers_used[index * 5])) 
@@ -1027,25 +1017,28 @@ async function fillIDDashboard(parameters)
             switch (containers_used[index * 5 + 1]) 
             {
                 case "20":
-                    set_container_class[index] = (containers_used[index * 5  + 2]) > 20  && (containers_used[index * 5 + 2]) <= 26 ? 'cu_2' : ((containers_used[index * 5 + 2]) > 26 ? 'cu_3' : 'cu_1')
-                    display_container_size[index] = "<option selected value='20'>20</option><option value='40'>40</option>"
+                    set_container_class[index] = (containers_used[index * 5  + 2]) > 20  && (containers_used[index * 5 + 2]) <= 26 ? 'bg_green_1000' : ((containers_used[index * 5 + 2]) > 26 ? 'bg_green_1000' : 'bg_green_1000')
+                    display_container_size[index] = "<option selected value='20'>20</option><option value='40'>40</option><option value=''>SELECCIONA</option>"
                 break;
             
                 case "40":
-                    set_container_class[index] = (containers_used[index * 5  + 2]) > 26  && (containers_used[index * 5 + 2]) <= 30 ? 'cu_2' : ((containers_used[index * 5 + 2]) > 30 ? 'cu_3' : 'cu_1')
-                    display_container_size[index] = "<option value='20'>20</option><option selected value='40'>40</option>"
+                    set_container_class[index] = (containers_used[index * 5  + 2]) > 26  && (containers_used[index * 5 + 2]) <= 30 ? 'bg_green_1000' : ((containers_used[index * 5 + 2]) > 30 ? 'bg_green_1000' : 'bg_green_1000')
+                    display_container_size[index] = "<option value='20'>20</option><option selected value='40'>40</option><option value=''>SELECCIONA</option>"
                 break;
 
-                case "-":
-                    set_container_class[index] = 'cu_4'
+                case'':
+                    set_container_class[index] = 'bg_green_1000'
+                    display_container_size[index] = "<option selected value=''>SELECCIONA</option><option value='20'>20</option><option value='40'>40</option>"
+
                 break;
             }
         }
         else //Means this one is not used...
         {
-            set_container_class[index] = 'cu_4'
+            set_container_class[index] = 'bg_green_1000'
+            display_container_size[index] = "<option value=''>SELECCIONA</option><option value='20'>20</option><option value='40'>40</option>"
         }
-    }
+    } 
 
     //To display GPS map if available...
     let display_gps_data = ['','']    
@@ -1062,7 +1055,7 @@ async function fillIDDashboard(parameters)
 
      
 
-    let moniEnableStatus   = parameters.man_moni_enable  === 'TRUE' ?  "checked" : ""
+    let moniEnableStatus   = parameters.man_moni_enable  === 'true' ?  "checked" : ""
 
 
 /*     $('#maneuvuers_scrollableContainer').append(
@@ -2483,15 +2476,15 @@ $('#maneuvuers_scrollableContainer').on('change','.tableData_transporter', (e)=>
 
 });
 
-function saveEvents() 
+function update_maneuvers() 
 {
-    let object_to_save = []
+    let objects_to_save = []
 
+    // Step [1] - Get input values from UI...
     $('.maneuver_item').each(function ()
     {
         let updated_object = {}
 
-        // Step [1] - Get values from UI...
         // Main row data...
         let maneuver_id = $(this).find('.maneuver_top_row')
         .find('.maneuver_main_table')
@@ -2577,140 +2570,140 @@ function saveEvents()
         .find('.maneuver_containers')
         .find('.cu_id_1').val();
 
-        validateField(new_container_1) ? new_container_1 = new_container_1 : new_container_1 = 'SIN ASIGNAR'
+        validateField(new_container_1) ? new_container_1 = new_container_1 : new_container_1 = ''
 
         let new_container_1_size = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.c1_size').val();
 
-        validateField(new_container_1_size) ? new_container_1_size = new_container_1_size : new_container_1_size = 'SIN ASIGNAR'
+        validateField(new_container_1_size) ? new_container_1_size = new_container_1_size : new_container_1_size = ''
 
         let new_container_1_weight = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.c1_weight').val();
 
-        validateField(new_container_1_weight) ? new_container_1_weight = new_container_1_weight : new_container_1_weight = 'SIN ASIGNAR'
+        validateField(new_container_1_weight) ? new_container_1_weight = new_container_1_weight : new_container_1_weight = ''
 
         let new_container_1_type = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.c1_type').val();
 
-        validateField(new_container_1_type) ? new_container_1_type = new_container_1_type : new_container_1_type = 'SIN ASIGNAR'
+        validateField(new_container_1_type) ? new_container_1_type = new_container_1_type : new_container_1_type = ''
 
         let new_container_1_content = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.c1_content').val();
 
-        validateField(new_container_1_content) ? new_container_1_content = new_container_1_content : new_container_1_content = 'SIN ASIGNAR'
+        validateField(new_container_1_content) ? new_container_1_content = new_container_1_content : new_container_1_content = ''
         
         let new_container_2 = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.cu_id_2').val();
 
-        validateField(new_container_2) ? new_container_2 = new_container_2 : new_container_2 = 'SIN ASIGNAR'
+        validateField(new_container_2) ? new_container_2 = new_container_2 : new_container_2 = ''
 
         let new_container_2_size = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.c2_size').val();
 
-        validateField(new_container_2_size) ? new_container_2_size = new_container_2_size : new_container_2_size = 'SIN ASIGNAR'
+        validateField(new_container_2_size) ? new_container_2_size = new_container_2_size : new_container_2_size = ''
 
         let new_container_2_weight = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.c2_weight').val();
 
-        validateField(new_container_2_weight) ? new_container_2_weight = new_container_2_weight : new_container_2_weight = 'SIN ASIGNAR'
+        validateField(new_container_2_weight) ? new_container_2_weight = new_container_2_weight : new_container_2_weight = ''
 
         let new_container_2_type = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.c2_type').val();
 
-        validateField(new_container_2_type) ? new_container_2_type = new_container_2_type : new_container_2_type = 'SIN ASIGNAR'
+        validateField(new_container_2_type) ? new_container_2_type = new_container_2_type : new_container_2_type = ''
 
         let new_container_2_content = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.c2_content').val();
 
-        validateField(new_container_2_content) ? new_container_2_content = new_container_2_content : new_container_2_content = 'SIN ASIGNAR'
+        validateField(new_container_2_content) ? new_container_2_content = new_container_2_content : new_container_2_content = ''
 
         let new_container_3 = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.cu_id_3').val();
 
-        validateField(new_container_3) ? new_container_3 = new_container_3 : new_container_3 = 'SIN ASIGNAR'
+        validateField(new_container_3) ? new_container_3 = new_container_3 : new_container_3 = ''
 
         let new_container_3_size = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.c3_size').val();
 
-        validateField(new_container_3_size) ? new_container_3_size = new_container_3_size : new_container_3_size = 'SIN ASIGNAR'
+        validateField(new_container_3_size) ? new_container_3_size = new_container_3_size : new_container_3_size = ''
 
         let new_container_3_weight = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.c3_weight').val();
 
-        validateField(new_container_3_weight) ? new_container_3_weight = new_container_3_weight : new_container_3_weight = 'SIN ASIGNAR'
+        validateField(new_container_3_weight) ? new_container_3_weight = new_container_3_weight : new_container_3_weight = ''
 
         let new_container_3_type = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.c3_type').val();
 
-        validateField(new_container_3_type) ? new_container_3_type = new_container_3_type : new_container_3_type = 'SIN ASIGNAR'
+        validateField(new_container_3_type) ? new_container_3_type = new_container_3_type : new_container_3_type = ''
 
         let new_container_3_content = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.c3_content').val();
 
-        validateField(new_container_3_content) ? new_container_3_content = new_container_3_content : new_container_3_content = 'SIN ASIGNAR'
+        validateField(new_container_3_content) ? new_container_3_content = new_container_3_content : new_container_3_content = ''
 
         let new_container_4 = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.cu_id_4').val();
 
-        validateField(new_container_4) ? new_container_4 = new_container_4 : new_container_4 = 'SIN ASIGNAR'
+        validateField(new_container_4) ? new_container_4 = new_container_4 : new_container_4 = ''
 
         let new_container_4_size = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.c4_size').val();
 
-        validateField(new_container_4_size) ? new_container_4_size = new_container_4_size : new_container_4_size = 'SIN ASIGNAR'
+        validateField(new_container_4_size) ? new_container_4_size = new_container_4_size : new_container_4_size = ''
 
         let new_container_4_weight = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.c4_weight').val();
 
-        validateField(new_container_4_weight) ? new_container_4_weight = new_container_4_weight : new_container_4_weight = 'SIN ASIGNAR'
+        validateField(new_container_4_weight) ? new_container_4_weight = new_container_4_weight : new_container_4_weight = ''
 
         let new_container_4_type = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.c4_type').val();
 
-        validateField(new_container_4_type) ? new_container_4_type = new_container_4_type : new_container_4_type = 'SIN ASIGNAR'
+        validateField(new_container_4_type) ? new_container_4_type = new_container_4_type : new_container_4_type = ''
 
         let new_container_4_content = $(this).find('.collapsable_row')
         .find('.maneuver_middle_row')
         .find('.maneuver_containers')
         .find('.c4_content').val();
 
-        validateField(new_container_4_content) ? new_container_4_content = new_container_4_content : new_container_4_content = 'SIN ASIGNAR'
+        validateField(new_container_4_content) ? new_container_4_content = new_container_4_content : new_container_4_content = ''
 
         // Get VISIBLE check status...
         let enable_moni = $(this).find('.collapsable_row')
@@ -2719,8 +2712,18 @@ function saveEvents()
 
         let is_active = enable_moni.is(':checked') ? 'true':'false'
 
-        // Get note
+        // Get note value...
+        let new_note = $(this).find('.collapsable_row')
+        .find('.note_container')
+        .find('.note').val();
 
+        // Get GPS new link value...
+        let new_gps_link = $(this).find('.collapsable_row')
+        .find('.tracking_container')
+        .find('.gps_container')
+        .find('.gps_controls')
+        .find('.gps_update_input').val();
+      
         // Step [2] - Build new object to be sent to the server...
         updated_object.man_folio                 = maneuver_id             
         updated_object.maneuver_current_location = new_location
@@ -2736,32 +2739,71 @@ function saveEvents()
         updated_object.man_caat                  = new_caat
         updated_object.man_terminal              = new_terminal
         updated_object.man_descarga              = new_unload
-        updated_object.man_Cont_1_id             = new_container_1
-        updated_object.man_Cont_1_size           = new_container_1_size
-        updated_object.man_Cont_1_peso           = new_container_1_weight
-        updated_object.man_Cont_1_tipo           = new_container_1_type
-        updated_object.man_Cont_1_contenido      = new_container_1_content
-        updated_object.man_Cont_2_id             = new_container_2
-        updated_object.man_Cont_2_size           = new_container_2_size
-        updated_object.man_Cont_2_peso           = new_container_2_weight
-        updated_object.man_Cont_2_tipo           = new_container_2_type
-        updated_object.man_Cont_2_contenido      = new_container_2_content
-        updated_object.man_Cont_3_id             = new_container_3
-        updated_object.man_Cont_3_size           = new_container_3_size
-        updated_object.man_Cont_3_peso           = new_container_3_weight
-        updated_object.man_Cont_3_tipo           = new_container_3_type
-        updated_object.man_Cont_3_contenido      = new_container_3_content
-        updated_object.man_Cont_4_id             = new_container_4
-        updated_object.man_Cont_4_size           = new_container_4_size
-        updated_object.man_Cont_4_peso           = new_container_4_weight
-        updated_object.man_Cont_4_tipo           = new_container_4_type
-        updated_object.man_Cont_4_contenido      = new_container_4_content
+        updated_object.manCont_1_id             = new_container_1
+        updated_object.manCont_1_size           = new_container_1_size
+        updated_object.manCont_1_peso           = new_container_1_weight
+        updated_object.manCont_1_tipo           = new_container_1_type
+        updated_object.manCont_1_contenido      = new_container_1_content
+        updated_object.manCont_2_id             = new_container_2
+        updated_object.manCont_2_size           = new_container_2_size
+        updated_object.manCont_2_peso           = new_container_2_weight
+        updated_object.manCont_2_tipo           = new_container_2_type
+        updated_object.manCont_2_contenido      = new_container_2_content
+        updated_object.manCont_3_id             = new_container_3
+        updated_object.manCont_3_size           = new_container_3_size
+        updated_object.manCont_3_peso           = new_container_3_weight
+        updated_object.manCont_3_tipo           = new_container_3_type
+        updated_object.manCont_3_contenido      = new_container_3_content
+        updated_object.manCont_4_id             = new_container_4
+        updated_object.manCont_4_size           = new_container_4_size
+        updated_object.manCont_4_peso           = new_container_4_weight
+        updated_object.manCont_4_tipo           = new_container_4_type
+        updated_object.manCont_4_contenido      = new_container_4_content
         updated_object.man_moni_enable           = is_active
+        updated_object.man_note                  = new_note
+        updated_object.man_gpsLink               = new_gps_link
 
-        object_to_save.push(updated_object)
+        objects_to_save.push(updated_object)
     })
 
-    console.log(object_to_save);
+    //console.log(objects_to_save);
+
+    $.ajax({
+                    url: API_URL+'/man/updateManeuvers',
+                    type: "patch",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        objects_to_save
+                    }),
+                    //data: {objects_to_save},
+                    success : (function (data) 
+                    {
+                       //console.log(data);
+                        $('#maneuvuers_scrollableContainer').empty()
+                       getAllManeuversID()
+                        //actualPage = animationFunction.navigateToView('maneuversPage','maneuversPage',false,'flex')
+                    }),
+                    
+                    error: function(serverResponse) 
+                    {   
+                        //console.log(serverResponse);
+                        $('.pop-error').removeClass('hidden')
+                        $('.pop-error').addClass('pop-up')
+                        $('.pop-up').fadeIn(500)
+                        $('#errorText').text("⛟ ERROR EN EL SERVIDOR.")
+                        $('#errorText').append("<p>🛈 Parece que el servidor no puede responder.</p>")
+                    },
+
+                    complete: function() 
+                    {
+                        //LOADER..!
+                        $('.toast-loader').fadeOut(200)
+                        animationFunction.animateTruck(false)
+                    },
+
+                    //async:false
+                }) 
+
     //console.log(allManeuvers);
 }
 
@@ -3242,10 +3284,6 @@ $('#back2MS_MONI').click(function()
 //Used to clean all from text INPUTS...
 function resetForm(formClass){ $("."+formClass+"").find(':input').val('') }
 
-
-
-
-
 //Used to display a mesagge pop-up...
 function display_notification(status,messages)
 {
@@ -3286,10 +3324,6 @@ function display_notification(status,messages)
 
 $('#close_notify').click(function() { $('.notify_pop_up').fadeOut(200) })
 
-
-
-
-
 //Used to display / hide loader...
 function display_loader(display)
 {
@@ -3304,13 +3338,10 @@ function display_loader(display)
     }
 }
 
-
-
-
-
 // Used to build all HTML SELECT CONTROL options dinamically...
 function build_select_options(master_object) 
 {
+    console.log(master_object);
     let built_options = '<option value="">SELECCIONA</option>'
  
     master_object.forEach(element => { built_options += "<option value='"+element+"'>"+element+"</option>" });
