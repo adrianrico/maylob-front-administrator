@@ -55,11 +55,12 @@ section
 /****************************************************************************************************************/
 /* #region [ VIEWS DISPLAY ] */
 
-#homePage         { display: flex; } /*flex*/
-#addEquipmentPage { display: none; } /*flex*/
-#maneuversPage    { display: none; } /*flex*/
-#addManeuverPage  { display: none; } /*flex*/
-#navBar           { display: none; } /*flex*/
+#homePage             { display: flex; } /*flex*/
+#clientManagementPage { display: none; } /*flex*/
+#addEquipmentPage     { display: none; } /*flex*/
+#maneuversPage        { display: none; } /*flex*/
+#addManeuverPage      { display: none; } /*flex*/
+#navBar               { display: none; } /*flex*/
 
 /* #endregion [ VIEWS DISPLAY ] */
 /****************************************************************************************************************/
@@ -217,6 +218,247 @@ header::after
 
 
 /****************************************************************************************************************/
+/* #region [ USERS MANAGEMENT PAGE ] */
+#clientManagementPage {position: relative;}
+
+#cmp_form_container
+{
+    height: clamp(300px, 95%, 700px);
+    width:  clamp(300px, 95%, 700px);
+    min-width:300px;
+ 
+    position: absolute;
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    display:         flex;
+    flex-direction:  column;
+    align-items:     center;
+    justify-content: center;
+    gap: 1rem;
+
+    /* GLASS EFFECT + SHADOW */
+    /*background:             rgba(61, 65, 73, 0.8);*/     /* DARK  */
+    background:             rgba(255, 255, 255, 0.125);  /* LIGHT */
+    box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.25);
+    backdrop-filter:          blur(50px);
+    -webkit-backdrop-filter:  blur(50px);
+
+    border-radius: 10px;
+}
+
+.input_container
+{ 
+    height:    3rem;
+    width:     clamp(320px, 95%, 375px);
+    min-width: 320px;
+    max-width: 375px;
+    
+    display:         flex;
+    align-items:     end;
+    justify-content: space-evenly;
+    gap:             0.25rem;
+
+}
+
+.controls_container
+{
+    height: 100%;
+    width:  100%;
+
+    display:         flex;
+    flex-direction:  column;
+    align-items:     center;
+    justify-content: space-evenly;
+}
+
+.input_label
+{
+    height: 1.25rem;
+    width:  100%;
+
+    padding:0 0 0.25rem 0.25rem;
+
+    font-weight:    100;
+    font-size:      clamp(0.8rem,1rem,1rem);
+    letter-spacing: 0.05rem;
+    text-align:     left;
+    color:        azure;
+}
+
+.select_input_entry
+{   
+    height: 100%;
+    width:  100%;
+
+    padding-left: 0.25rem;
+
+    font-weight:    300;
+    font-size:      clamp(0.8rem,1rem,1rem);
+    text-align:     left;
+    /* color:        #2196F3; */
+    color:        azure;
+
+    appearance: none;
+    border:     none;
+
+    border-radius: 5px; 
+
+    background-color: #3d4149;
+
+    transition: all ease-out 0.24s;
+}
+
+.select_input_entry:hover { filter: brightness(0.8);}
+.select_input_entry:focus { outline: none; }
+
+.input_clear
+{
+    height: calc(50% + 0.25rem);
+    width: 2.5rem;
+    
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+
+    appearance:    none;
+    border:        none;
+    border-radius: 5px;
+
+    background-color: #f74f4f;
+
+    transition: all ease-out 0.24s;
+}
+
+.input_clear img
+{
+    width: 50%;
+    
+    object-fit:   contain;
+    aspect-ratio: 1/1;
+}
+
+.input_clear:hover { filter: brightness(0.8);}
+.input_clear:focus { outline: none; }
+
+.custom_toggle
+{
+    box-sizing: border-box;
+
+    padding: 0.25rem;
+
+    display:         flex;
+    align-items:     center;
+    justify-content: space-evenly;
+
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+    position: relative;
+}
+
+.custom_toggle p
+{
+    font-size:  1rem;
+    font-weight: 600;
+    
+    padding: 0.25rem;
+    
+    margin:  0.25rem;
+}
+
+.custom_toggle p:nth-child(3) { color: #8792a0; }
+.custom_toggle p:nth-child(1) { color: #ed9843; }
+
+/* TOOGLE container... */
+.switch 
+{
+    height: 2rem;
+    width:  4rem;
+ 
+    position: relative;
+  
+    display:  inline-block;
+}
+
+/* Checkbox used for event - Must be hidden...! */
+.switch input 
+{
+  width:  0;
+  height: 0;
+
+  opacity: 0;
+}
+
+/* Slider rail... */
+.slider 
+{
+  position: absolute;
+  top:    0;
+  left:   0;
+  right:  0;
+  bottom: 0;
+
+  cursor:   pointer;
+
+  border-radius: 25px;
+
+  background-color: #3d4149;
+
+  -webkit-transition: all ease-out .14s;
+  transition:         all ease-out .14s;
+}
+
+.slider:hover
+{
+  filter: brightness(0.8);
+}
+
+/* Slider point... */
+.slider::before 
+{
+  height: 1.75rem;
+  width:  1.75rem;
+
+  content: "";
+
+  position: absolute;
+  top:    50%;
+  left:   0.25rem;
+  right:  0;
+  bottom: 0;
+
+  transform: translateY(-50%);
+
+  border-radius: 25px;
+
+  background-color: #ed9843;
+
+  -webkit-transition: all ease-out .14s;
+  transition:         all ease-out .14s;
+}
+
+/* Change slider rail color when checked... */
+/* input:checked + .slider { background-color: #37bc9b; } */
+
+/* Change slider point position and properties... */
+input:checked + .slider:before 
+{
+  background-color: #8792a0;
+
+   -webkit-transform: translate(100%, -50%);
+  -ms-transform:      translate(100%, -50%);
+  transform:          translate(100%, -50%);
+}
+
+/* #endregion [ USERS MANAGEMENT PAGE ] */
+/****************************************************************************************************************/
+
+
+
+
+
+/****************************************************************************************************************/
 /* #region [ HOME PAGE ] */
 
 #homePage{ position: relative; }
@@ -237,11 +479,11 @@ header::after
     justify-content: space-evenly;
 
     /* GLASS EFFECT + SHADOW */
-    /*background:             rgba(61, 65, 73, 0.8);*/
-    background:             rgba(255, 255, 255, 0.125);
+    /*background:             rgba(61, 65, 73, 0.8);*/     /* DARK  */
+    background:             rgba(255, 255, 255, 0.125);  /* LIGHT */
     box-shadow: 0 4px 30px  rgba(0, 0, 0, 0.25);
-    backdrop-filter:            blur(50px);
-    -webkit-backdrop-filter:    blur(50px);
+    backdrop-filter:          blur(50px);
+    -webkit-backdrop-filter:  blur(50px);
 
     border-radius: 10px;
 }

@@ -147,6 +147,12 @@ function displayNavBar(actualPage)
                     $('#save_btn').css('display','flex')
                     $('#filter_btn').css('display','none')
                 break;
+
+                case 'clientManagementPage':
+                    $('#goBack_btn').css('display','flex')
+                    $('#save_btn').css('display','flex')
+                    $('#filter_btn').css('display','none')
+                break;
             
                 default: break;
             }

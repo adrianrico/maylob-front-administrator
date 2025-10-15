@@ -4,10 +4,16 @@ import * as animationFunction from '/js/gsap/indexAnimations.js';
 var actualPage = ''
 
 // Used for local testing...
-//const API_URL = 'http://127.0.0.1:8080'
-const API_URL = 'https://maylob-backend.onrender.com'
+const API_URL = 'http://127.0.0.1:8080'
+//const API_URL = 'https://maylob-backend.onrender.com'
 
 //#region [ INITIAL VIEW ]
+
+$('#go2clienManagement').click(function()
+{
+    preloadClientsNames()
+    actualPage = animationFunction.navigateToView('homePage','clientManagementPage',false,'flex')
+});
 
 $('#go2addManeuvers').click(function()
 {
@@ -41,6 +47,10 @@ $('#goBack_btn').click(function()
         case 'addManeuverPage':
            actualPage = animationFunction.navigateToView('addManeuverPage','homePage',false,'flex') 
         break;
+
+        case 'clientManagementPage':
+           actualPage = animationFunction.navigateToView('clientManagementPage','homePage',false,'flex') 
+        break;
     
         default: break;
     }
@@ -56,6 +66,10 @@ $('#save_btn').click(function()
 
         case 'addManeuverPage':
            saveNewManeuver() 
+        break;
+
+        case 'clientManagementPage':
+           processClient() 
         break;
     
         default: break;
@@ -76,6 +90,206 @@ $('#filter_btn').click(function()
 
 //#endregion [ NAV BAR ]
 
+
+
+
+
+//#region [CLIENTS MANAGEMENT PAGE ]
+
+async function preloadClientsNames()
+{   display_loader(true)
+
+    let client_names = await get_clients()
+
+    const default_select_option =  '<option value="NUEVO">NUEVO</option>'    
+    $('#cmp_client_select').empty()
+    $('#cmp_client_select').append(build_select_options(client_names,default_select_option))
+    
+    display_loader(false)
+}
+
+function processClient() 
+{
+    /** - Step [1][A][B]
+     *  - Validate entry before trying to execute API CALL...
+     */
+    let clientEntryData  = $('#cmp_input_entry_data').val()
+    if (!validateField(clientEntryData)) 
+    {
+        let notification_msg = ['¡Datos no actualizados! ⛟ ','* Necesitas ingresar un nuevo dato.']
+        display_notification('warning', notification_msg)    
+    }else
+    {
+        /** - Step [2][A]
+         *  - Build data structure...
+         */
+        let data2Send = { 'client_name':clientEntryData }
+
+        /** - Step [3][A]
+         *  - Process according of type of selection...
+         */
+        let selectedClient = $('#cmp_client_select').val()
+
+        if (selectedClient === 'NUEVO') 
+        {
+            display_loader(true)
+
+            $.ajax({
+            url: API_URL+'/client/createClient',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data2Send),
+            success : (function (data) 
+            {
+                if (data.message == '0') 
+                {
+                    let notification_msg = 
+                    ['¡Datos no guardados! ⛟ ',
+                     '* El servidor tuvo problemas para procesar los datos.',
+                     '* Revisa si el cliente ya está registrado.'
+                    ]
+                    display_notification('warning', notification_msg)   
+                }else
+                {
+                    $('#cmp_input_entry_data').val('')
+
+                    preloadClientsNames()
+
+                    let notification_msg = ['¡Cliente guardado! ⛟ ','* Guardado con éxito, presiona el botón para continuar.']
+                    display_notification('ok', notification_msg) 
+                }              
+            }),
+
+            error: function(serverResponse) 
+            {   
+                let notification_msg = ['¡Datos no guardados! ⛟ ','* El servidor tuvo problemas para procesar los datos.']
+                display_notification('error', notification_msg)   
+            },
+
+            complete: function() 
+            {
+                display_loader(false)
+            }, 
+
+            //async:false
+            })
+        }else
+        {             
+            /** - Step [2][B]
+             *  - Build data structure to be sent...
+             */
+            let data2Send = 
+            { 
+                'new_client_name':clientEntryData.toUpperCase(),
+                'client_name_to_update':selectedClient
+            }
+
+            $.ajax({
+            url: API_URL+'/client/updateClient',
+            type: 'PATCH',
+            contentType: 'application/json',
+            data: JSON.stringify(data2Send),
+            success : (function (data) 
+            {
+                if (data.message == '0') 
+                {
+                    let notification_msg = 
+                    ['¡Datos no actualizados! ⛟ ',
+                     '* El servidor tuvo problemas para encontrar al cliente.',
+                     '* El cliente puede no estar registrado.'
+                    ]
+                    display_notification('warning', notification_msg)   
+                }else
+                {
+                    $('#cmp_input_entry_data').val('')
+
+                    preloadClientsNames()
+
+                    let notification_msg = ['¡Cliente actualizado! ⛟ ','* Los datos se actualizaron con éxito, presiona el botón para continuar.']
+                    display_notification('ok', notification_msg) 
+                }
+            }),
+
+            error: function(serverResponse) 
+            {   
+                let notification_msg = ['¡Datos no actualizados! ⛟ ','* El servidor tuvo problemas para procesar los datos.']
+                display_notification('error', notification_msg)   
+            },
+
+            complete: function() 
+            {
+                display_loader(false)
+            }, 
+
+            //async:false
+            })
+        }
+    }
+
+}
+
+
+$('#cmp_form_container').on('click','.input_clear', (e)=>
+{
+    let clickedOption = $(e.target).closest('.input_container').find('.input_label').text()
+    switch (clickedOption) 
+    {
+        case 'Nuevo dato de nombre.':
+            $('#cmp_input_entry_data').val('')
+        break;
+    
+        case 'Eliminar cliente.':
+            let selectedClient = $('#cmp_client_select').val()
+
+            let data2delete = {'client_name':selectedClient}
+
+            if (selectedClient != 'NUEVO') 
+            {
+                $.ajax({
+                url: API_URL+'/client/deleteClient',
+                type: 'DELETE',
+                contentType: 'application/json',
+                data: JSON.stringify(data2delete),
+                success : (function (data) 
+                {
+                    if (data.message == '0') 
+                    {
+                        let notification_msg = 
+                        ['¡No se pudo eliminar! ⛟ ',
+                        '* El servidor tuvo problemas para encontrar al cliente.',
+                        '* El cliente puede no estar registrado.'
+                        ]
+                        display_notification('warning', notification_msg)   
+                    }else
+                    {
+                        $('#cmp_input_entry_data').val('')
+
+                        preloadClientsNames()
+
+                        let notification_msg = ['¡Cliente eliminado! ⛟ ','* Los datos se eliminaron con éxito, presiona el botón para continuar.']
+                        display_notification('ok', notification_msg) 
+                    }
+                }),
+
+                error: function(serverResponse) 
+                {   
+                    let notification_msg = ['¡Datos no eliminados! ⛟ ','* El servidor tuvo problemas para procesar los datos.']
+                    display_notification('error', notification_msg)   
+                },
+
+                complete: function() 
+                {
+                    display_loader(false)
+                }, 
+
+                //async:false
+                })
+            }
+        break;
+    }
+})
+
+//#endregion [CLIENTS MANAGEMENT PAGE ]
 
 
 
@@ -3339,12 +3553,22 @@ function display_loader(display)
 }
 
 // Used to build all HTML SELECT CONTROL options dinamically...
-function build_select_options(master_object) 
+function build_select_options(master_object,custom_default) 
 {
-    console.log(master_object);
-    let built_options = '<option value="">SELECCIONA</option>'
- 
-    master_object.forEach(element => { built_options += "<option value='"+element+"'>"+element+"</option>" });
+    let built_options
+   
+    if (custom_default) 
+    {
+        built_options = custom_default
+    }else
+    {
+        built_options = '<option value="">SELECCIONA</option>'
+    }
+
+    if (master_object!= '0' || master_object != 0) 
+    {
+        master_object.forEach(element => { built_options += "<option value='"+element+"'>"+element+"</option>" });    
+    }
 
     return built_options
 }

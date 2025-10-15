@@ -37,12 +37,79 @@
 <section id="homePage">
 
 <div id="homePage_btnsWidget">
+    <button id="go2clienManagement" class="homePage_btn">REGISTRO DE CLIENTES</button>
     <button id="go2addManeuvers" class="homePage_btn">REGISTRAR MANIOBRA</button>
     <button id="go2maneuversID"  class="homePage_btn">MIS MANIOBRAS</button>
 </div>    
 
 </section>
 
+
+
+
+
+<!--****************************************************************************************************
+[ CLIENTS MANAGEMENT PAGE ]
+****************************************************************************************************-->
+<section id="clientManagementPage">
+    <div id="cmp_form_container">
+        <div class="input_container">
+            <div class="controls_container">
+                <label class="input_label">Selecciona cliente.</label>
+                <select id="cmp_client_select" class="select_input_entry">
+
+                </select>
+            </div>
+
+<!--             <button class="input_clear">
+                <img src="img/error_white.svg" alt="expand row arrow">
+            </button> -->
+        </div>
+        <div class="input_container">
+            <div class="controls_container">
+                <label class="input_label">Nuevo dato de nombre.</label>
+                <input type="text" class="select_input_entry" placeholder="Ingresa nuevo dato." id="cmp_input_entry_data">
+            </div>
+
+            <button class="input_clear">
+                <img src="img/error_white.svg" alt="expand row arrow">
+            </button>
+        </div>
+
+        <div class="input_container">
+            <div class="controls_container">
+                <label class="input_label">Selecciona prioridad.</label>
+                <select id="" class="select_input_entry">
+                    <option value="">NORMAL</option>
+                    <option value="">ALTA</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="custom_toggle">
+            <p>ACTIVO</p>
+            <label class="switch">
+                <input type="checkbox" />
+                <span class="slider"></span>
+            </label>
+            <P>INACTIVO</P>
+        </div>
+
+
+        <div class="input_container">
+            <div class="controls_container">
+                <label class="input_label">Eliminar cliente.</label>
+            </div>
+
+            <button class="input_clear">
+                <img src="img/delete_white.svg" alt="expand row arrow">
+            </button>
+        </div>
+
+
+    </div>
+</section>
 
 
 
