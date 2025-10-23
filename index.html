@@ -26,7 +26,39 @@
  
 <header>
     <img id="bannerLogo"src="img/mainLogo_orange.svg" alt="truck logo">
-    <p id="bannerText">¡Bienvenido!</p>
+
+    <div class="header_filter">
+        <div class="custom_toggle">
+            <p>HOY</p>
+            <label class="switch">
+                <input type="checkbox" class="hf_check"/>
+                <span class="slider"></span>
+            </label>
+            <P>AYER</P>
+        </div>
+
+            <div class="input_container">
+                <div class="controls_container">
+                    <label class="input_label">Fecha inicial.</label>
+                    <input type="datetime-local" class="select_input_entry hf_entry hf_start" placeholder="Ingresa fecha.">
+                </div>
+
+                <button class="input_clear">
+                    <img src="img/error_white.svg" alt="expand row arrow">
+                </button>
+            </div>
+            <span>HASTA</span>
+            <div class="input_container">
+                <div class="controls_container">
+                    <label class="input_label">Fecha final.</label>
+                    <input type="datetime-local" class="select_input_entry hf_entry hf_end" placeholder="Ingresa fecha.">
+                </div>
+
+                <button class="input_clear">
+                    <img src="img/error_white.svg" alt="expand row arrow">
+                </button>
+            </div>
+        </div>
 </header>
 
 <main class="flexCentered">

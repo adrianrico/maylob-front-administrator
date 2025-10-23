@@ -77,9 +77,19 @@ header
     height: 60px;
     width:  100%;
 
+    padding: 0 0.5rem;
+
     display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    gap: 0.5rem;
 
     position: relative;    
+}
+
+header span
+{
+    color: #f5a329;
 }
 
 header::after
@@ -93,6 +103,7 @@ header::after
     display: block;
 
     position: absolute;
+    left: 0;
     bottom:   0;
 }
 
@@ -102,6 +113,7 @@ header::after
     padding: 0.5rem;
 
     margin-right: auto;
+
 }
 
 #bannerText
@@ -118,6 +130,16 @@ header::after
     justify-content: center;
 
     margin-right: 0.25rem;
+}
+
+.header_filter
+{
+    padding: 0.25rem;
+    
+    display:         none;
+    align-items:     flex-end;
+    justify-content: flex-end;
+    gap:             0.5rem;
 }
 
 /* #endregion [ HEADER ] */
@@ -209,6 +231,7 @@ header::after
     -o-transform:       rotate(90deg);
     transform:          rotate(90deg);
 }
+
 
 /* #endregion [ NAV BAR ] */
 /****************************************************************************************************************/

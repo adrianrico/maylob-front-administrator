@@ -45,13 +45,14 @@ export function growAnimation(view2display,byClass,displayType)
 {
     if (byClass) 
     {
-        $("#"+view2display+"").removeClass('hidden');
+        $("."+view2display+"").removeClass('hidden');
+        $("."+view2display+"").css('display',displayType);
    
         var displayView = gsap.timeline();
         
         displayView
-        .fromTo('#'+view2display+'',{scale:0}, { duration: 0.15,scale:1.05})
-        .fromTo('#'+view2display+'',{scale:1.05}, { duration: 0.15,scale:1})
+        .fromTo('.'+view2display+'',{scale:0}, { duration: 0.15,scale:1.05})
+        .fromTo('.'+view2display+'',{scale:1.05}, { duration: 0.15,scale:1})
     } else 
     {
         $("#"+view2display+"").css('display',displayType);
@@ -71,13 +72,13 @@ export function shrinkAnimation(view2hide,byClass)
         let shrinkView = gsap.timeline({
             onComplete: function() 
             {
-                $("#"+view2hide+"").addClass('hidden');
+                $("."+view2hide+"").addClass('hidden');
             }
         });
     
         shrinkView
-        .fromTo('#'+view2hide+'',{scale:1}, { duration: 0.15,scale:1.05})
-        .fromTo('#'+view2hide+'',{scale:1.05}, { duration: 0.15,scale:0})
+        .fromTo('.'+view2hide+'',{scale:1}, { duration: 0.15,scale:1.05})
+        .fromTo('.'+view2hide+'',{scale:1.05}, { duration: 0.15,scale:0})
 
     } else 
     {
@@ -129,6 +130,8 @@ function displayNavBar(actualPage)
     if (actualPage === 'homePage') 
     {
         shrinkAnimation('navBarView',false)
+        shrinkAnimation('header_filter',true)
+        //$('.header_filter').css('display','none')
     }else
     {
         setTimeout(function() 
@@ -140,21 +143,26 @@ function displayNavBar(actualPage)
                     $('#goBack_btn').css('display','flex')
                     $('#save_btn').css('display','flex')
                     $('#filter_btn').css('display','flex')
+                    growAnimation('header_filter',true,'flex')
                 break;
 
                 case 'addManeuverPage':
                     $('#goBack_btn').css('display','flex')
                     $('#save_btn').css('display','flex')
                     $('#filter_btn').css('display','none')
+                    $('.header_filter').css('display','none')
+
                 break;
 
                 case 'clientManagementPage':
                     $('#goBack_btn').css('display','flex')
                     $('#save_btn').css('display','flex')
                     $('#filter_btn').css('display','none')
+                    $('.header_filter').css('display','none')
                 break;
             
-                default: break;
+                default: 
+                break;
             }
             
             growAnimation('navBarView',false,'flex')

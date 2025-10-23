@@ -25,6 +25,7 @@ $('#go2maneuversID').click(function()
 {
     $('#maneuvuers_scrollableContainer').empty()
     getAllManeuversID()
+
 });
 
 //#endregion [ INITIAL VIEW ]
@@ -82,6 +83,7 @@ $('#filter_btn').click(function()
     {
         case 'maneuversPage':
             animationFunction.growAnimation('filter_container',false,'flex')
+
         break;
     
         default: break;
@@ -97,7 +99,8 @@ $('#filter_btn').click(function()
 //#region [CLIENTS MANAGEMENT PAGE ]
 
 async function preloadClientsNames()
-{   display_loader(true)
+{   
+    display_loader(true)
 
     let client_names = await get_clients()
 
@@ -290,6 +293,7 @@ $('#cmp_form_container').on('click','.input_clear', (e)=>
 })
 
 //#endregion [CLIENTS MANAGEMENT PAGE ]
+
 
 
 
@@ -737,7 +741,7 @@ $('#cmp_form_container').on('click','.input_clear', (e)=>
         contentType: 'application/json',
         data: JSON.stringify(data2Send),
         success : (function (data) 
-        {
+        {   console.log(data.message);
             switch (data.message) 
             {
                 case '1':
@@ -845,6 +849,8 @@ var reusableManeuverID
 var client_names
 var all_retrieved_transporters
 var transporters
+var todayManeuvers     = []
+var yesterdayManeuvers = []
 
 async function get_transporters(search_this_transporter)
 {
@@ -926,12 +932,14 @@ async function getAllManeuversID()
             {  
                 allManeuvers = data.objectsFound 
                 
+                /*
                 for (let index = 0; index < allManeuvers.length; index++) 
                 {
                     fillIDDashboard(allManeuvers[index])
-                }
+                } */
 
                 preloadFilterControls() 
+                preloadHeaderFilter()
 
                 actualPage = animationFunction.navigateToView('homePage','maneuversPage',false,'flex')
             }
@@ -1828,6 +1836,161 @@ function preloadFilterControls()
 
 }
 
+function preloadHeaderFilter()
+{
+    $('.hf_check').prop('checked',false)
+    resetForm('controls_container')
+
+        /** - Step [1]
+     *  - Define bounds and zeroing time to iterate only by date...!
+     */
+    const today = new Date()
+    today.setHours(0,0,0,0)
+
+    const yesterday = new Date()
+    yesterday.setDate(yesterday.getDate()-1)
+    yesterday.setHours(0,0,0,0)
+
+    todayManeuvers     = []
+    yesterdayManeuvers = []
+
+    /** - Step [2]
+     *  - Fill filtered arrays to display...
+     */
+    allManeuvers.forEach(maneuver => 
+    {
+        const maneuver_last_update = new Date (maneuver.maneuver_update_date)
+        maneuver_last_update.setHours(0,0,0,0)
+
+        if (maneuver_last_update.toDateString() === today.toDateString()) { todayManeuvers.push(maneuver) }          // Only this part is taken as STRING for comparison...
+        if (maneuver_last_update < today && maneuver_last_update >= yesterday) { yesterdayManeuvers.push(maneuver) } // Normal DATE object comparison...
+    })
+
+    /** - Step [3] 
+     *  - On view load display filtered according to condition...
+     */
+    $('#maneuvuers_scrollableContainer').empty()
+    if (todayManeuvers.length >= 1) 
+    {
+        let notification_msg = ['Mostrando maniobras del día de hoy ⛟ ','* Encontramos maniobras que se actualizaron hoy como más recientes primero.']
+        display_notification('ok', notification_msg) 
+        
+        for (let index = 0; index < todayManeuvers.length; index++) 
+        {
+            fillIDDashboard(todayManeuvers[index])    
+        }
+    }else
+    {
+        if (yesterdayManeuvers.length >= 1) 
+        {
+            let notification_msg = ['Mostrando maniobras del día de ayer ⛟ ','* Encontramos maniobras que se actualizaron ayer como más recientes primero.']
+            display_notification('ok', notification_msg) 
+            for (let index = 0; index < yesterdayManeuvers.length; index++) 
+            {
+                fillIDDashboard(yesterdayManeuvers[index])    
+            } 
+        } else 
+        {
+            let notification_msg = ['Mostrando todas las maniobras ⛟ ','* No encontramos maniobras actualizadas hoy.','* No encontramos maniobras actualizadas ayer.','* Mostrando todas las maniobras.']
+            display_notification('ok', notification_msg) 
+            for (let index = 0; index < allManeuvers.length; index++) 
+            {
+                fillIDDashboard(allManeuvers[index])    
+            } 
+        }
+    }
+
+}
+
+//TOGGLE change filter events...
+$('.header_filter').on('change','.hf_check', (e)=>
+{
+    let value = $(e.target).closest('.header_filter').find('.hf_check')
+    console.log(value[0].checked);
+
+    $('#maneuvuers_scrollableContainer').empty()
+
+    if (value[0].checked) 
+    {
+        console.log(yesterdayManeuvers);
+        if (yesterdayManeuvers.length <= 0) 
+        {
+            let notification_msg = ['¡Ninguna maniobra fue actualizada ayer! ⛟ ','* No hay maniobras actualizadas con fecha del día de ayer.','* Se mostrarán todas las maniobras']
+            display_notification('warning', notification_msg) 
+
+            for (let index = 0; index < allManeuvers.length; index++) 
+            {
+                fillIDDashboard(allManeuvers[index])    
+            } 
+        }else
+        {
+            for (let index = 0; index < yesterdayManeuvers.length; index++) 
+            {
+                fillIDDashboard(yesterdayManeuvers[index])    
+            } 
+        }
+    } else 
+    {
+        console.log(todayManeuvers);
+        if (todayManeuvers.length <= 0) 
+        {
+            let notification_msg = ['¡Ninguna maniobra fue actualizada hoy! ⛟ ','* No hay maniobras actualizadas con fecha del día de hoy.','* Se mostrarán todas las maniobras']
+            display_notification('warning', notification_msg) 
+
+            for (let index = 0; index < allManeuvers.length; index++) 
+            {
+                fillIDDashboard(allManeuvers[index])    
+            } 
+        }else
+        {
+            for (let index = 0; index < todayManeuvers.length; index++) 
+            {
+                fillIDDashboard(todayManeuvers[index])    
+            } 
+        }
+    }
+
+    resetForm('controls_container')
+
+
+})
+
+$('.header_filter').on('click','.input_clear', (e)=>
+{
+    $(e.target).closest('.input_container').find('.hf_entry').val('')
+})
+
+$('.header_filter').on('change','.hf_entry', (e)=>
+{
+    let start_search_date = $('.hf_start').val()
+    console.log(start_search_date);
+    
+    let end_search_date = $('.hf_end').val()
+    console.log(end_search_date);
+
+    console.log(validateField(start_search_date));
+
+    if (validateField(start_search_date) && validateField(end_search_date)) 
+    {   
+        let from_this_date = new Date(start_search_date)
+        let to_this_date   = new Date(end_search_date)
+        console.log('Fields are valid...');   
+        if (to_this_date > from_this_date) 
+        {
+            console.log('Dates are valid... Apply filter');
+
+        }else
+        {
+            console.log('Display warning message...');
+        }
+    }
+
+
+})
+
+
+
+
 /* +==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+
  * + [⚑] FILTER POP UP...                                                                          +                                                                +
  * +==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+*/ 
@@ -1947,7 +2110,17 @@ function useFilter(allManeuvers)
     *  - Get values from filters form...
     */
 
-    const availableFilters  = ['folio_filter','placas_filter','contedores_filter','cliente_filter','transportista_filter','operador_filter','finished_filter','from_date_filter','until_date_filter']
+    const availableFilters  = [
+        'folio_filter',
+        'placas_filter',
+        'contedores_filter',
+        'cliente_filter',
+        'transportista_filter',
+        'operador_filter',
+        'finished_filter',
+        'from_date_filter',
+        'until_date_filter'
+    ]
     let usedFilters         = []
     let filteredMAneuvers   = []
 
@@ -3573,6 +3746,23 @@ function build_select_options(master_object,custom_default)
     return built_options
 }
 
+function timeSnapshot(fullDateTime)
+{
+    const dateTime = new Date()
+
+    const day     = dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate() 
+    const month   = dateTime.toLocaleString('es-mx',{month:'long'}).toUpperCase()
+    const year    = dateTime.getFullYear()
+    const hours   = dateTime.getHours()   < 10 ? "0" + dateTime.getHours()   : dateTime.getHours()
+    const minutes = dateTime.getMinutes() < 10 ? "0" + dateTime.getMinutes() : dateTime.getMinutes()
+    const seconds = dateTime.getSeconds() < 10 ? "0" + dateTime.getSeconds() : dateTime.getSeconds()
+
+    let timeSnapshot
+
+    fullDateTime ? timeSnapshot = day +"-"+month+"-"+year+"  "+hours+":"+minutes+":"+seconds : timeSnapshot = day +"-"+month+"-"+year
+
+    return timeSnapshot
+}
 //#endregion [AUXILIARY COMMON FUCTIONS]
 
 
