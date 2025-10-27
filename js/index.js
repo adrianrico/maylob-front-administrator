@@ -4,8 +4,8 @@ import * as animationFunction from '/js/gsap/indexAnimations.js';
 var actualPage = ''
 
 // Used for local testing...
-const API_URL = 'http://127.0.0.1:8080'
-//const API_URL = 'https://maylob-backend.onrender.com'
+//const API_URL = 'http://127.0.0.1:8080'
+const API_URL = 'https://maylob-backend.onrender.com'
 
 //#region [ INITIAL VIEW ]
 
@@ -851,6 +851,7 @@ var all_retrieved_transporters
 var transporters
 var todayManeuvers     = []
 var yesterdayManeuvers = []
+var quickDateFilter    = []
 
 async function get_transporters(search_this_transporter)
 {
@@ -1906,13 +1907,11 @@ function preloadHeaderFilter()
 $('.header_filter').on('change','.hf_check', (e)=>
 {
     let value = $(e.target).closest('.header_filter').find('.hf_check')
-    console.log(value[0].checked);
 
     $('#maneuvuers_scrollableContainer').empty()
 
     if (value[0].checked) 
     {
-        console.log(yesterdayManeuvers);
         if (yesterdayManeuvers.length <= 0) 
         {
             let notification_msg = ['¡Ninguna maniobra fue actualizada ayer! ⛟ ','* No hay maniobras actualizadas con fecha del día de ayer.','* Se mostrarán todas las maniobras']
@@ -1951,44 +1950,60 @@ $('.header_filter').on('change','.hf_check', (e)=>
     }
 
     resetForm('controls_container')
-
-
 })
 
+// Clean HEADER FILTER date field...
 $('.header_filter').on('click','.input_clear', (e)=>
 {
     $(e.target).closest('.input_container').find('.hf_entry').val('')
 })
 
+//
 $('.header_filter').on('change','.hf_entry', (e)=>
 {
-    let start_search_date = $('.hf_start').val()
+    quickDateFilter = []
+
+    const start_search_date = $('.hf_start').val()
     console.log(start_search_date);
     
-    let end_search_date = $('.hf_end').val()
+    const end_search_date = $('.hf_end').val()
     console.log(end_search_date);
-
-    console.log(validateField(start_search_date));
 
     if (validateField(start_search_date) && validateField(end_search_date)) 
     {   
-        let from_this_date = new Date(start_search_date)
-        let to_this_date   = new Date(end_search_date)
-        console.log('Fields are valid...');   
+        const from_this_date = new Date(start_search_date)
+        from_this_date.setHours(0,0,0,0)
+
+        const to_this_date = new Date(end_search_date)
+        to_this_date.setHours(0,0,0,0)
+
         if (to_this_date > from_this_date) 
         {
             console.log('Dates are valid... Apply filter');
+            allManeuvers.forEach(maneuver => 
+            {
+                const maneuver_last_update = new Date(maneuver.maneuver_update_date)
+                if (maneuver_last_update >= from_this_date && maneuver_last_update <= to_this_date) { quickDateFilter.push(maneuver) }  
+            });
 
+                    console.log(quickDateFilter);
+            $('#maneuvuers_scrollableContainer').empty()
+            let notification_msg = ['Mostrando maniobras encontradaas ⛟ ','* Encontramos maniobras que se actualizaron dentro del rango de fechas.']
+            display_notification('ok', notification_msg) 
+            for (let index = 0; index < quickDateFilter.length; index++) 
+            {
+                fillIDDashboard(quickDateFilter[index])    
+            } 
         }else
         {
-            console.log('Display warning message...');
+            let notification_msg = ['¡Rangos de fecha no válido! ⛟ ','* Revisa que la fecha final sea posterior a la inicial.']
+            display_notification('warning', notification_msg) 
         }
+
+
     }
 
-
 })
-
-
 
 
 /* +==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+==+
